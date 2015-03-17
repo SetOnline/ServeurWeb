@@ -191,9 +191,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         console.log("creation d'un compte");
-        var mail = compte['adresse_mail'];
-        var pseudo = compte['pseudo'];
-        var mdp = compte['mdp'];
+        var mail = compte[0].value;
+        var pseudo = compte[1].value;
+        var mdp = compte[2].value;
         console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
         var resultat = [];
         resultat.push({ name: 'adresse_mail', value: 'true' });
