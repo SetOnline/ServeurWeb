@@ -206,8 +206,8 @@ io.sockets.on('connection', function (socket) {
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         console.log("connexion à un compte");
-        var pseudo = compte['pseudo'];
-        var mdp = compte['mdp'];
+        var pseudo = compte[0].value;
+        var mdp = compte[1].value;
         console.log("connexion au compte : " + pseudo + " " + mdp);
         socket.emit('Resultat connexion', 0);
     });
@@ -222,8 +222,8 @@ io.sockets.on('connection', function (socket) {
     socket.on('Desinscription', function () {
         var compte = JSON.parse(compteJSON);
         console.log("Desinscription");
-        var pseudo = compte['pseudo'];
-        var mdp = compte['mdp'];
+        var pseudo = compte[0].value;
+        var mdp = compte[1].value;
         console.log("desinscription du compte : " + pseudo + " " + mdp);
     });
 
@@ -231,9 +231,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('Modifier profil', function (profilJSON) {
         var profil = JSON.parse(profilJSON);
         console.log('Modifier profil');
-        var ancienmdp = profil['ancienmdp'];
-        var nouveaumdp = profil['nouveaumdp'];
-        var nvelavatar = profil['nvelavatar'];
+        var ancienmdp = profil[0].value;
+        var nouveaumdp = profil[0].value;
+        var nvelavatar = profil[0].value;
         console.log("modif profil fini");
     });
 });
