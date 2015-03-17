@@ -196,7 +196,9 @@ io.sockets.on('connection', function (socket) {
         var mdp = compte['mdp'];
         console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
         var resultat = [];
-        resultat.push({ adresse_mail: 'invalide', pseudo: 'true', mdp: 'true'});
+        resultat.push({ name: 'adresse_mail', value: 'invalide' });
+        resultat.push({ name: 'pseudo', value: 'true' });
+        resultat.push({ name: 'mdp', value: 'true' });
         socket.emit('Resultat inscription',  JSON.stringify(resultat));
     });
 
