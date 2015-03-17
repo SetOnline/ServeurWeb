@@ -1,6 +1,10 @@
 ﻿#jeu{
     width:700px;
     float:left;
+    border-radius: 25px;
+    background-color: #1f454d;
+    text-align: center;
+    margin: 40px auto;
 }
 
 .carte{
@@ -26,10 +30,26 @@
 #trouves{
     width:490px;
     float:left;
-    background: gray;
+    border-radius: 25px;
+    background-color: #1f454d;
+    text-align: center;
 }
 
 #contenu{
     width:1200px;
     margin:auto;
+}
+
+body{
+    background:black url(background.jpg) repeat-x left top;
+}
+
+#idTIMER {
+    color: white;
+    font-weight: bold;
+}
+
+#idSetsTrouvables {
+    color: white;
+    font-weight: bold;
 }

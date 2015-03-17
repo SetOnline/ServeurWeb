@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+    <script src="./monprofil.js"></script>
+
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./stylejeu.css">
+    <title>Mon profil</title>
+</head>
+<body>
+    <div id="contenu">
+        <span id="name">Henry</span>
+        <img alt="avatar" src="./test.jpg" />
+        <div id="medailles">
+            <h2>Médailles :</h2>
+            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
+            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
+            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
+            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
+        </div>
+
+        <div id="trophes">
+            <h2>Trophés :</h2>
+            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
+            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
+            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
+            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
+        </div>
+
+        <div id="amis">
+            <h2>Amis :</h2>
+            <img class="ami" alt="aminom" src="./ami.jpg" />
+            <img class="ami" alt="aminom" src="./ami.jpg" />
+            <img class="ami" alt="aminom" src="./ami.jpg" />
+            <img class="ami" alt="aminom" src="./ami.jpg" />
+        </div>
+
+        <div id="rangs">
+
+        </div>
+
+		<div id="modifProfil">
+			<form onsubmit="ModifierProfil(this)">
+				<label for="Ancien_mdp">Ancien mot de passe: </label>
+				<input type="password" minlength="3" maxlength="20" id="Ancien_mdp" />
+				<label for="Nouveau_mdp">Nouveau mot de passe: </label>
+				<input type="password" minlength="3" maxlength="20" id="Nouveau_mdp" />
+				<label for="avatar">Avatar</label>
+				<input type="file" id="avatar" accept="image/*"/>
+				<input type="submit" value="Submit">
+			</form>
+        </div>
+    </div>
+    <footer>
+        <span id="copyright">© Pancake 2015</span>
+        <span>Evènement à venir : Noël, Halloween</span>
+    </footer>
+
+</body>
+</html>

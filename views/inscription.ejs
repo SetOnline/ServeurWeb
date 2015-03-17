@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
+    <script src="./connect.js"></script>
+
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./stylejeu.css">
+    <title>Jeu</title>
+</head>
+<body>
+    <div id="inscription">
+            <form onsubmit="creationCompte(this)">
+                <label for="pseudo">Pseudo: </label>
+                <input type="text" minlength="3" maxlength="20" id="pseudo" required />
+				<label for="adr">Adresse mail: </label>
+                <input type="email" id="mail" required />
+                <label for="mdp">Mot de passe</label>
+                <input type="password" id="mdp" minlength="3" maxlength="20" required />
+				<label for="avatar">Avatar</label>
+				<input type="file" id="avatar" accept="image/*"/>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+</body>
+</html>
