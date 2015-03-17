@@ -182,7 +182,7 @@ io.sockets.on('connection', function (socket) {
         console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
         var resultat = [];
         resultat.push({ adresse_mail: 'invalide', pseudo: 'true', mdp: 'true'});
-        socket.emit('Resultat inscription', resultat);
+        socket.emit('Resultat inscription',  JSON.stringify(resultat));
     });
 
     // connexion
