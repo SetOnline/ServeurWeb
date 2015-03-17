@@ -1,0 +1,35 @@
+﻿#jeu{
+    width:700px;
+    float:left;
+}
+
+.carte{
+    margin-right:15px;
+    margin-bottom:15px;
+    width:200px;
+}
+
+.carte:hover
+{
+        filter: sepia(1);
+        -webkit-filter: sepia(1);
+        -moz-filter: sepia(1);
+        -o-filter: sepia(1);
+        -ms-filter: sepia(1);
+}
+
+.mincarte{
+    padding:10px;
+    width:140px;
+}
+
+#trouves{
+    width:490px;
+    float:left;
+    background: gray;
+}
+
+#contenu{
+    width:1200px;
+    margin:auto;
+}
