@@ -32,6 +32,21 @@ app.get('/game', function (req, res) {
     res.render('game.ejs');
 });
 
+// definition de la route de l'accueil
+app.get('/accueil', function (req, res) {
+    res.render('accueil.ejs');
+});
+
+// definition de la route du jeu
+app.get('/inscription', function (req, res) {
+    res.render('inscription.ejs');
+});
+
+// definition de la route du jeu
+app.get('/profil', function (req, res) {
+    res.render('profil.ejs');
+});
+
 // definition du declanchement de la fonction timer chaque seconde
 setInterval(function () {
     tempsRestant--;
