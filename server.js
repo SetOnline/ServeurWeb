@@ -9,12 +9,12 @@ var server = app.listen(port);
 // creation comm client serveur
 var io = require('socket.io')(server);
 
-// émetteur d'évènements
+// emetteur d'evenements
 var EventEmitter = require('events').EventEmitter;
 var jeu = new EventEmitter();
 
 // GLOBALES
-var tempsDePartie = 60000; // durée d'une partie (en ms)
+var tempsDePartie = 60000; // duree d'une partie (en ms)
 var tempsRestant = 0; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 
@@ -32,14 +32,14 @@ app.get('/game', function (req, res) {
     res.render('game.ejs');
 });
 
-// definition du déclanchement de la fonction timer chaque seconde
+// definition du declanchement de la fonction timer chaque seconde
 setInterval(function () {
     tempsRestant--;
     console.log(tempsRestant);
     io.sockets.emit('timer', tempsRestant);
 }, 1000);
 
-// fonction utilisé pour générer aléatoirement les 12 cartes distribués
+// fonction utilise pour generer aleatoirement les 12 cartes distribues
 // @param low : borne -
 // @param high : borne +
 // @return : retourne un entier compris entre low et high
@@ -51,16 +51,16 @@ function randomInt(low, high) {
 // abcd
 // avec
 // a : couleur (1 : R, 2 : V, 3 : B)
-// b : remplissage (1 : plein, 2 : rayé, 3 : vide)
-// c : quantité (1, 2, 3)
-// d : forme (1 : éclair, 2 : sphère, 3 : triangle)
+// b : remplissage (1 : plein, 2 : raye, 3 : vide)
+// c : quantite (1, 2, 3)
+// d : forme (1 : eclair, 2 : sphère, 3 : triangle)
 
 
 
 
 
 // genere une combinaison correspondant au code d'une carte
-// @return : retourne une chaine de 4 caractères correspondant au code de la carte généré
+// @return : retourne une chaine de 4 caractères correspondant au code de la carte genere
 function genererCombinaison() {
     var combi = '';
     var i;
@@ -71,10 +71,10 @@ function genererCombinaison() {
 }
 
 
-// vérifie si une carte n'a pas été tirée
-// @param tab : tableau contenant les codes des cartes déjà tirées
-// @param carte : le code carte à vérifier
-// @return : vrai si la carte est déjà tirée, faux sinon
+// verifie si une carte n'a pas ete tiree
+// @param tab : tableau contenant les codes des cartes dejà tirees
+// @param carte : le code carte à verifier
+// @return : vrai si la carte est dejà tiree, faux sinon
 function carteDejaTiree(tab, carte) {
     var i;
     for (i = 0; i != tab.length; ++i) {
@@ -89,8 +89,8 @@ function carteDejaTiree(tab, carte) {
     return false;
 }
 
-// génération des 12 cartes et remplissage du fichier JSON
-// @return : un string correspondant au fichier JSON contenant les 12 cartes (un JSON stringifié)
+// generation des 12 cartes et remplissage du fichier JSON
+// @return : un string correspondant au fichier JSON contenant les 12 cartes (un JSON stringifie)
 function genererNouvellePartieEnJSON() {
     var tabCartes = [];
     var i;
@@ -116,7 +116,7 @@ function genererNouvellePartieEnJSON() {
 }
 
 
-// détermine le nombre de solution d'un jeu
+// determine le nombre de solution d'un jeu
 // @return : le nombre de solution
 function getNbSolutions(partie) {
     var tabCartes = JSON.parse(partie);
@@ -134,7 +134,7 @@ function getNbSolutions(partie) {
     return res;
 }
 
-// definition du déclanchement de la nouvelle partie chaque tempsDePartie (variable globale définie en haut du fichier)
+// definition du declanchement de la nouvelle partie chaque tempsDePartie (variable globale definie en haut du fichier)
 setInterval(function () {
     var nouveauJeu = genererNouvellePartieEnJSON();
 
@@ -145,12 +145,12 @@ setInterval(function () {
 }, tempsDePartie);
 
 
-// déclancher à chaque connexion d'un client
-// socket est la variable associé à chacun des clients dans la fonction de callback
-// dans cette fonction de callback on défini les fonctions qui vont modifier les variables propres à chaque client
+// declancher à chaque connexion d'un client
+// socket est la variable associe à chacun des clients dans la fonction de callback
+// dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
 io.sockets.on('connection', function (socket) {
 
-    console.log('Un client est connecté !');
+    console.log('Un client est connecte !');
     socket.nbSetsValidesRestants = 0;
 
     // reinitialisation du nombre de set restant
@@ -158,7 +158,7 @@ io.sockets.on('connection', function (socket) {
         socket.nbSetsValidesRestants = 0;
     });
 
-    // écouteur de l'évennement Set d'un client, vérifie si le set est valide
+    // ecouteur de l'evennement Set d'un client, verifie si le set est valide
     socket.on('Set', function (setJoueur) {
         var setPropose = JSON.parse(setJoueur);
         if (estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) {
@@ -170,9 +170,9 @@ io.sockets.on('connection', function (socket) {
         } else {
             socket.emit('Set invalide', setJoueur);
         }
-
     });
 
+    // creation compte
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         console.log("creation d'un compte");
@@ -180,13 +180,12 @@ io.sockets.on('connection', function (socket) {
         var pseudo = compte['pseudo'];
         var mdp = compte['mdp'];
         console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
-        var comptepascree = [];
-        comptePasCree.push({ adresse_mail: 'invalide', pseudo: 'true', mdp: 'true' });
-        socket.emit('Compte pas cree', comptePasCree);
-        var compteCree = [];
-        socket.emit('Compte cree', compteCree);
+        var resultat = [];
+        resultat.push({ adresse_mail: 'invalide', pseudo: 'true', mdp: 'true'});
+        socket.emit('Resultat inscription', resultat);
     });
 
+    // connexion
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         console.log("connexion à un compte");
@@ -196,11 +195,13 @@ io.sockets.on('connection', function (socket) {
         socket.emit('Resultat connexion', 0);
     });
 
+    // profil
     socket.on('Demande mon profil', function () {
         console.log('Demande mon profil');
         socket.emit('Reponse mon profil', 0); // ici on ne sait pas encore ce qu'on va envoyer
     });
 
+    // desinscription
     socket.on('Desinscription', function () {
         var compte = JSON.parse(compteJSON);
         console.log("Desinscription");
@@ -209,6 +210,7 @@ io.sockets.on('connection', function (socket) {
         console.log("desinscription du compte : " + pseudo + " " + mdp);
     });
 
+    // modification profil
     socket.on('Modifier profil', function (profilJSON) {
         var profil = JSON.parse(profilJSON);
         console.log('Modifier profil');
