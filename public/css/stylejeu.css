@@ -41,7 +41,7 @@
 }
 
 body{
-    background:black url(background.jpg) repeat-x left top;
+    background:black url(/img/background.jpg) repeat-x left top;
 }
 
 #idTIMER {

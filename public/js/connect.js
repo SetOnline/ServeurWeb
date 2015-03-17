@@ -1,10 +1,8 @@
-//Il manque "Compte pas cree"
-
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
 
-//var socket = io(); //.connect('http://localhost:1337/game');
+var socket = io(); //.connect('http://localhost:1337/game');
 
 /*
     Réception évenement Compte pas cree (lorsque le compte envoyé au serveur pour sa création n'est pas valide)
@@ -14,12 +12,13 @@
     name: mdp value: invalide/true
     name: avatar value: invalide/true
 */
-socket.on('Compte pas cree', function (message) {
+socket.on('Resultat inscription', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);
 
     //affichage debug dans la console
     console.debug(info);
+    alert('test');
     
     //vérification de chaque champ et affichage correspondant
     //adresse_mail
@@ -74,6 +73,9 @@ function creationCompte(form) {
     var mail = form.mail.value;
     var mdp = form.mdp.value;
     var avatar = form.avatar.value;
+
+    //redimensionnement de l'image
+    //avatar.fakecrop();
 
     //mise dans un tableau
     var donnees = [];

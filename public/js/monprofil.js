@@ -7,14 +7,14 @@
     Réception évenement Reponse mon profil
     @param infos : fichier Json de la forme:... à voir plus tard
 */
-/*socket.on('Reponse mon profil', function (infos) {
+socket.on('Reponse mon profil', function (infos) {
     //récupération des données du serveur
     var info = JSON.parse(message);
 
     //affichage debug dans la console
     console.debug(info);
     alert('test');
-});*/
+});
 
 ///////////////////
 // Evenements Client - Serveur
