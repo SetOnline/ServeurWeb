@@ -236,6 +236,10 @@ io.sockets.on('connection', function (socket) {
         var nvelavatar = profil[0].value;
         console.log("modif profil fini");
     });
+
+    socket.on('Deco', function (profilJSON) {
+        console.log("deco");
+    });
 });
 
 // validation d'une propriete
