@@ -13,35 +13,17 @@ var io = require('socket.io')(server);
 var EventEmitter = require('events').EventEmitter;
 var jeu = new EventEmitter();
 
-// GLOBALES
-var tempsDePartie = 5000; // duree d'une partie (en ms)
-var tempsRestant = 0; // temps restant sur la partie (en s)
-var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
-
-
 app.use(express.static(__dirname + "/public"));
 
 var controllers = require('./controllers');
 controllers.init(app);
-
 var game = controllers.setGame;
-
-// definition du declanchement de la fonction timer chaque seconde
-setInterval(function () {
-    tempsRestant--;
-    console.log(tempsRestant);
-    io.sockets.emit('timer', tempsRestant);
-}, 1000);
-
-// definition du declanchement de la nouvelle partie chaque tempsDePartie (variable globale definie en haut du fichier)
-setInterval(function () {
-    var nouveauJeu = game.genererNouvellePartieEnJSON();
-
-    var infoPartie = JSON.parse(nouveauJeu);
-    console.log('Nouvelle partie ! ' + infoPartie[12].value);
-    tempsRestant = tempsDePartie / 1000;
-    io.sockets.emit('Nouvelle partie', nouveauJeu);
-}, tempsDePartie);
+var bdd = controllers.bdd;
+var Utilisateur = controllers.utilisateur;
+// GLOBALES
+var tempsDePartie = 5000; // duree d'une partie (en ms)
+var tempsRestant = 0; // temps restant sur la partie (en s)
+var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 
 
 // declancher à chaque connexion d'un client
@@ -78,6 +60,8 @@ io.sockets.on('connection', function (socket) {
         var mail = compte[0].value;
         var pseudo = compte[1].value;
         var mdp = compte[2].value;
+        var usr = new Utilisateur(mail, pseudo, mdp);
+        usr.insereBdd(bdd);
         console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
         var resultat = [];
         resultat.push({ name: 'adresse_mail', value: 'true' });
@@ -126,4 +110,21 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+// informations envoyées à tout les joueurs 
 
+// definition du declanchement de la fonction timer chaque seconde
+setInterval(function () {
+    tempsRestant--;
+    console.log(tempsRestant);
+    io.sockets.emit('timer', tempsRestant);
+}, 1000);
+
+// definition du declanchement de la nouvelle partie chaque tempsDePartie (variable globale definie en haut du fichier)
+setInterval(function () {
+    var nouveauJeu = game.genererNouvellePartieEnJSON();
+    
+    var infoPartie = JSON.parse(nouveauJeu);
+    console.log('Nouvelle partie ! ' + infoPartie[12].value);
+    tempsRestant = tempsDePartie / 1000;
+    io.sockets.emit('Nouvelle partie', nouveauJeu);
+}, tempsDePartie);

@@ -4,7 +4,7 @@
 // Evenements Serveur - Client
 ///////////////////
 
-//var socket = io(); //.connect('http://localhost:1337/game');
+var socket = io(); //.connect('http://localhost:1337/game');
 
 /*
     Réception évenement Compte pas cree (lorsque le compte envoyé au serveur pour sa création n'est pas valide)
@@ -14,6 +14,8 @@
     name: mdp value: invalide/true
     name: avatar value: invalide/true
 */
+
+
 socket.on('Compte pas cree', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);
@@ -73,18 +75,17 @@ function creationCompte(form) {
     var pseudo = form.pseudo.value;
     var mail = form.mail.value;
     var mdp = form.mdp.value;
-    var avatar = form.avatar.value;
+    //var avatar = form.avatar.value;
 
     //mise dans un tableau
     var donnees = [];
     donnees.push({ name: 'pseudo', value: pseudo });
     donnees.push({ name: 'mail', value: mail });
     donnees.push({ name: 'mdp', value: mdp });
-    donnees.push({ name: 'avatar', value: avatar });
+    //donnees.push({ name: 'avatar', value: avatar });
 
     //affichage debug
     console.debug(donnees);
-    alert("test");
 
     //envoi au serveur
     socket.emit('Creation compte', JSON.stringify(donnees));
