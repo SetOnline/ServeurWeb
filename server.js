@@ -33,6 +33,7 @@ io.sockets.on('connection', function (socket) {
 
     console.log('Un client est connecte !');
     socket.nbSetsValidesRestants = 0;
+    socket.utilisateur = 0;
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function (nouvelleCombi) {
@@ -56,13 +57,13 @@ io.sockets.on('connection', function (socket) {
     // creation compte
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
-        console.log("creation d'un compte");
         var mail = compte[0].value;
         var pseudo = compte[1].value;
         var mdp = compte[2].value;
+
         var usr = new Utilisateur(mail, pseudo, mdp);
         usr.insereBdd(bdd);
-        console.log("creation du compte : " + mail + " " + pseudo + " " + mdp);
+
         var resultat = [];
         resultat.push({ name: 'adresse_mail', value: 'true' });
         resultat.push({ name: 'pseudo', value: 'true' });
@@ -73,11 +74,10 @@ io.sockets.on('connection', function (socket) {
     // connexion
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
-        console.log("connexion à un compte");
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
-        console.log("connexion au compte : " + pseudo + " " + mdp);
-        socket.emit('Resultat connexion', 0);
+        bdd.connexionUser(pseudo, mdp, socket);
+        console.log("connecté : " + socket.utilisateur);
     });
 
     // profil
@@ -115,7 +115,6 @@ io.sockets.on('connection', function (socket) {
 // definition du declanchement de la fonction timer chaque seconde
 setInterval(function () {
     tempsRestant--;
-    console.log(tempsRestant);
     io.sockets.emit('timer', tempsRestant);
 }, 1000);
 

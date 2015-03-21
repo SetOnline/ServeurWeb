@@ -22,6 +22,31 @@ function bdd(){
             }
         });
     }
+
+    this.connexionUser = function (login, password, socket){
+        /*var requete = "SELECT idUtilisateur" 
+                    + " FROM Utilisateur U"
+                    + " WHERE U.pseudo = '" + login + "'"
+                    + " AND U.mdp = '" + password + "'";*/
+        var requete = "SELECT idUtilisateur FROM Utilisateur U WHERE U.pseudo = 'pierre' AND U.mdp = 'pierre'";
+        bdd.query(requete, function select(error, results, fields) {
+
+            if (error) {
+                console.log(error);
+                return;
+            }
+
+            if (results.length > 0) {
+                socket.utilisateur = 3;
+                console.log(socket.utilisateur);
+                socket.emit('Resultat connexion', 1);
+            } 
+            else {
+                socket.utilisateur = 2;
+                socket.emit('Resultat connexion', 0);
+            }
+        });
+    }
 }
 
 // conversion date format mysql

@@ -107,7 +107,6 @@ function connexion(form) {
 
     //affichage debug
     console.debug(donnees);
-    alert('test');
 
     //envoi au serveur
     socket.emit('Connexion', JSON.stringify(donnees));
