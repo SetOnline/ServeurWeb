@@ -9,6 +9,23 @@ var server = app.listen(port);
 // creation comm client serveur
 var io = require('socket.io')(server);
 
+// cookies - sessions
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var test = require('session.socket.io');
+app.use(cookieParser());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+
+
+
+
+
+
+
 // emetteur d'evenements
 var EventEmitter = require('events').EventEmitter;
 var jeu = new EventEmitter();
@@ -70,30 +87,14 @@ io.sockets.on('connection', function (socket) {
         resultat.push({ name: 'mdp', value: 'true' });
         socket.emit('Resultat inscription',  JSON.stringify(resultat));
     });
-
+    
+    
     // connexion
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
-        bdd.connexionUser(pseudo, mdp, function select(error, results, fields) {
-            
-            if (error) {
-                console.log(error);
-                return;
-            }
-            
-            if (results.length > 0) {
-                socket.utilisateur = 3;
-                console.log(socket.utilisateur);
-                socket.emit('Resultat connexion', 1);
-            } 
-            else {
-                socket.utilisateur = 2;
-                socket.emit('Resultat connexion', 0);
-            }
-        });
-        console.log("connecté : " + socket.utilisateur);
+        bdd.connexionUser(pseudo, mdp);
     });
 
     // profil

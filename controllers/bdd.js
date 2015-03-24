@@ -14,7 +14,7 @@ function bdd(){
         var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) "
                                     + "VALUES('" + mail + "','', '" + date.toMysqlFormat() 
                                     + "', '" + login + "', '" + password + "', '1') ";
-
+        
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -23,13 +23,26 @@ function bdd(){
         });
     }
 
-    this.connexionUser = function (login, password, callback){
+    this.connexionUser = function (login, password) {
         /*var requete = "SELECT idUtilisateur" 
                     + " FROM Utilisateur U"
                     + " WHERE U.pseudo = '" + login + "'"
                     + " AND U.mdp = '" + password + "'";*/
         var requete = "SELECT idUtilisateur FROM Utilisateur U WHERE U.pseudo = 'pierre' AND U.mdp = 'pierre'";
-        bdd.query(requete, callback);
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            if (results.length > 0) {
+
+                socket.emit('Resultat connexion', 1);
+            } 
+            else {
+                socket.emit('Resultat connexion', 0);
+            }
+        });
+       
     }
 }
 
