@@ -1,5 +1,9 @@
 ﻿//framework express
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var myCookieParser = cookieParser('secret');
+var SessionSockets = require('session.socket.io');
 var app = express();
 
 // creation du serveur
@@ -9,17 +13,16 @@ var server = app.listen(port);
 // creation comm client serveur
 var io = require('socket.io')(server);
 
-// cookies - sessions
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var test = require('session.socket.io');
-app.use(cookieParser());
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true
-}));
+//gestion cookie - session
 
+var sessionStore = new expressSession.MemoryStore();
+
+// socket io + session 
+
+var sessionSockets = new SessionSockets(io, sessionStore, myCookieParser);
+
+app.use(myCookieParser);
+app.use(expressSession({ secret: 'secret', store: sessionStore }));
 
 
 
@@ -46,9 +49,12 @@ var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 // declancher à chaque connexion d'un client
 // socket est la variable associe à chacun des clients dans la fonction de callback
 // dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
-io.sockets.on('connection', function (socket) {
-
+sessionSockets.on('connection', function (err, socket, session) {
+    
+    session.foo = session.foo + 1;
+    session.save();
     console.log('Un client est connecte !');
+    console.log(session.foo);
     socket.nbSetsValidesRestants = 0;
     socket.utilisateur = 0;
 

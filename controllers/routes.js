@@ -11,6 +11,7 @@ module.exports.set = function (app) {
     
     // definition de la route de l'accueil
     app.get('/accueil', function (req, res) {
+        req.session.foo = req.session.foo || 3;
         res.render('accueil.ejs');
     });
     
