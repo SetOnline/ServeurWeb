@@ -14,20 +14,13 @@ var server = app.listen(port);
 var io = require('socket.io')(server);
 
 //gestion cookie - session
-
 var sessionStore = new expressSession.MemoryStore();
 
 // socket io + session 
-
 var sessionSockets = new SessionSockets(io, sessionStore, myCookieParser);
 
 app.use(myCookieParser);
 app.use(expressSession({ secret: 'secret', store: sessionStore }));
-
-
-
-
-
 
 // emetteur d'evenements
 var EventEmitter = require('events').EventEmitter;
@@ -51,12 +44,12 @@ var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 // dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
 sessionSockets.on('connection', function (err, socket, session) {
     
+    session.utilisateur = session.utilisateur || 0;  // si l'utilisateur n'est pas co on met 0
     session.foo = session.foo + 1;
     session.save();
-    console.log('Un client est connecte !');
-    console.log(session.foo);
+    console.log('Un client est connecte. utilisateur : ');
+    console.log(session.utilisateur);
     socket.nbSetsValidesRestants = 0;
-    socket.utilisateur = 0;
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function (nouvelleCombi) {
@@ -100,7 +93,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
-        bdd.connexionUser(pseudo, mdp);
+        bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur);
     });
 
     // profil

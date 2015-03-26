@@ -1,5 +1,7 @@
 var mysql = require('mysql');
 
+
+
 function bdd(){
     var bdd = mysql.createConnection({
         host: "localhost",
@@ -8,6 +10,7 @@ function bdd(){
         database: "TER_Set"
     });
     
+
     this.addUser = function (mail, login, password){
         var date = new Date();
 
@@ -23,19 +26,22 @@ function bdd(){
         });
     }
 
-    this.connexionUser = function (login, password) {
-        /*var requete = "SELECT idUtilisateur" 
+    this.connexionUser = function (login, password, socket, session, Utilisateur) {
+        var requete = "SELECT idUtilisateur, email" 
                     + " FROM Utilisateur U"
                     + " WHERE U.pseudo = '" + login + "'"
-                    + " AND U.mdp = '" + password + "'";*/
-        var requete = "SELECT idUtilisateur FROM Utilisateur U WHERE U.pseudo = 'pierre' AND U.mdp = 'pierre'";
+                    + " AND U.mdp = '" + password + "'";
+        
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
                 return;
             }
             if (results.length > 0) {
-
+                var firstResult = results[0];
+                session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['idUtilisateur']);
+                session.save();       
+                console.log("session : " + session.utilisateur);
                 socket.emit('Resultat connexion', 1);
             } 
             else {
