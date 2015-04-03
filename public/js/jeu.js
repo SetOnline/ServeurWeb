@@ -170,18 +170,12 @@ function cardEvents() {
             console.log("carte3 == 0");
         }
         if (selection) {
-            $(this).css('filter', 'sepia(1)');
-            $(this).css('-webkit-filter', 'sepia(1)');
-            $(this).css('-moz-filter', 'sepia(1)');
-            $(this).css('-o-filter', 'sepia(1)');
-            $(this).css('-ms-filter', 'sepia(1)');
+            $(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
         }
         else {
-            $(this).css('filter', 'sepia(0)');
-            $(this).css('-webkit-filter', 'sepia(0)');
-            $(this).css('-moz-filter', 'sepia(0)');
-            $(this).css('-o-filter', 'sepia(0)');
-            $(this).css('-ms-filter', 'sepia(0)');    
+            $(this).css('filter', 'none'); /* firefox */
+             $(this).css('-webkit-filter', 'none'); /* chrome et safari */
+             $(this).css('-webkit-transition', 'none');
         }
 
         if ((carte1 != 0) && (carte2 != 0) && (carte3 != 0)) {
