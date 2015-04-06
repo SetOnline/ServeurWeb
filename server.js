@@ -6,6 +6,9 @@ var myCookieParser = cookieParser('secret');
 var SessionSockets = require('session.socket.io');
 var app = express();
 
+
+
+
 // creation du serveur
 var port = process.env.port || 1337; // port du serveur
 var server = app.listen(port);
@@ -87,6 +90,18 @@ sessionSockets.on('connection', function (err, socket, session) {
         socket.emit('Resultat inscription',  JSON.stringify(resultat));
     });
     
+    // classement
+    socket.on('Demande classement', function () {
+        bdd.classement(socket);
+    });
+    
+    socket.on('Demande classement jour', function () {
+        bdd.classementJour(socket);
+    });
+    
+    socket.on('Demande classement semaine', function () {
+        bdd.classementSemaine(socket);
+    });
     
     // connexion
     socket.on('Connexion', function (compteJSON) {
@@ -120,8 +135,10 @@ sessionSockets.on('connection', function (err, socket, session) {
         var nvelavatar = profil[0].value;
         console.log("modif profil fini");
     });
-
+    
+    // deconnexion
     socket.on('Deco', function (profilJSON) {
+        session.utilisateur = 0;
         console.log("deco");
     });
 });

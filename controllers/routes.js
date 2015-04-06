@@ -4,6 +4,10 @@ module.exports.set = function (app) {
         res.end('Vous êtes à l\'accueil');
     });
     
+    app.get('/test', function (req, res) {
+        res.render('test.ejs');
+    });
+
     // definition de la route du jeu
     app.get('/game', function (req, res) {
         res.render('game.ejs');

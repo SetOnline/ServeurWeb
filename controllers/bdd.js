@@ -40,7 +40,7 @@ function bdd(){
             if (results.length > 0) {
                 var firstResult = results[0];
                 session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['idUtilisateur']);
-                session.save();       
+                session.save();   
                 console.log("session : " + session.utilisateur);
                 socket.emit('Resultat connexion', 1);
             } 
@@ -48,7 +48,67 @@ function bdd(){
                 socket.emit('Resultat connexion', 0);
             }
         });
-       
+    }
+
+    this.classement = function (socket){
+        var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
+                    + "FROM Utilisateur U, Joue J " 
+                    + "WHERE U.idUtilisateur = J.idUtilisateur " 
+                    + "GROUP BY U.pseudo " 
+                    + "ORDER BY nbDePts DESC " 
+                    + "LIMIT 10 ";
+        var classementJSON = [];
+        bdd.query(requete, function (error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            for (var i = 0; i < results.length; i++) {
+                classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts']});
+            }
+        });
+        socket.emit('Reponse classement', classementJSON);
+    }
+
+    this.classementJour = function (socket) {
+        var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
+                    + "FROM Utilisateur U, Joue J " 
+                    + "WHERE U.idUtilisateur = J.idUtilisateur " 
+                    + "AND DAY(J.dateJeu) = DAY(NOW()) " 
+                    + "GROUP BY U.pseudo " 
+                    + "ORDER BY nbDePts DESC ";
+        
+        var classementJSON = [];
+        bdd.query(requete, function (error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            for (var i = 0; i < results.length; i++) {
+                classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts'] });
+            }
+        });
+        socket.emit('Reponse classement jour', classementJSON);
+    }
+
+    this.classementSemaine = function (socket) {
+        var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
+        + "FROM Utilisateur U, Joue J " 
+        + "WHERE U.idUtilisateur = J.idUtilisateur " 
+        + "AND WEEK(J.dateJeu, 1) = WEEK(NOW(), 1) " 
+        + "GROUP BY U.pseudo " 
+        + "ORDER BY nbDePts DESC ";
+        var classementJSON = [];
+        bdd.query(requete, function (error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            for (var i = 0; i < results.length; i++) {
+                classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts'] });
+            }
+        });
+        socket.emit('Reponse classement semaine', classementJSON);
     }
 }
 
