@@ -1,5 +1,3 @@
-//Il manque "Compte pas cree"
-
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
@@ -53,10 +51,15 @@ socket.on('Compte pas cree', function (message) {
 
 /*
     Réception évenement Resultat connexion
-    @param nouveauJeu : Entier permettant de savoir si la connexion est réussie ou pas (0 - réussie, 1 - invalide)
+    @param nouveauJeu : Entier permettant de savoir si la connexion est réussie ou pas (1 - réussie, 0 - invalide)
 */
 socket.on('Resultat connexion', function (RsltConnexion) {
-    if (RsltConnexion == 0) { document.location.href = "accueil.ejs"; } //redirection
+    console.log(RsltConnexion);
+    if (RsltConnexion == 1) {
+        console.log("a");
+        alert('connexion réussie');
+       // document.location.href = "accueil.ejs";
+    } //redirection
     else {
         alert('Données invalides.');
     }
@@ -79,8 +82,8 @@ function creationCompte(form) {
 
     //mise dans un tableau
     var donnees = [];
-    donnees.push({ name: 'pseudo', value: pseudo });
     donnees.push({ name: 'mail', value: mail });
+    donnees.push({ name: 'pseudo', value: pseudo });
     donnees.push({ name: 'mdp', value: mdp });
     //donnees.push({ name: 'avatar', value: avatar });
 
@@ -107,7 +110,6 @@ function connexion(form) {
 
     //affichage debug
     console.debug(donnees);
-
     //envoi au serveur
     socket.emit('Connexion', JSON.stringify(donnees));
 }
@@ -118,3 +120,12 @@ function connexion(form) {
 function deco() {
     socket.emit('Deco');
 }
+
+//PAGE INSCRIPTION
+$('#createCompte').submit(function () {
+    alert('a');
+   // var message = $('#message').val();
+   // preventDefault();
+   // creationCompte(this);
+    return false; // Permet de bloquer l'envoi "classique" du formulaire
+});

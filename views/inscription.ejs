@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="inscription">
-            <form onsubmit="creationCompte(this)">
+            <form action="/" method="post" id="createCompte">
                 <label for="pseudo">Pseudo: </label>
                 <input type="text" minlength="3" maxlength="20" id="pseudo" required />
 				<label for="adr">Adresse mail: </label>
@@ -21,7 +21,7 @@
                 <input type="password" id="mdp" minlength="3" maxlength="20" required />
 				<label for="avatar">Avatar</label>
 				<input type="file" id="avatar" accept="image/*"/>
-                <input type="submit" value="Submit">
+                <input type="submit" id="connect" value="Submit">
             </form>
         </div>
 </body>
