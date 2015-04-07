@@ -10,7 +10,6 @@ function bdd(){
         database: "TER_Set"
     });
     
-
     this.addUser = function (mail, login, password) {
         var date = new Date();
         
@@ -54,10 +53,10 @@ function bdd(){
 
     this.connexionUser = function (login, password, socket, session, Utilisateur) {
         var requete = "SELECT idUtilisateur, email" 
-                    + " FROM Utilisateur U"
-                    + " WHERE U.pseudo = '" + login + "'"
+                    + " FROM Utilisateur U" 
+                    + " WHERE U.pseudo = '" + login + "'" 
                     + " AND U.mdp = '" + password + "'";
-
+        
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -73,7 +72,19 @@ function bdd(){
                 socket.emit('Resultat connexion', 0);
             }
         });
-    }
+    };
+    
+    this.addScoreUser = function (idUtilisateur, score) {
+        var requete = "INSERT INTO Joue(idUtilisateur, score, dateJeu) " 
+                    + "VALUES(" + idUtilisateur + ", " + score + ", CURRENT_TIMESTAMP) ";
+
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+        });
+    };
 
     this.classement = function (socket){
         var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 

@@ -55,8 +55,8 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function () {
-        if (socket.nbPtsPartie != 0) {
-            //insertion dans la bdd des pts de l'ancienne partie
+        if (socket.nbPtsPartie != 0 && session.utilisateur != 0) {
+            bdd.addScoreUser(session.utilisateur.idUtilisateur, socket.nbPtsPartie);
         }
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
@@ -67,10 +67,11 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.on('Set', function (setJoueur) {
         var setPropose = JSON.parse(setJoueur);
         if (game.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) {
-            console.log("set valide");
+            // on ajoute le multiplicateur au score 
             socket.nbPtsPartie += socket.multiplicateur;
+            // puis on double le multiplicateur (x2 pour le set suivant)
             socket.multiplicateur = socket.multiplicateur * 2;
-            console.log("pts actuel : " + socket.nbPtsPartie);
+            // à revoir ??
             socket.nbSetsValidesRestants -= 1;
             if (socket.nbSetsValidesRestants < 0)
                 socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours - 1;
