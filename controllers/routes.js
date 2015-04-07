@@ -24,8 +24,13 @@ module.exports.set = function (app) {
         res.render('inscription.ejs');
     });
     
-    // definition de la route du jeu
+    // definition de la route du profil
     app.get('/profil', function (req, res) {
         res.render('profil.ejs');
+    });
+
+    // definition de la route du classement
+    app.get('/classement', function (req, res) {
+        res.render('classement.ejs');
     });
 }
