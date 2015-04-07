@@ -73,12 +73,12 @@ socket.on('Resultat connexion', function (RsltConnexion) {
     Fonction appellée automatiquement lors de la validation du formulaire d'inscription
     @param form le formulaire d'inscription
 */
-function creationCompte(form) {
+function creationCompte() {
     //récupération des valeurs du formulaire
-    var pseudo = form.pseudo.value;
-    var mail = form.mail.value;
-    var mdp = form.mdp.value;
-    //var avatar = form.avatar.value;
+    var pseudo = $("#pseudo").val();
+    var mail = $("#mail").val();
+    var mdp = $("#mdp").val();
+    //var avatar = $("#avatar").val();
 
     //mise dans un tableau
     var donnees = [];
@@ -98,10 +98,10 @@ function creationCompte(form) {
     Fonction appellée automatiquement lors de la validation du formulaire de connexion
     @param form le formulaire de connexion
 */
-function connexion(form) {
+function connexion() {
     //récupération des valeurs du formulaire
-    var pseudo = form.pseudo.value;
-    var mdp = form.mdp.value;
+    var pseudo = $("#pseudo").val();
+    var mdp = $("#mdp").val();
 
     //mise dans un tableau
     var donnees = [];
