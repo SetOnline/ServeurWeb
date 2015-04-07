@@ -144,9 +144,9 @@ function bdd(){
                 return;
             }
             for (var i = 0; i < results.length; i++) {
-                classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts']});
+                classementJSON.push({ name: results[i]['pseudo'], value: "" + results[i]['nbDePts'] });
             }
-            socket.emit('Reponse classement', classementJSON);
+            socket.emit('Reponse classement', JSON.stringify(classementJSON));
         });
 
     }
