@@ -10,9 +10,8 @@ var nbSetTrouves = 0;
 var socket = io(); //.connect('http://localhost:1337/game');
 
 socket.on('timer', function (message) {
-
     document.getElementById('idTIMER').innerHTML = "il reste " + message + " secondes avant la fin du jeu !";
-
+    document.getElementById('timer').innerHTML = message;
 });
 
 socket.on('Nouvelle partie', function (nouveauJeu) {

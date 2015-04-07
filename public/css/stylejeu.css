@@ -38,6 +38,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    position: relative; 
 }
 
 #contenu{
@@ -52,6 +53,15 @@ body{
 #idTIMER {
     color: white;
     font-weight: bold;
+}
+
+#timer{
+   font-weight: bold;
+   text-align: center;
+   position: absolute; 
+   top: 84px; 
+   left: 0; 
+   width: 100%; 
 }
 
 #idSetsTrouvables {
