@@ -37,7 +37,7 @@ var game = controllers.setGame;
 var bdd = controllers.bdd;
 var Utilisateur = controllers.utilisateur;
 // GLOBALES
-var tempsDePartie = 5000; // duree d'une partie (en ms)
+var tempsDePartie = 30000; // duree d'une partie (en ms)
 var tempsRestant = 0; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 
@@ -46,16 +46,20 @@ var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 // socket est la variable associe à chacun des clients dans la fonction de callback
 // dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
 sessionSockets.on('connection', function (err, socket, session) {
-    
-    session.utilisateur = session.utilisateur || 0;  // si l'utilisateur n'est pas co on met 0
-    session.foo = session.foo + 1;
-    session.save();
+    session.utilisateur = session.utilisateur || 0;
+    socket.nbPtsPartie = 0;
+    socket.multiplicateur = 1;
     console.log('Un client est connecte. utilisateur : ');
     console.log(session.utilisateur);
     socket.nbSetsValidesRestants = 0;
 
     // reinitialisation du nombre de set restant
-    jeu.on('Nouvelle partie', function (nouvelleCombi) {
+    jeu.on('Nouvelle partie', function () {
+        if (socket.nbPtsPartie != 0) {
+            //insertion dans la bdd des pts de l'ancienne partie
+        }
+        socket.nbPtsPartie = 0;
+        socket.multiplicateur = 1;
         socket.nbSetsValidesRestants = 0;
     });
 
@@ -63,6 +67,10 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.on('Set', function (setJoueur) {
         var setPropose = JSON.parse(setJoueur);
         if (game.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) {
+            console.log("set valide");
+            socket.nbPtsPartie += socket.multiplicateur;
+            socket.multiplicateur = socket.multiplicateur * 2;
+            console.log("pts actuel : " + socket.nbPtsPartie);
             socket.nbSetsValidesRestants -= 1;
             if (socket.nbSetsValidesRestants < 0)
                 socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours - 1;
@@ -158,5 +166,6 @@ setInterval(function () {
     var infoPartie = JSON.parse(nouveauJeu);
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
+    jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
