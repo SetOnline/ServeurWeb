@@ -90,13 +90,9 @@ sessionSockets.on('connection', function (err, socket, session) {
         var mdp = compte[2].value;
 
         var usr = new Utilisateur(mail, pseudo, mdp);
-        usr.insereBdd(bdd);
+        usr.insereBdd(bdd, socket);
 
-        var resultat = [];
-        resultat.push({ name: 'adresse_mail', value: 'true' });
-        resultat.push({ name: 'pseudo', value: 'true' });
-        resultat.push({ name: 'mdp', value: 'true' });
-        socket.emit('Resultat inscription',  JSON.stringify(resultat));
+        
     });
     
     // classement

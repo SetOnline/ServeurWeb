@@ -9,8 +9,8 @@ function Utilisateur(mail, login, pwd, id){
     
     var that = this;
 
-    this.insereBdd = function (bdd) {
-        bdd.addUser(that.adresseMail, that.pseudo, that.mdp);
+    this.insereBdd = function (bdd, socket) {
+        bdd.addUser(that.adresseMail, that.pseudo, that.mdp, socket);
     };
 
     this.modifierPseudo = function (nouveauPseudo, bdd) {

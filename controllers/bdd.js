@@ -10,17 +10,61 @@ function bdd(){
         database: "TER_Set"
     });
     
-    this.addUser = function (mail, login, password) {
+    this.addUser = function (mail, login, password, socket) {
         var date = new Date();
         
-        var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) " 
-                                    + "VALUES('" + mail + "','', '" + date.toMysqlFormat() 
-                                    + "', '" + login + "', '" + password + "', '1') ";
-        
-        bdd.query(requete, function select(error, results, fields) {
+        // on test si le mail existe
+        var testMail = "SELECT * FROM Utilisateur WHERE email = '" + mail + "'";
+        bdd.query(testMail, function select(error, results, fields) {
             if (error) {
                 console.log(error);
                 return;
+            }
+            // si le mail existe déjà 
+            if (results.length > 0) {
+                var resultat = [];
+                resultat.push({ name: 'adresse_mail', value: 'false' });
+                resultat.push({ name: 'pseudo', value: 'true' });
+                resultat.push({ name: 'mdp', value: 'true' });
+                socket.emit('Resultat inscription', JSON.stringify(resultat));
+            }
+            // sinon on test le pseudo
+            else {
+                var testPseudo = "SELECT * FROM Utilisateur WHERE pseudo = '" + login + "'";
+                bdd.query(testPseudo, function select2(error, results, fields) {
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    // si le pseudo existe déjà 
+                    if (results.length > 0) {
+                        var resultat = [];
+                        resultat.push({ name: 'adresse_mail', value: 'true' });
+                        resultat.push({ name: 'pseudo', value: 'false' });
+                        resultat.push({ name: 'mdp', value: 'true' });
+                        socket.emit('Resultat inscription', JSON.stringify(resultat));
+                    }
+                    // sinon go for it
+                    else {
+                        var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) " 
+                                    + "VALUES('" + mail + "','', '" + date.toMysqlFormat() 
+                                    + "', '" + login + "', '" + password + "', '1') ";
+                        
+                        bdd.query(requete, function select3(error, results, fields) {
+                            if (error) {
+                                console.log(error);
+                                return;
+                            }
+                            else {
+                                var resultat = [];
+                                resultat.push({ name: 'adresse_mail', value: 'true' });
+                                resultat.push({ name: 'pseudo', value: 'true' });
+                                resultat.push({ name: 'mdp', value: 'true' });
+                                socket.emit('Resultat inscription', JSON.stringify(resultat));
+                            }
+                        });
+                    }
+                });
             }
         });
     };
