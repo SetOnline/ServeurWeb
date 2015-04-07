@@ -1,5 +1,14 @@
 ﻿var socket = io();
 
+// connexion
+connexion = [];
+connexion.push({ name: "pseudo", value: "pierre" });
+connexion.push({ name: "mdp", value: "pierre" });
+socket.emit('Connexion', JSON.stringify(connexion));
+
+
+
+// classement
 socket.emit('Demande classement');
 
 socket.on('Reponse classement', function () {

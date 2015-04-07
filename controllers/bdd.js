@@ -11,10 +11,10 @@ function bdd(){
     });
     
 
-    this.addUser = function (mail, login, password){
+    this.addUser = function (mail, login, password) {
         var date = new Date();
-
-        var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) "
+        
+        var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) " 
                                     + "VALUES('" + mail + "','', '" + date.toMysqlFormat() 
                                     + "', '" + login + "', '" + password + "', '1') ";
         
@@ -24,14 +24,40 @@ function bdd(){
                 return;
             }
         });
-    }
+    };
+    
+    this.modifierPseudoUser = function (nouveauPseudo, ancienPseudo) {
+        var requete = "UPDATE Utilisateur "
+                    + "SET pseudo = " + nouveauPseudo + " "
+                    + "WHERE pseudo = " + ancienPseudo + " ";
+        
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+        });
+    };
+    
+    this.modifierEmailUser = function (nouveauMail, pseudo) {
+        var requete = "UPDATE Utilisateur U "
+                    + "SET email = " + nouveauMail + " "
+                    + "WHERE pseudo = " + pseudo + " ";
+        
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+        });
+    };
 
     this.connexionUser = function (login, password, socket, session, Utilisateur) {
         var requete = "SELECT idUtilisateur, email" 
                     + " FROM Utilisateur U"
                     + " WHERE U.pseudo = '" + login + "'"
                     + " AND U.mdp = '" + password + "'";
-        
+
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -40,8 +66,7 @@ function bdd(){
             if (results.length > 0) {
                 var firstResult = results[0];
                 session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['idUtilisateur']);
-                session.save();   
-                console.log("session : " + session.utilisateur);
+                session.save();
                 socket.emit('Resultat connexion', 1);
             } 
             else {
