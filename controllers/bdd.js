@@ -23,7 +23,7 @@ function bdd(){
             // si le mail existe déjà 
             if (results.length > 0) {
                 var resultat = [];
-                resultat.push({ name: 'adresse_mail', value: 'false' });
+                resultat.push({ name: 'adresse_mail', value: 'deja prise' });
                 resultat.push({ name: 'pseudo', value: 'true' });
                 resultat.push({ name: 'mdp', value: 'true' });
                 socket.emit('Resultat inscription', JSON.stringify(resultat));
@@ -40,7 +40,7 @@ function bdd(){
                     if (results.length > 0) {
                         var resultat = [];
                         resultat.push({ name: 'adresse_mail', value: 'true' });
-                        resultat.push({ name: 'pseudo', value: 'false' });
+                        resultat.push({ name: 'pseudo', value: 'deja pris' });
                         resultat.push({ name: 'mdp', value: 'true' });
                         socket.emit('Resultat inscription', JSON.stringify(resultat));
                     }
