@@ -14,7 +14,7 @@ var socket = io(); //.connect('http://localhost:1337/game');
 */
 
 
-socket.on('Compte pas cree', function (message) {
+socket.on('Resultat inscription', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);
 

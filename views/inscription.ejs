@@ -7,20 +7,20 @@
     <script src="/js/connect.js"></script>
 
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="./stylejeu.css">
+    <link rel="stylesheet" type="text/css" href="/css/styleform.css">
     <title>Jeu</title>
 </head>
 <body>
     <div id="inscription">
             <form>
                 <label for="pseudo">Pseudo: </label>
-                <input type="text" minlength="3" maxlength="20" id="pseudo" required />
+                <input type="text" minlength="3" maxlength="20" id="pseudo" required /><br />
 				<label for="adr">Adresse mail: </label>
-                <input type="email" id="mail" required />
+                <input type="email" id="mail" required /><br />
                 <label for="mdp">Mot de passe</label>
-                <input type="password" id="mdp" minlength="3" maxlength="20" required />
+                <input type="password" id="mdp" minlength="3" maxlength="20" required /><br />
 				<label for="avatar">Avatar</label>
-				<input type="file" id="avatar" accept="image/*"/>
+				<input type="file" id="avatar" accept="image/*"/><br />
                 <input type="submit" id="connect" value="Submit" onclick="creationCompte()">
             </form>
         </div>
