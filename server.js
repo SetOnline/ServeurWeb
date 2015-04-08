@@ -4,10 +4,8 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var myCookieParser = cookieParser('secret');
 var SessionSockets = require('session.socket.io');
+var FileStore = require('session-file-store')(expressSession);
 var app = express();
-
-
-
 
 // creation du serveur
 var port = process.env.port || 1337; // port du serveur
@@ -16,14 +14,12 @@ var server = app.listen(port);
 // creation comm client serveur
 var io = require('socket.io')(server);
 
-//gestion cookie - session
-var sessionStore = new expressSession.MemoryStore();
 
 // socket io + session 
-var sessionSockets = new SessionSockets(io, sessionStore, myCookieParser);
+var sessionSockets = new SessionSockets(io, new FileStore(), myCookieParser);
 
 app.use(myCookieParser);
-app.use(expressSession({ secret: 'secret', store: sessionStore }));
+app.use(expressSession({ secret: 'secret', store: new FileStore() }));
 
 // emetteur d'evenements
 var EventEmitter = require('events').EventEmitter;
