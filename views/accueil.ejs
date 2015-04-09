@@ -7,12 +7,13 @@
     <script src="/js/connect.js"></script>
 
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="./stylejeu.css">
+    <link rel="stylesheet" type="text/css" href="/css/styleaccueil.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>Accueil</title>
 </head>
 <body>
     <header>
-        <div id="connexion">
+	    <div id="connexion">
             <form>
                 <label for="pseudo">Pseudo: </label>
                 <input type="text" id="pseudo" required />
@@ -20,13 +21,12 @@
                 <input type="password" id="mdp" required />
                 <input type="submit" value="Submit" onclick="connexion()">
             </form>
+			<button type="button" onclick="deco()">Deconnexion</button> 
         </div>
-		<div>
-			 <button type="button" onclick="deco()">Deconnexion</button> 
-		</div>
+		<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
+		<p id="setonline">SetOnline</p>
 
         <div class="clear"></div>
-        <img alt="logo" src="./logo.jpg" id="logo" />
     </header>
 
     <div id="contenu">

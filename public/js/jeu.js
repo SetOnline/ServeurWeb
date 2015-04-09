@@ -38,7 +38,6 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
 });
 
 socket.on('Set valide', function (setQuiEstValide) {
-    console.log("youhou c'est valide");
     var setPropose = JSON.parse(setQuiEstValide);
     var setBon = '';
     setBon += setPropose[0].value;

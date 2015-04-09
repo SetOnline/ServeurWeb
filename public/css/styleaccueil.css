@@ -1,0 +1,28 @@
+﻿@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* EOT file for IE */
+}
+@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* TTF file for CSS3 browsers */
+}
+
+#setonline {
+    font-family:'OrangeJuice';
+    font-size: 56px;
+    font-weight:normal;
+    text-align:center;
+}
+
+#logo{
+    width:100px;
+    height:100px;
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#connexion{
+    text-align:right;
+}

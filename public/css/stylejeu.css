@@ -6,6 +6,21 @@
     text-align: center;
     margin: 40px auto;
 }
+/*Si on veut ajouter la police OrangeJuice a cette page...*/
+@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* EOT file for IE */
+}
+@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* TTF file for CSS3 browsers */
+}
+
+.orangej {
+    font-family:'OrangeJuice';
+    font-size: 48px;
+    font-weight:normal;
+}
 
 .carte{
     margin-right:15px;
@@ -47,7 +62,8 @@
 }
 
 body{
-    background:black url(background.jpg) repeat-x left top;
+    /*background:black url(background.jpg) repeat-x left top;*/
+    background-color: #F5F7FF;
 }
 
 #idTIMER{
