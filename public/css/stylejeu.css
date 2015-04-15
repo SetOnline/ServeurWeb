@@ -2,7 +2,7 @@
     width:700px;
     float:left;
     border-radius: 25px;
-    background-color: #1f454d;
+    background-color: #F2C994;
     text-align: center;
     margin: 40px auto;
 }
@@ -18,8 +18,6 @@
 
 .orangej {
     font-family:'OrangeJuice';
-    font-size: 48px;
-    font-weight:normal;
 }
 
 .carte{
@@ -42,7 +40,7 @@
     width:490px;
     float:left;
     border-radius: 25px;
-    background-color: #1f454d;
+    background-color: #E0B872;
     text-align: center;
 }
 
@@ -63,27 +61,23 @@
 
 body{
     /*background:black url(background.jpg) repeat-x left top;*/
-    background-color: #F5F7FF;
-}
-
-#idTIMER{
-    color: white;
-    font-weight: bold;
+    background-color: #96350F;
 }
 
 #timer{
    font-weight: bold;
    text-align: center;
    position: absolute; 
-   top: 38px; 
+   top: 25px; 
    left: 0; 
    width: 100%; 
+   font-size: 23px;
 }
 
 #nbSets{
    font-weight: bold;
-   color: white;
    text-align: center;
+   font-size: 46px;
 }
 
 #idSetsTrouvables {
