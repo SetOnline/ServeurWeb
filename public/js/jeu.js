@@ -106,27 +106,21 @@ function set() {
 
 function viderCartes() {
     if (carte1 != 0) {
-        $("#" + carte1).css('filter', 'sepia(0)');
-        $("#" + carte1).css('-webkit-filter', 'sepia(0)');
-        $("#" + carte1).css('-moz-filter', 'sepia(0)');
-        $("#" + carte1).css('-o-filter', 'sepia(0)');
-        $("#" + carte1).css('-ms-filter', 'sepia(0)');
+        $("#" + carte1).css('filter', 'none'); /* firefox */
+        $("#" + carte1).css('-webkit-filter', 'none'); /* chrome et safari */
+        $("#" + carte1).css('-webkit-transition', 'none');
         carte1 = 0;
     }
     if (carte2 != 0) {
-        $("#" + carte2).css('filter', 'sepia(0)');
-        $("#" + carte2).css('-webkit-filter', 'sepia(0)');
-        $("#" + carte2).css('-moz-filter', 'sepia(0)');
-        $("#" + carte2).css('-o-filter', 'sepia(0)');
-        $("#" + carte2).css('-ms-filter', 'sepia(0)');
+        $("#" + carte2).css('filter', 'none'); /* firefox */
+        $("#" + carte2).css('-webkit-filter', 'none'); /* chrome et safari */
+        $("#" + carte2).css('-webkit-transition', 'none');
         carte2 = 0;
     }
     if (carte3 != 0) {
-        $("#" + carte3).css('filter', 'sepia(0)');
-        $("#" + carte3).css('-webkit-filter', 'sepia(0)');
-        $("#" + carte3).css('-moz-filter', 'sepia(0)');
-        $("#" + carte3).css('-o-filter', 'sepia(0)');
-        $("#" + carte3).css('-ms-filter', 'sepia(0)');
+        $("#" + carte3).css('filter', 'none'); /* firefox */
+        $("#" + carte3).css('-webkit-filter', 'none'); /* chrome et safari */
+        $("#" + carte3).css('-webkit-transition', 'none');
         carte3 = 0;
     }
 }
@@ -175,8 +169,8 @@ function cardEvents() {
         }
         else {
             $(this).css('filter', 'none'); /* firefox */
-             $(this).css('-webkit-filter', 'none'); /* chrome et safari */
-             $(this).css('-webkit-transition', 'none');
+            $(this).css('-webkit-filter', 'none'); /* chrome et safari */
+            $(this).css('-webkit-transition', 'none');
         }
 
         if ((carte1 != 0) && (carte2 != 0) && (carte3 != 0)) {

@@ -1,12 +1,16 @@
-﻿#jeu{
+﻿/*Affichage du jeu en général*/
+#jeu{
     width:700px;
     float:left;
     border-radius: 25px;
     background-color: #F2C994;
     text-align: center;
     margin: 40px auto;
+    position:absolute;
+    z-index:1;
 }
-/*Si on veut ajouter la police OrangeJuice a cette page...*/
+
+/*gestion police*/
 @font-face {
     font-family:"OrangeJuice";
     src: url("/fonts/orange_juice_20.ttf") /* EOT file for IE */
@@ -20,6 +24,15 @@
     font-family:'OrangeJuice';
 }
 
+#boom{
+    width:150px;
+    height:150px;
+    z-index:2;
+    margin-left:250px;
+    position:fixed;
+    left:-10px;
+}
+
 .carte{
     margin-right:15px;
     margin-bottom:15px;
@@ -31,6 +44,7 @@
         filter: contrast(150%);
 }
 
+/*carte miniature (setstrouves)*/
 .mincarte{
     padding:10px;
     width:140px;
@@ -64,6 +78,7 @@ body{
     background-color: #96350F;
 }
 
+/*Affichage du temps du timer*/
 #timer{
    font-weight: bold;
    text-align: center;
@@ -74,13 +89,10 @@ body{
    font-size: 23px;
 }
 
+
 #nbSets{
    font-weight: bold;
    text-align: center;
    font-size: 46px;
-}
-
-#idSetsTrouvables {
-    color: white;
-    font-weight: bold;
+   position:absolute;
 }
