@@ -17,9 +17,6 @@ var socket = io(); //.connect('http://localhost:1337/game');
 socket.on('Resultat inscription', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);
-
-    //affichage debug dans la console
-    console.debug(info);
     
     //vérification de chaque champ et affichage correspondant
     //adresse_mail
@@ -44,8 +41,13 @@ socket.on('Resultat inscription', function (message) {
     }
 
     //avatar
-    if (info[3].value == "invalide") {
+    /*if (info[3].value == "invalide") {
         alert("L'avatar choisi n'est pas valide");
+    }*/
+
+    if (info[1].value == "true" && info[2].value == "true" /*&& info[3].value=="true"*/) {
+        alert("Inscription réussie!");
+        document.location.href = "/accueil";
     }
 });
 
@@ -54,12 +56,10 @@ socket.on('Resultat inscription', function (message) {
     @param nouveauJeu : Entier permettant de savoir si la connexion est réussie ou pas (1 - réussie, 0 - invalide)
 */
 socket.on('Resultat connexion', function (RsltConnexion) {
-    console.log(RsltConnexion);
-    if (RsltConnexion == 1) {
-        console.log("a");
+    if (RsltConnexion == 1) { //redirection
         alert('connexion réussie');
-       // document.location.href = "accueil.ejs";
-    } //redirection
+       document.location.href = "/accueil";
+    } 
     else {
         alert('Données invalides.');
     }
@@ -74,6 +74,7 @@ socket.on('Resultat connexion', function (RsltConnexion) {
     @param form le formulaire d'inscription
 */
 function creationCompte() {
+
     //récupération des valeurs du formulaire
     var pseudo = $("#pseudo").val();
     var mail = $("#mail").val();
