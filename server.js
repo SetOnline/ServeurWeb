@@ -36,7 +36,7 @@ var Utilisateur = controllers.utilisateur;
 var tempsDePartie = 30000; // duree d'une partie (en ms)
 var tempsRestant = 0; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
-
+var classementTempsReel = 0; // contiendra le tableau du classement de la partie en cours
 
 // declancher à chaque connexion d'un client
 // socket est la variable associe à chacun des clients dans la fonction de callback
@@ -67,6 +67,8 @@ sessionSockets.on('connection', function (err, socket, session) {
             socket.nbPtsPartie += socket.multiplicateur;
             // puis on double le multiplicateur (x2 pour le set suivant)
             socket.multiplicateur = socket.multiplicateur * 2;
+            classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
+            console.log("classement en temps reel : " + classementTempsReel[session.utilisateur.pseudo]);
             // à revoir ??
             socket.nbSetsValidesRestants -= 1;
             if (socket.nbSetsValidesRestants < 0)
@@ -142,6 +144,26 @@ sessionSockets.on('connection', function (err, socket, session) {
         session.utilisateur = 0;
         console.log("deco");
     });
+
+    socket.on('Demande classement partie actuelle', function () {
+        var sort = sortAssoc(classementTempsReel);
+        console.log("Demande de classement : ");
+        var classementJSON = [];
+        var position = 0;
+        for (var key in sort) {
+            position++;
+            classementJSON.push({ name: key, value: sort[key], rank: position });
+        }
+        console.log(classementJSON);
+        socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
+    });
+
+    socket.on('Est connecte', function () {
+        if (socket.utilisateur != 0)
+            socket.emit('Resultat est connecte', socket.utilisateur.pseudo);
+        else
+            socket.emit('Resultat est connecte', 0);
+    });
 });
 
 // informations envoyées à tout les joueurs 
@@ -155,10 +177,23 @@ setInterval(function () {
 // definition du declanchement de la nouvelle partie chaque tempsDePartie (variable globale definie en haut du fichier)
 setInterval(function () {
     var nouveauJeu = game.genererNouvellePartieEnJSON();
-    
     var infoPartie = JSON.parse(nouveauJeu);
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
+    classementTempsReel = [];
     jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
+
+function sortAssoc(aInput) {
+    var aTemp = [];
+    for (var sKey in aInput)
+        aTemp.push([sKey, aInput[sKey]]);
+    aTemp.sort(function () { return arguments[0][1] < arguments[1][1] });
+    
+    var aOutput = [];
+    for (var nIndex = aTemp.length - 1; nIndex >= 0; nIndex--)
+        aOutput[aTemp[nIndex][0]] = aTemp[nIndex][1];
+    
+    return aOutput;
+}
