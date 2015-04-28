@@ -162,7 +162,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Est connecte', function () {
-        if (socket.utilisateur != 0)
+        if (session.utilisateur != 0)
             socket.emit('Resultat est connecte', socket.utilisateur.pseudo);
         else
             socket.emit('Resultat est connecte', 0);
