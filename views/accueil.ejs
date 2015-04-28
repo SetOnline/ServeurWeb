@@ -1,17 +1,4 @@
-﻿<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
-    <script src="/js/connect.js"></script>
-
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="/css/styleaccueil.css">
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-    <title>Accueil</title>
-</head>
-<body>
+﻿<% include header.ejs %>
     <header>
 	    <div id="connexion">
             <form>
@@ -23,10 +10,6 @@
             </form>
 			<button type="button" onclick="deco()">Deconnexion</button> 
         </div>
-		<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
-		<p id="setonline">SetOnline</p>
-
-        <div class="clear"></div>
     </header>
 
     <div id="contenu">
@@ -42,10 +25,4 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
     </div>
-
-    <footer>
-        <span id="copyright">© Pancake 2015</span>
-        <span>Evènement à venir : Noël, Halloween</span>
-    </footer>
-</body>
-</html>
+<% include footer.ejs %>

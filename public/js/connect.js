@@ -13,8 +13,8 @@ var socket = io(); //.connect('http://localhost:1337/game');
     name: avatar value: invalide/true
 */
 
-
 socket.on('Resultat inscription', function (message) {
+    console.debug(message);
     //récupération des données du serveur
     var info = JSON.parse(message);
     
@@ -53,15 +53,29 @@ socket.on('Resultat inscription', function (message) {
 
 /*
     Réception évenement Resultat connexion
-    @param nouveauJeu : Entier permettant de savoir si la connexion est réussie ou pas (1 - réussie, 0 - invalide)
+    @param RsltConnexion : Entier permettant de savoir si la connexion est réussie ou pas (1 - réussie, 0 - invalide)
 */
 socket.on('Resultat connexion', function (RsltConnexion) {
     if (RsltConnexion == 1) { //redirection
         alert('connexion réussie');
-       document.location.href = "/accueil";
+        //document.location.href = "/accueil";
     } 
     else {
         alert('Données invalides.');
+    }
+});
+
+/*
+    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
+    @param RsltConnexion : 0 si pas connecté, pseudo sinon
+ */
+socket.on('Resultat est connecte', function (RsltConnexion) {
+    if (RsltConnexion == 0) { 
+        alert('pas connecté');
+    } 
+    else {
+        alert(RsltConnexion);
+        document.getElementById("connexion").style.display = 'none'; //permet de cacher la div de connexion
     }
 });
 
@@ -70,8 +84,15 @@ socket.on('Resultat connexion', function (RsltConnexion) {
 // Evenements Client - Serveur
 ///////////////////
 /*
+    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
+ */
+function estConnecte(){
+    socket.emit('Est connecte');
+}
+
+
+/*
     Fonction appellée automatiquement lors de la validation du formulaire d'inscription
-    @param form le formulaire d'inscription
 */
 function creationCompte() {
 
@@ -93,6 +114,7 @@ function creationCompte() {
 
     //envoi au serveur
     socket.emit('Creation compte', JSON.stringify(donnees));
+    alert("ici");
 }
 
 /*
@@ -121,12 +143,3 @@ function connexion() {
 function deco() {
     socket.emit('Deco');
 }
-
-//PAGE INSCRIPTION
-$('#createCompte').submit(function () {
-    alert('a');
-   // var message = $('#message').val();
-   // preventDefault();
-   // creationCompte(this);
-    return false; // Permet de bloquer l'envoi "classique" du formulaire
-});

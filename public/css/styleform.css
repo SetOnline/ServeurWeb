@@ -1,6 +1,4 @@
-﻿body {
-}
-label {
+﻿.labelinscription {
     display: block;
     width: 150px;
     float: left;

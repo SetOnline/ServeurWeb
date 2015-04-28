@@ -1,13 +1,139 @@
-﻿/*Affichage du jeu en général*/
+﻿body{
+    /*background:black url(background.jpg) repeat-x left top;*/
+    background-color: #96350F;
+}
+
+#contenu{
+	width:1200px;
+	margin:auto;
+	padding:10px;
+}
+
+#timerdiv{
+    float:left;
+    position: relative; 
+}
+
+    #sablier{
+        width:80px;
+        z-index:2;
+        position:absolute;
+    }
+
+    #timer{
+       font-weight: bold;
+       text-align: center;
+       font-size: 23px;
+       top:40px;
+       left:33px;
+       z-index:3;
+       position:absolute;
+    }
+
+#boomdiv{
+    left:60px;
+    top:180px;
+    position:relative;
+    float:left;
+}
+    #boom{
+        width:150px;
+        height:150px;
+        z-index:2;
+        position:absolute;
+    }
+
+    #nbdepts{
+        /**bonne police + positionnement*/
+       font-weight: bold;
+       text-align: center;
+       font-size: 42px;
+       top:40px;
+       left:65px;
+       z-index:3;
+       position:absolute;
+    }
+
 #jeu{
     width:700px;
-    float:left;
     border-radius: 25px;
     background-color: #F2C994;
     text-align: center;
-    margin: 40px auto;
-    position:absolute;
-    z-index:1;
+    margin: auto;
+}
+
+#classement{
+    position:relative;
+    float:right;
+}
+    .personne{
+        margin:10px;
+        border-radius:25px;
+    }
+        .num{
+            width:30px;
+            height:30px;
+        }
+        .value{
+
+        }
+        .avatar{
+            width:30px;
+            float:right;
+            height:30px;
+        }
+        .pseudo{
+
+        }
+
+#nbSetsdiv{
+    float:right;
+    position:relative;
+    right:0px;
+    top:180px;
+    display:none;
+}
+    .nb{
+       font-weight: bold;
+       text-align: center;
+       font-size: 46px;
+    }
+    #nbSetsTrouves{
+       
+    }
+    #nbSets{
+      
+    }
+
+
+
+
+
+
+
+.carte{
+    margin-right:15px;
+    margin-bottom:15px;
+    width:200px;
+}
+
+.carte:hover{
+        filter: contrast(150%);
+}
+
+/*carte miniature (setstrouves)*/
+.mincarte{
+    padding:10px;
+    width:140px;
+}
+
+/*Gestion du bloc contenant les sets trouves*/
+#trouves{
+    width:490px;
+    float:left;
+    border-radius: 25px;
+    background-color: #E0B872;
+    text-align: center;
 }
 
 /*gestion police*/
@@ -22,77 +148,4 @@
 
 .orangej {
     font-family:'OrangeJuice';
-}
-
-#boom{
-    width:150px;
-    height:150px;
-    z-index:2;
-    margin-left:250px;
-    position:fixed;
-    left:-10px;
-}
-
-.carte{
-    margin-right:15px;
-    margin-bottom:15px;
-    width:200px;
-}
-
-.carte:hover
-{
-        filter: contrast(150%);
-}
-
-/*carte miniature (setstrouves)*/
-.mincarte{
-    padding:10px;
-    width:140px;
-}
-
-#trouves{
-    width:490px;
-    float:left;
-    border-radius: 25px;
-    background-color: #E0B872;
-    text-align: center;
-}
-
-#sablier{
-    max-width: 100%;
-    width:80px;
-	height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative; 
-}
-
-#contenu{
-    width:50%;
-    margin:auto;
-}
-
-body{
-    /*background:black url(background.jpg) repeat-x left top;*/
-    background-color: #96350F;
-}
-
-/*Affichage du temps du timer*/
-#timer{
-   font-weight: bold;
-   text-align: center;
-   position: absolute; 
-   top: 25px; 
-   left: 0; 
-   width: 100%; 
-   font-size: 23px;
-}
-
-
-#nbSets{
-   font-weight: bold;
-   text-align: center;
-   font-size: 46px;
-   position:absolute;
 }

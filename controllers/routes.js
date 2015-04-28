@@ -19,7 +19,7 @@ module.exports.set = function (app) {
         res.render('accueil.ejs');
     });
     
-    // definition de la route du jeu
+    // definition de la route de la page d'inscription
     app.get('/inscription', function (req, res) {
         res.render('inscription.ejs');
     });
