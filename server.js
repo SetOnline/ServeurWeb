@@ -144,6 +144,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     // deconnexion
     socket.on('Deco', function (profilJSON) {
         session.utilisateur = 0;
+        session.save();
         console.log("deco");
     });
 
