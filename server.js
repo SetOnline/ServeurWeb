@@ -67,8 +67,10 @@ sessionSockets.on('connection', function (err, socket, session) {
             socket.nbPtsPartie += socket.multiplicateur;
             // puis on double le multiplicateur (x2 pour le set suivant)
             socket.multiplicateur = socket.multiplicateur * 2;
-            classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
-            console.log("classement en temps reel : " + classementTempsReel[session.utilisateur.pseudo]);
+            if (socket.utilisateur != 0) {
+                classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
+                console.log("classement en temps reel : " + classementTempsReel[session.utilisateur.pseudo]);
+            }
             // à revoir ??
             socket.nbSetsValidesRestants -= 1;
             if (socket.nbSetsValidesRestants < 0)
