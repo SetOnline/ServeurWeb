@@ -9,6 +9,9 @@ var nbSetTrouves = 0;
 
 var socket = io(); //.connect('http://localhost:1337/game');
 
+
+setInterval(function () { demandeClassement(); }, 1000);
+
 socket.on('timer', function (message) {
     document.getElementById('timer').innerHTML = message;
 });
@@ -51,8 +54,29 @@ socket.on('Set invalide', function (setQuiEstInvalide) {
     console.log('pas valide, reessaie p\'tit hacker');
 });
 
+socket.on('Reponse classement partie actuelle', function (donnees) {
+    console.log(donnees);
+    // suppression ancien classement
+    var myNode = document.getElementById("classement");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    //pour chaque personne
+    var tbpersonne = JSON.parse(donnees);
+    var noeudP;
+    for (i = 0; i < tbpersonne.length ; ++i) {
+        noeudP = "<div class=' personne '> <img src = '/img/boom.png' class='num'><span class='value'>" + tbpersonne[i].rank + "</span><span class='pseudo'>"+ tbpersonne[i].name +"</span>"
+        + "<img src='/img/sablier.gif' class='avatar'></div>"; //A remplacer ac le véritable avatar
+        console.log(tbpersonne[i].name);
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+});
+
 ///////////////////
 
+function demandeClassement(){
+    socket.emit('Demande classement partie actuelle');
+}
 
 function loadGame(combiCartes) {
     var codeCarte = 0;

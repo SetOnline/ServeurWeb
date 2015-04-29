@@ -114,7 +114,6 @@ function creationCompte() {
 
     //envoi au serveur
     socket.emit('Creation compte', JSON.stringify(donnees));
-    alert("ici");
 }
 
 /*

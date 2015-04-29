@@ -73,9 +73,14 @@
         .num{
             width:30px;
             height:30px;
+            position:absolute;
+            z-index:2;
+            left:-25px;
         }
         .value{
-
+            z-index:3;
+            position:absolute;
+            left:-20px;
         }
         .avatar{
             width:30px;
