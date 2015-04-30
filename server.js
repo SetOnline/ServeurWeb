@@ -47,7 +47,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.multiplicateur = 1;
     console.log('Un client est connecte. utilisateur : ');
     console.log(session.utilisateur);
-    socket.nbSetsValidesRestants = 0;
+    socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function () {
@@ -56,7 +56,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         }
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
-        socket.nbSetsValidesRestants = 0;
+        socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
     });
 
     // ecouteur de l'evennement Set d'un client, verifie si le set est valide
@@ -73,8 +73,6 @@ sessionSockets.on('connection', function (err, socket, session) {
             }
             // à revoir ??
             socket.nbSetsValidesRestants -= 1;
-            if (socket.nbSetsValidesRestants < 0)
-                socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours - 1;
             setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
             setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
             setPropose.push({ name: 'nbPtsTotal', value: (socket.nbPtsPartie) });
@@ -201,7 +199,7 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Est connecte', function () {
         if (session.utilisateur != 0)
-            socket.emit('Resultat est connecte', socket.utilisateur.pseudo);
+            socket.emit('Resultat est connecte', session.utilisateur.pseudo);
         else
             socket.emit('Resultat est connecte', 0);
     });
@@ -222,15 +220,6 @@ setInterval(function () {
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
     classementTempsReel = [];
-    classementTempsReel["jacky"] = 1;
-    classementTempsReel["pierre"] = 10;
-    classementTempsReel["marlene"] = 3;
-    classementTempsReel["matthieu"] = 4;
-    classementTempsReel["olivier"] = 5;
-    classementTempsReel["pierre2"] = 6;
-    classementTempsReel["marlene2"] = 2;
-    classementTempsReel["olivier2"] = 8;
-    classementTempsReel["test"] = 9;
     jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
