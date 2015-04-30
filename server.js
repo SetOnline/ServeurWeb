@@ -203,12 +203,33 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.on('Demande liste amis', function () {
         // do stuff
         listeAmisJSON = [];
-        listeAmis.push({ name : "pseudo", status : true, points : 10 });
-        listeAmis.push({ name : "pseudo2", status : false, points : 5 });
+        listeAmisJSON.push({ name : "pseudo", status : true, points : 10 });
+        listeAmisJSON.push({ name : "pseudo2", status : false, points : 5 });
         socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
     });
 
+    socket.on('Demander ami', function (nomAmiString) {
+        console.log("l'utilisateur: " + session.utilisateur.pseudo + "demande en ami : " + nomAmiString);
+        socket.emit('Reponse demande ami', 1);
+    });
 
+    socket.on('Accepter ami', function (nomAmiString) {
+        console.log("l'utilisateur: " + session.utilisateur.pseudo + "accepte en ami : " + nomAmiString);
+    });
+
+    socket.on('Refuser ami', function (nomAmiString) {
+        console.log("l'utilisateur: " + session.utilisateur.pseudo + "refuse en ami : " + nomAmiString);
+    });
+
+    socket.on('Demande liste demandes amis', function () {
+        listeAmisJSON = [];
+        listeAmisJSON.push({ name : "tricky" });
+        listeAmisJSON.push({ name : "moby" });
+        listeAmisJSON.push({ name : "francky" });
+        listeAmisJSON.push({ name : "jacky" });
+        listeAmisJSON.push({ name : "pierre" });
+        socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+    });
 });
 
 // informations envoyées à tout les joueurs 
