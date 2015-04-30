@@ -57,6 +57,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
         socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
+        console.log("dans nouvelle partie : " + socket.nbSetsValidesRestants);
     });
 
     // ecouteur de l'evennement Set d'un client, verifie si le set est valide
@@ -74,6 +75,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             // à revoir ??
             socket.nbSetsValidesRestants -= 1;
             setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
+            console.log("Set : " + socket.nbSetsValidesRestants);
             setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
             setPropose.push({ name: 'nbPtsTotal', value: (socket.nbPtsPartie) });
             socket.emit('Set valide', JSON.stringify(setPropose));
@@ -193,7 +195,6 @@ sessionSockets.on('connection', function (err, socket, session) {
             precScore = sort[key];
             precPosition = position;
         }
-        console.log(classementJSON);
         socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
     });
 
@@ -217,6 +218,7 @@ setInterval(function () {
 setInterval(function () {
     var nouveauJeu = game.genererNouvellePartieEnJSON();
     var infoPartie = JSON.parse(nouveauJeu);
+    nbSetsTrouvablesPartieEnCours = infoPartie[12].value;
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
     classementTempsReel = [];
