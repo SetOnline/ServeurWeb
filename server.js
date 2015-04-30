@@ -76,6 +76,8 @@ sessionSockets.on('connection', function (err, socket, session) {
             if (socket.nbSetsValidesRestants < 0)
                 socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours - 1;
             setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
+            setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
+            setPropose.push({ name: 'nbPtsTotal', value: (socket.nbPtsPartie) });
             socket.emit('Set valide', JSON.stringify(setPropose));
         } else {
             socket.emit('Set invalide', setJoueur);
@@ -152,10 +154,36 @@ sessionSockets.on('connection', function (err, socket, session) {
         var sort = sortAssoc(classementTempsReel);
         console.log("Demande de classement : ");
         var classementJSON = [];
-        var position = 0;
+        var position = 0; // on considere ici position comme rank du joueur
+        var positionJoueur = 0; // positionJoueur est le rank du joueur qui fait la requête de classement
+        var precName = ""; // nom du joueur précédent
+        var precScore = 0; // score du joueur précedent
+        var precPosition = 0; // position du joueur précedent
         for (var key in sort) {
             position++;
-            classementJSON.push({ name: key, value: sort[key], rank: position });
+            if (key == session.utilisateur.pseudo)
+                positionJoueur = position;
+            if (position < 5)
+                classementJSON.push({ name: key, value: sort[key], rank: position });
+            if (positionJoueur > 4) {
+                // tour de boucle du joueur qui demande le classement
+                if (positionJoueur == position) {
+                    // on pop les 3 derniers joueurs (3, 4 et 5eme)
+                    classementJSON.pop();
+                    classementJSON.pop();
+                    classementJSON.pop();
+                    // on ajoute le precedent + le joueur
+                    classementJSON.push({ name: precName, value: precScore, rank: precPosition });
+                    classementJSON.push({ name: key, value: sort[key], rank: position });
+                }
+                // tour de boucle du joueur d'apres
+                if ((positionJoueur + 1) == position) {
+                    classementJSON.push({ name: key, value: sort[key], rank: position });
+                }
+            }
+            precName = key;
+            precScore = sort[key];
+            precPosition = position;
         }
         console.log(classementJSON);
         socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
@@ -184,6 +212,14 @@ setInterval(function () {
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
     classementTempsReel = [];
+    classementTempsReel["jacky"] = 1;
+    classementTempsReel["pierre"] = 7;
+    classementTempsReel["marlene"] = 3;
+    classementTempsReel["matthieu"] = 4;
+    classementTempsReel["olivier"] = 5;
+    classementTempsReel["pierre2"] = 6;
+    classementTempsReel["marlene2"] = 2;
+    classementTempsReel["olivier2"] = 8;
     jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
