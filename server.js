@@ -199,6 +199,16 @@ sessionSockets.on('connection', function (err, socket, session) {
         else
             socket.emit('Resultat est connecte', 0);
     });
+
+    socket.on('Demande liste amis', function () {
+        // do stuff
+        listeAmisJSON = [];
+        listeAmis.push({ name : "pseudo", status : true, points : 10 });
+        listeAmis.push({ name : "pseudo2", status : false, points : 5 });
+        socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
+    });
+
+
 });
 
 // informations envoyées à tout les joueurs 
