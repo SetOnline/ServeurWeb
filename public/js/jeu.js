@@ -38,16 +38,32 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     while(myNode.firstChild){
         myNode.removeChild(myNode.firstChild);
     }
+
+    //suppression nb de pts
+    document.getElementById('nbdepts').innerHTML = 0;
 });
 
 socket.on('Set valide', function (setQuiEstValide) {
     var setPropose = JSON.parse(setQuiEstValide);
+    //ajouts des sets
     var setBon = '';
     setBon += setPropose[0].value;
     setBon += setPropose[1].value;
     setBon += setPropose[2].value;
-
-    addSetFound(setBon);
+   // addSetFound(setBon);
+    var nbSetsRestants = setPropose[3].value;
+    var nbPtsGagne = setPropose[4].value;
+    var nbPtsTotal = setPropose[5].value;
+    console.log(nbSetsRestants);
+    console.log(nbPtsGagne);
+    console.log(nbPtsTotal);
+    var nbSetsTotal = document.getElementById('nbSets').innerHTML;
+    //var nbSets = nbSetsTotal - nbSetsRestants;
+    //console.log(nbSetsRestants);
+    console.log(nbSetsTotal);
+    //console.log(nbSets);
+    //afficher nbPtsGagne en gros pdt une courte période
+    document.getElementById('nbdepts').innerHTML = nbPtsTotal;
 });
 
 socket.on('Set invalide', function (setQuiEstInvalide) {
@@ -55,7 +71,7 @@ socket.on('Set invalide', function (setQuiEstInvalide) {
 });
 
 socket.on('Reponse classement partie actuelle', function (donnees) {
-    console.log(donnees);
+    //console.log(donnees);
     // suppression ancien classement
     var myNode = document.getElementById("classement");
     while (myNode.firstChild) {
@@ -67,7 +83,7 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
     for (i = 0; i < tbpersonne.length ; ++i) {
         noeudP = "<div class=' personne '> <img src = '/img/boom.png' class='num'><span class='value'>" + tbpersonne[i].rank + "</span><span class='pseudo'>"+ tbpersonne[i].name +"</span>"
         + "<img src='/img/sablier.gif' class='avatar'></div>"; //A remplacer ac le véritable avatar
-        console.log(tbpersonne[i].name);
+       // console.log(tbpersonne[i].name);
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
