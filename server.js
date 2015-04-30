@@ -69,7 +69,6 @@ sessionSockets.on('connection', function (err, socket, session) {
             socket.multiplicateur = socket.multiplicateur * 2;
             if (socket.utilisateur != 0) {
                 classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
-                console.log("classement en temps reel : " + classementTempsReel[session.utilisateur.pseudo]);
             }
             // à revoir ??
             socket.nbSetsValidesRestants -= 1;
@@ -125,7 +124,6 @@ sessionSockets.on('connection', function (err, socket, session) {
     // desinscription
     socket.on('Desinscription', function () {
         var compte = JSON.parse(compteJSON);
-        console.log("Desinscription");
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
         console.log("desinscription du compte : " + pseudo + " " + mdp);
@@ -150,7 +148,6 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Demande classement partie actuelle', function () {
         var sort = sortAssoc(classementTempsReel);
-        console.log("Demande de classement : ");
         var classementJSON = [];
         var position = 0; // on considere ici position comme rank du joueur
         var positionJoueur = 0; // positionJoueur est le rank du joueur qui fait la requête de classement
@@ -193,7 +190,6 @@ sessionSockets.on('connection', function (err, socket, session) {
             precScore = sort[key];
             precPosition = position;
         }
-        console.log(classementJSON);
         socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
     });
 
@@ -217,6 +213,7 @@ setInterval(function () {
 setInterval(function () {
     var nouveauJeu = game.genererNouvellePartieEnJSON();
     var infoPartie = JSON.parse(nouveauJeu);
+    nbSetsTrouvablesPartieEnCours = infoPartie[12].value;
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
     tempsRestant = tempsDePartie / 1000;
     classementTempsReel = [];
@@ -228,11 +225,11 @@ function sortAssoc(aInput) {
     var aTemp = [];
     for (var sKey in aInput)
         aTemp.push([sKey, aInput[sKey]]);
-    aTemp.sort(function () { return arguments[0][1] < arguments[1][1] });
+    aTemp.sort(function () { return arguments[0][1] > arguments[1][1] });
     
-    var aOutput = [];
+    var tab = [];
     for (var nIndex = aTemp.length - 1; nIndex >= 0; nIndex--)
-        aOutput[aTemp[nIndex][0]] = aTemp[nIndex][1];
-    
-    return aOutput;
+        tab[aTemp[nIndex][0]] = aTemp[nIndex][1];
+            
+    return tab;
 }
