@@ -40,9 +40,9 @@ function desinscription() {
 */
 function ModifierProfil(form) {
     //récupération des valeurs du formulaire
-    var ancien_mdp = form.Ancien_mdp.value;
-    var nouveau_mdp = form.Nouveau_mdp.value;
-    var avatar = form.avatar.value;
+    var ancien_mdp = $("#Ancien_mdp").val();
+    var nouveau_mdp = $("#Nouveau_mdp").val();
+    var avatar = $("#avatar").val();
 
     //mise dans un tableau
     var donnees = [];

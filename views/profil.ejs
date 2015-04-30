@@ -1,19 +1,7 @@
-﻿<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
-    <script src="/js/monprofil.js"></script>
-
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="/css/stylejeu.css">
-    <title>Mon profil</title>
-</head>
-<body>
+﻿<% include header.ejs %>
     <div id="contenu">
         <span id="name">Henry</span>
-        <img alt="avatar" src="./test.jpg" />
+        <img alt="avatar" src="/img/logo.png" />
         <div id="medailles">
             <h2>Médailles :</h2>
             <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
@@ -43,21 +31,15 @@
         </div>
 
 		<div id="modifProfil">
-			<form onsubmit="ModifierProfil(this)">
+			<form>
 				<label for="Ancien_mdp">Ancien mot de passe: </label>
-				<input type="password" minlength="3" maxlength="20" id="Ancien_mdp" />
+				<input type="password" id="Ancien_mdp" />
 				<label for="Nouveau_mdp">Nouveau mot de passe: </label>
-				<input type="password" minlength="3" maxlength="20" id="Nouveau_mdp" />
+				<input type="password" id="Nouveau_mdp" />
 				<label for="avatar">Avatar</label>
 				<input type="file" id="avatar" accept="image/*"/>
-				<input type="submit" value="Submit">
+				<input type="button" onclick="ModifierProfil()"></button>
 			</form>
         </div>
     </div>
-    <footer>
-        <span id="copyright">© Pancake 2015</span>
-        <span>Evènement à venir : Noël, Halloween</span>
-    </footer>
-
-</body>
-</html>
+	<% include footer.ejs %>

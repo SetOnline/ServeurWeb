@@ -32,6 +32,7 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     //affichage du nombre de sets à trouver
     var nbSets = infoPartie[12].value;
     document.getElementById('nbSets').innerHTML = nbSets;
+    document.getElementById('nbSetsTrouves').innerHTML = "0";
 
     // suppression sets trouvés
     var myNode = document.getElementById("trouves");
@@ -54,14 +55,14 @@ socket.on('Set valide', function (setQuiEstValide) {
     var nbSetsRestants = setPropose[3].value;
     var nbPtsGagne = setPropose[4].value;
     var nbPtsTotal = setPropose[5].value;
-    console.log(nbSetsRestants);
-    console.log(nbPtsGagne);
-    console.log(nbPtsTotal);
     var nbSetsTotal = document.getElementById('nbSets').innerHTML;
-    //var nbSets = nbSetsTotal - nbSetsRestants;
-    //console.log(nbSetsRestants);
-    console.log(nbSetsTotal);
-    //console.log(nbSets);
+    var nbSets = nbSetsTotal - nbSetsRestants;
+    console.log("nombre de sets total : " + nbSetsTotal);
+    console.log("nombre de sets trouves : " + nbSets);
+    
+    document.getElementById('nbSets').innerHTML = nbSetsTotal;
+    document.getElementById('nbSetsTrouves').innerHTML = nbSets;
+
     //afficher nbPtsGagne en gros pdt une courte période
     document.getElementById('nbdepts').innerHTML = nbPtsTotal;
 });

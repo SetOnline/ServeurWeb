@@ -60,6 +60,8 @@
     background-color: #F2C994;
     text-align: center;
     margin: auto;
+    background-image: url("/img/fondJeu.png");
+    background-repeat: repeat-x;
 }
 
 #classement{
@@ -96,7 +98,6 @@
     position:relative;
     right:0px;
     top:180px;
-    display:none;
 }
     .nb{
        font-weight: bold;
