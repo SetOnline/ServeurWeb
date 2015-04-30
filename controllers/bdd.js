@@ -191,6 +191,63 @@ function bdd(){
             socket.emit('Reponse classement semaine', classementJSON);
         });
     }
+    
+    this.ajouteAmi = function (ajouteur, ajoute, socket) {
+        if (ajouteur == ajoute) {
+            socket.emit('Reponse demande ami', 0);
+            console.log("1");
+        }
+        else {
+            var requetetest1 = "SELECT * " 
+                         + "FROM Amis " 
+                         + "WHERE usr1 = '" + ajouteur + "' " 
+                         + "AND usr2 = '" + ajoute + "' ";
+            bdd.query(requetetest1, function select(error, results, fields) {
+                if (error) {
+                    console.log(error);
+                    socket.emit('Reponse demande ami', 0);
+                    console.log("2");
+                    return;
+                }
+                if (results.length > 0) {
+                    socket.emit('Reponse demande ami', 0);
+                    console.log("3");
+                }
+                else {
+                    var requetetest2 = "SELECT * " 
+                                 + "FROM Amis " 
+                                 + "WHERE usr1 = '" + ajoute + "' " 
+                                 + "AND usr2 = '" + ajouteur + "' ";
+                    bdd.query(requetetest2, function select2(error, results, fields) {
+                        if (error) {
+                            console.log(error);
+                            socket.emit('Reponse demande ami', 0);
+                            console.log("4");
+                            return;
+                        }
+                        if (results.length > 0) {
+                            socket.emit('Reponse demande ami', 0);
+                            console.log("5");
+                        }
+                        else {
+                            var requete = "INSERT INTO Amis(usr1, usr2, valide) " 
+                                    + "VALUES('" + ajouteur + "', '" + ajoute + "', false) ";
+                            
+                            bdd.query(requete, function select(error, results, fields) {
+                                if (error) {
+                                    console.log(error);
+                                    socket.emit('Reponse demande ami', 0);
+                                    console.log("6");
+                                    return;
+                                }
+                                socket.emit('Reponse demande ami', 1);
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
 }
 
 // conversion date format mysql
