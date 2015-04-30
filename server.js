@@ -159,11 +159,14 @@ sessionSockets.on('connection', function (err, socket, session) {
         var precName = ""; // nom du joueur précédent
         var precScore = 0; // score du joueur précedent
         var precPosition = 0; // position du joueur précedent
+        var prec2Name = ""; // le nom de l'antépenultieme
+        var prec2Score = 0; // le score de l'antepenultieme
+        var prec2Position = 0; // la position de l'antepenultieme
         for (var key in sort) {
             position++;
             if (key == session.utilisateur.pseudo)
                 positionJoueur = position;
-            if (position < 5)
+            if (position <= 5)
                 classementJSON.push({ name: key, value: sort[key], rank: position });
             if (positionJoueur > 4) {
                 // tour de boucle du joueur qui demande le classement
@@ -173,14 +176,21 @@ sessionSockets.on('connection', function (err, socket, session) {
                     classementJSON.pop();
                     classementJSON.pop();
                     // on ajoute le precedent + le joueur
+                    classementJSON.push({ name: prec2Name, value: prec2Score, rank: prec2Position });
                     classementJSON.push({ name: precName, value: precScore, rank: precPosition });
                     classementJSON.push({ name: key, value: sort[key], rank: position });
                 }
                 // tour de boucle du joueur d'apres
                 if ((positionJoueur + 1) == position) {
-                    classementJSON.push({ name: key, value: sort[key], rank: position });
+                    classementJSON[2] = classementJSON[3];
+                    classementJSON[3] = classementJSON[4];
+                    classementJSON[4] = { name: key, value: sort[key], rank: position };
+                    
                 }
             }
+            prec2Name = precName;
+            prec2Score = precScore;
+            prec2Position = precPosition;
             precName = key;
             precScore = sort[key];
             precPosition = position;
@@ -213,13 +223,14 @@ setInterval(function () {
     tempsRestant = tempsDePartie / 1000;
     classementTempsReel = [];
     classementTempsReel["jacky"] = 1;
-    classementTempsReel["pierre"] = 7;
+    classementTempsReel["pierre"] = 10;
     classementTempsReel["marlene"] = 3;
     classementTempsReel["matthieu"] = 4;
     classementTempsReel["olivier"] = 5;
     classementTempsReel["pierre2"] = 6;
     classementTempsReel["marlene2"] = 2;
     classementTempsReel["olivier2"] = 8;
+    classementTempsReel["test"] = 9;
     jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
