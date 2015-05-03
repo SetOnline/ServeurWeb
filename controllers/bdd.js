@@ -274,10 +274,11 @@ function bdd(){
         });
     }
 
-    this.listeDemandesAmis = function(ajoute, socket) {
+    this.listeDemandesAmis = function (ajoute, socket) {
+        console.log("je passe ici");
         var requete = "SELECT * " 
                     + "FROM Amis " 
-                    + "WHERE usr1 = '" + ajoute + "' " 
+                    + "WHERE usr2 = '" + ajoute + "' " 
                     + "AND valide = 0 ";
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
@@ -286,8 +287,10 @@ function bdd(){
             }
             listeAmisJSON = [];
             for (var i = 0; i < results.length; i++) {
-                listeAmisJSON.push({ name: results[i]['usr2']});
+                console.log("je passe dans le for");
+                listeAmisJSON.push({ name: results[i]['usr1']});
             }
+            console.log("j'emit : " + listeAmisJSON);
             socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
         });
     }
