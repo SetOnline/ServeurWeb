@@ -217,7 +217,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Refuser ami', function (nomAmiString) {
-        console.log("l'utilisateur: " + session.utilisateur.pseudo + "refuse en ami : " + nomAmiString);
+        bdd.refuseAmi(session.utilisateur.pseudo, nomAmiString, socket);
     });
 
     socket.on('Demande liste demandes amis', function () {
