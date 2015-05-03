@@ -248,6 +248,31 @@ function bdd(){
             });
         }
     }
+
+    this.accepteAmi = function (ajoute, ajouteur, socket) {
+        var requete = "SELECT * " 
+                    + "FROM Amis " 
+                    + "WHERE usr1 = '" + ajouteur + "' " 
+                    + "AND usr2 = '" + ajoute + "' ";
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            if (results.length > 0) {
+                var requete2 = "UPDATE Amis "
+                            + "SET valide = 1 "
+                            + "WHERE usr1 = '" + ajouteur + "' " 
+                            + "AND usr2 = '" + ajoute + "' ";
+                bdd.query(requete2, function select2(error, results, fields) {
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                });
+            }
+        });
+    }
 }
 
 // conversion date format mysql

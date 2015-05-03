@@ -210,11 +210,10 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Demander ami', function (nomAmiString) {
         bdd.ajouteAmi(session.utilisateur.pseudo, nomAmiString, socket);
-        console.log("matthieu call ! ");
     });
 
     socket.on('Accepter ami', function (nomAmiString) {
-        console.log("l'utilisateur: " + session.utilisateur.pseudo + "accepte en ami : " + nomAmiString);
+        bdd.accepteAmi(session.utilisateur.pseudo, nomAmiString, socket);
     });
 
     socket.on('Refuser ami', function (nomAmiString) {
