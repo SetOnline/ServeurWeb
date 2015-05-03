@@ -273,6 +273,24 @@ function bdd(){
             }
         });
     }
+
+    this.listeDemandesAmis = function(ajoute, socket) {
+        var requete = "SELECT * " 
+                    + "FROM Amis " 
+                    + "WHERE usr1 = '" + ajoute + "' " 
+                    + "AND valide = 0 ";
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            listeAmisJSON = [];
+            for (var i = 0; i < results.length; i++) {
+                listeAmisJSON.push({ name: results[i]['usr2']});
+            }
+            socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+        });
+    }
 }
 
 // conversion date format mysql

@@ -221,6 +221,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Demande liste demandes amis', function () {
+        bdd.listeDemandesAmis(session.utilisateur.pseudo, socket);
         listeAmisJSON = [];
         listeAmisJSON.push({ name : "tricky" });
         listeAmisJSON.push({ name : "moby" });
