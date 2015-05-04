@@ -1,4 +1,9 @@
-﻿.medaille{
+﻿.miniature{
+    width:50px;
+    height:50px;
+}
+
+#avatarProfil{
     width:50px;
     height:50px;
 }

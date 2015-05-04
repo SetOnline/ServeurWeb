@@ -1,29 +1,38 @@
 ﻿<% include header.ejs %>
     <div id="contenu">
         <span id="name">Henry</span>
-        <img alt="avatar" src="/img/logo.png" />
+        <img alt="avatar" id="avatarProfil" src="/img/logo.png" />
         <div id="medailles">
             <h2>Médailles :</h2>
-            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
-            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
-            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
-            <img class="medaille" alt="medaillenum" src="./medaille.jpg" />
+            <img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
+            <img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
+			<img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
+			<img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
         </div>
 
         <div id="trophes">
             <h2>Trophés :</h2>
-            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
-            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
-            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
-            <img class="trophe" alt="trophenum" src="./trophe.jpg" />
+            <img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
+			<img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
+			<img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
         </div>
 
-        <div id="amis">
-            <h2>Amis :</h2>
-            <img class="ami" alt="aminom" src="./ami.jpg" />
-            <img class="ami" alt="aminom" src="./ami.jpg" />
-            <img class="ami" alt="aminom" src="./ami.jpg" />
-            <img class="ami" alt="aminom" src="./ami.jpg" />
+        <div id="liste_amis">
+			<div class="ami">
+				<img class="miniature" alt="avatarAmi" src="/img/avatar.png/>
+				<span class="pseudo">Pseudo1</span>
+				<img class="isconnect" alt="connecte" src="/img/connecte.png"/>
+			</div>
+			<div class="ami">
+				<img class="miniature" alt="avatarAmi" src="/img/avatar.png/>
+				<span class="pseudo">Pseudo2</span>
+				<img class="isconnect" alt="connecte" src="/img/connecte.png"/>
+			</div>
+			<div class="ami">
+				<img class="miniature" alt="avatarAmi" src="/img/avatar.png/>
+				<span class="pseudo">Pseudo3</span>
+				<img class="isconnect" alt="connecte" src="/img/connecte.png"/>
+			</div>
         </div>
 
         <div id="rangs">
@@ -38,8 +47,9 @@
 				<input type="password" id="Nouveau_mdp" />
 				<label for="avatar">Avatar</label>
 				<input type="file" id="avatar" accept="image/*"/>
-				<input type="button" onclick="ModifierProfil()"></button>
+				<input type="button" value="Modifier" onclick="ModifierProfil()"></button>
 			</form>
         </div>
     </div>
+	<script src="/js/monprofil.js"></script>
 	<% include footer.ejs %>

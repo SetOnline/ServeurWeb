@@ -1,32 +1,57 @@
+//Chargement de la page
+function codeAddress() {
+    socket.emit('Demande liste amis');
+    socket.emit('Demande mon profil');
+    socket.emit('Demande liste demandes amis');
+    $(document).tooltip();
+}
+window.onload = codeAddress();
+
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
-//var socket = io(); //.connect('http://localhost:1337/game');
 
 /*
     Réception évenement Reponse mon profil
     @param infos : fichier Json de la forme:... à voir plus tard
 */
-/*socket.on('Reponse mon profil', function (infos) {
+socket.on('Reponse mon profil', function (infos) {
     //récupération des données du serveur
-    var info = JSON.parse(message);
+    var info = JSON.parse(infos);
 
     //affichage debug dans la console
+    console.log("Reponse mon profil");
     console.debug(info);
     alert('test');
-});*/
+});
+
+/*
+    Réception évenement Reponse liste amis
+    @param infos : fichier Json de la forme:
+    * name : pseudo    status : connecté ou non, booléen    points : score
+*/
+socket.on('Reponse liste amis', function (infos) {
+    // suppression ancienne liste d'amis
+    var myNode = document.getElementById("liste_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+
+    //récupération des données du serveur
+    var info = JSON.parse(infos);
+    var noeudP;
+    for (i = 0; i < info.length ; ++i) {
+        noeudP = "<div class='ami'>< img class='miniature' alt='avatarAmi' src='/img/avatar.png/><span class='pseudo'>" + info[i].name +"</span><span id='nbpts'>"+ info[i].points +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/connecte.png'/></div>"; 
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+    //affichage debug dans la console
+    alert("rep liste amis: ");
+    console.debug(info);
+});
 
 ///////////////////
 // Evenements Client - Serveur
 ///////////////////
-/*
-    Fonction appellée automatiquement lors de l'ouverture de la page monprofil.ejs
-*/
-function demandeMonProfil() {
-    //envoi au serveur
-    socket.emit('Demande mon profil');
-}
-
 /*
     Fonction appellée automatiquement lors du click sur le bouton "desinscription"
 */
