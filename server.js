@@ -37,6 +37,7 @@ var tempsDePartie = 30000; // duree d'une partie (en ms)
 var tempsRestant = 0; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 var classementTempsReel = 0; // contiendra le tableau du classement de la partie en cours
+var nouveauJeu = 0; // contient le jeu
 
 // declancher à chaque connexion d'un client
 // socket est la variable associe à chacun des clients dans la fonction de callback
@@ -48,6 +49,11 @@ sessionSockets.on('connection', function (err, socket, session) {
     console.log('Un client est connecte. utilisateur : ');
     console.log(session.utilisateur);
     socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
+    
+    // si un jeu est en cours en l'envoie quand il se connecte
+    if (nouveauJeu != 0) {
+        socket.emit('Nouvelle partie', nouveauJeu);
+    }
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function () {
@@ -188,7 +194,7 @@ setInterval(function () {
 
 // definition du declanchement de la nouvelle partie chaque tempsDePartie (variable globale definie en haut du fichier)
 setInterval(function () {
-    var nouveauJeu = game.genererNouvellePartieEnJSON();
+    nouveauJeu = game.genererNouvellePartieEnJSON();
     var infoPartie = JSON.parse(nouveauJeu);
     nbSetsTrouvablesPartieEnCours = infoPartie[12].value;
     console.log('Nouvelle partie ! ' + infoPartie[12].value);
