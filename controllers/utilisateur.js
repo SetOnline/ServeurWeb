@@ -10,7 +10,30 @@ function Utilisateur(mail, login, pwd, id){
     var that = this;
 
     this.insereBdd = function (bdd, socket) {
-        bdd.addUser(that.adresseMail, that.pseudo, that.mdp, socket);
+        if (that.adresseMail == "") {
+            var resultat = [];
+            resultat.push({ name: 'adresse_mail', value: 'invalide' });
+            resultat.push({ name: 'pseudo', value: 'true' });
+            resultat.push({ name: 'mdp', value: 'true' });
+            socket.emit('Resultat inscription', JSON.stringify(resultat));
+        }
+        else if (that.pseudo == "") {
+            var resultat = [];
+            resultat.push({ name: 'adresse_mail', value: 'true' });
+            resultat.push({ name: 'pseudo', value: 'invalide' });
+            resultat.push({ name: 'mdp', value: 'true' });
+            socket.emit('Resultat inscription', JSON.stringify(resultat));
+        }
+        else if (that.mdp == "") {
+            var resultat = [];
+            resultat.push({ name: 'adresse_mail', value: 'true' });
+            resultat.push({ name: 'pseudo', value: 'true' });
+            resultat.push({ name: 'mdp', value: 'invalide' });
+            socket.emit('Resultat inscription', JSON.stringify(resultat));
+        }
+        else {
+            bdd.addUser(that.adresseMail, that.pseudo, that.mdp, socket);
+        }  
     };
 
     this.modifierPseudo = function (nouveauPseudo, bdd) {
