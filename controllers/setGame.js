@@ -58,7 +58,53 @@ function setGame(){
         }
         return setCorrect;
     }
-
+    
+    this.classementTempsReelJSON = function (pseudo, classementTempsReel){
+        var sort = sortAssoc(classementTempsReel);
+        var classementJSON = [];
+        var position = 0; // on considere ici position comme rank du joueur
+        var positionJoueur = 0; // positionJoueur est le rank du joueur qui fait la requête de classement
+        var precName = ""; // nom du joueur précédent
+        var precScore = 0; // score du joueur précedent
+        var precPosition = 0; // position du joueur précedent
+        var prec2Name = ""; // le nom de l'antépenultieme
+        var prec2Score = 0; // le score de l'antepenultieme
+        var prec2Position = 0; // la position de l'antepenultieme
+        for (var key in sort) {
+            position++;
+            if (key == pseudo)
+                positionJoueur = position;
+            if (position <= 5)
+                classementJSON.push({ name: key, value: sort[key], rank: position });
+            if (positionJoueur > 4) {
+                // tour de boucle du joueur qui demande le classement
+                if (positionJoueur == position) {
+                    // on pop les 3 derniers joueurs (3, 4 et 5eme)
+                    classementJSON.pop();
+                    classementJSON.pop();
+                    classementJSON.pop();
+                    // on ajoute le precedent + le joueur
+                    classementJSON.push({ name: prec2Name, value: prec2Score, rank: prec2Position });
+                    classementJSON.push({ name: precName, value: precScore, rank: precPosition });
+                    classementJSON.push({ name: key, value: sort[key], rank: position });
+                }
+                // tour de boucle du joueur d'apres
+                if ((positionJoueur + 1) == position) {
+                    classementJSON[2] = classementJSON[3];
+                    classementJSON[3] = classementJSON[4];
+                    classementJSON[4] = { name: key, value: sort[key], rank: position };
+                    
+                }
+            }
+            prec2Name = precName;
+            prec2Score = precScore;
+            prec2Position = precPosition;
+            precName = key;
+            precScore = sort[key];
+            precPosition = position;
+        }
+        return classementJSON;
+    }
 
     // private methods
     
@@ -133,6 +179,23 @@ function setGame(){
             return false;
         }
     }
+
+    
+    // trie le tableau en fonction des values
+    function sortAssoc(aInput) {
+        var aTemp = [];
+        for (var sKey in aInput)
+            aTemp.push([sKey, aInput[sKey]]);
+        aTemp.sort(function () { return arguments[0][1] > arguments[1][1] });
+        
+        var tab = [];
+        for (var nIndex = aTemp.length - 1; nIndex >= 0; nIndex--)
+            tab[aTemp[nIndex][0]] = aTemp[nIndex][1];
+        
+        return tab;
+    }
+
+
 }
 
 
