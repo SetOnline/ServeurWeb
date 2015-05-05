@@ -2,9 +2,13 @@ var socket = io();
 
 //Chargement de la page
 function codeAddress() {
+    socket.emit('Est connecte');
     socket.emit('Demande liste amis');
-    socket.emit('Demande mon profil');
     socket.emit('Demande liste demandes amis');
+    
+    socket.emit('Demande liste trophees');
+    socket.emit('Demande liste medailles');
+    
     $(document).tooltip();
 }
 window.onload = codeAddress();
@@ -12,21 +16,6 @@ window.onload = codeAddress();
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
-
-/*
-    Réception évenement Reponse mon profil
-    @param infos : fichier Json de la forme:... à voir plus tard
-*/
-socket.on('Reponse mon profil', function (infos) {
-    //récupération des données du serveur
-    var info = JSON.parse(infos);
-
-    //affichage debug dans la console
-    console.log("Reponse mon profil");
-    console.debug(info);
-    alert('test');
-});
-
 /*
     Réception évenement Reponse liste amis
     @param infos : fichier Json de la forme:
@@ -52,7 +41,7 @@ socket.on('Reponse liste amis', function (infos) {
 /*
     Réception évenement Reponse liste demandes amis (permet de savoir qui nous a demandé en ami)
     @param infos : fichier Json de la forme:
-    * name : pseudo    status : connecté ou non, booléen    points : score
+    * name : pseudo    
 */
 socket.on('Reponse liste demandes amis', function (infos) {
     // suppression ancienne liste de demandes d'amis
@@ -71,12 +60,49 @@ socket.on('Reponse liste demandes amis', function (infos) {
 });
 
 /*
+    Réception évenement Reponse liste trophees
+    @param infos : fichier Json de la forme:
+    * name : nom    desc : description        pic : nom l’image
+*/
+socket.on('Reponse liste trophees', function (infos) {
+    //récupération des données du serveur
+    var info = JSON.parse(infos);
+    console.debug(info);
+    var noeudP;
+    var myNode = document.getElementById("trophes");
+    for (i = 0; i < info.length ; ++i) {
+        noeudP = "<img class='miniature' alt='trophe' src='/img/trophe/"+ info[i].pic +"' title='"+ info[i].desc +"'/><span>"+ info[i].name +"</span>";
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+});
+
+/*
+    Réception évenement Reponse liste medailles
+    @param infos : fichier Json de la forme:
+    * name : nom    desc : description        pic : nom l’image
+*/
+socket.on('Reponse liste medailles', function (infos) {
+    //récupération des données du serveur
+    var info = JSON.parse(infos);
+    console.debug(info);
+    var noeudP;
+    var myNode = document.getElementById("medailles");
+    for (i = 0; i < info.length ; ++i) {
+        noeudP = "<img class='miniature' alt='medaille' src='/img/medaille/" + info[i].pic + "' title='" + info[i].desc + "'/><span>" + info[i].name + "</span>";
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+});
+
+/*
     Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
     @param RsltConnexion : 0 si pas connecté, pseudo sinon
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
-    if (RsltConnexion != 0) {
+    if (RsltConnexion == 0) {
         document.location.href = "/accueil";
+    }
+    else {
+        document.getElementById('pseudoConnecte').innerHTML = RsltConnexion;
     }
 });
 
@@ -89,6 +115,11 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 */
 function desinscription() {
     socket.emit('Desinscription');
+}
+
+function ajouteAmi(){
+    socket.emit('Demander ami', $("#pseudoAjout").val());
+    document.location.href = "/profil";
 }
 
 /*

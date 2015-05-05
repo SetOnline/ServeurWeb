@@ -18,32 +18,33 @@
 	<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
 	<p id="setonline">SetOnline</p>
     <div id="contenu">
-        <span id="pseudoConnecte"></span>
+        <h2><span id="pseudoConnecte"></span></h2>
         <img alt="avatar" id="avatarProfil" src="/img/avatar.png" />
+		<h3>Médailles</h3>
         <div id="medailles">
-            <h2>Médailles :</h2>
-            <img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
-            <img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
-			<img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
-			<img class="miniature" alt="medaillenum" src="/img/logo.png" title="nom médaille"/>
         </div>
 
+		<h3>Trophés</h3>
         <div id="trophes">
-            <h2>Trophés :</h2>
-            <img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
-			<img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
-			<img class="miniature" alt="trophenum" src="/img/boom.png" title="nom trophé"/>
         </div>
 
+		<h3>Liste d'amis</h3>
         <div id="liste_amis">
         </div>
+		<form>
+			<label for="pseudoAjout">Pseudo: </label>
+			<input type="text" id="pseudoAjout" required />
+			<input type="button" value="Ajouter" onclick="ajouteAmi()">
+		</form>
 
+		<h3>Liste de demandes d'amis</h3>
 		<div id="liste_demandes_amis">
         </div>
 
         <div id="rangs">
         </div>
 
+		<h3>Modification du profil</h3>
 		<div id="modifProfil">
 			<form>
 				<label for="Ancien_mdp">Ancien mot de passe: </label>
@@ -56,5 +57,4 @@
 			</form>
         </div>
     </div>
-	<script src="/js/monprofil.js"></script>
 	<% include footer.ejs %>
