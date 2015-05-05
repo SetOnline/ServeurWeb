@@ -26,7 +26,13 @@ module.exports.set = function (app) {
     
     // definition de la route du profil
     app.get('/profil', function (req, res) {
-        res.render('profil.ejs');
+        if (req.session.utilisateur != 0) {
+            res.render('profil.ejs');
+        }
+        else {
+            res.setHeader('content-Type', 'text/plain');
+            res.end('Vous êtes à l\'accueil');
+        }  
     });
 
     // definition de la route du classement

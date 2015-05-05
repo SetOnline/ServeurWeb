@@ -51,9 +51,8 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function () {
-        if (socket.nbPtsPartie != 0 && session.utilisateur != 0) {
+        if (socket.nbPtsPartie != 0 && session.utilisateur != 0)
             bdd.addScoreUser(session.utilisateur.idUtilisateur, socket.nbPtsPartie);
-        }
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
         socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
@@ -70,7 +69,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             if (socket.utilisateur != 0) {
                 classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
             }
-            // à revoir ??
+            // il reste un set de moins à trouver
             socket.nbSetsValidesRestants -= 1;
             setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
             setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
@@ -89,9 +88,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         var mdp = compte[2].value;
 
         var usr = new Utilisateur(mail, pseudo, mdp);
-        usr.insereBdd(bdd, socket);
-
-        
+        usr.insereBdd(bdd, socket);  
     });
     
     // classement
@@ -159,14 +156,8 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Demande liste amis', function () {
-        // do stuff
-        if (session.utilisateur != 0) {
+        if (session.utilisateur != 0)
             bdd.listeAmis(session.utilisateur.pseudo, socket);
-        }
-        else {
-            listeAmisJSON = [];
-            socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
-        }
     });
 
     socket.on('Demander ami', function (nomAmiString) {
