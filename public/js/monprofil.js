@@ -39,9 +39,10 @@ socket.on('Reponse liste amis', function (infos) {
 
     //récupération des données du serveur
     var info = JSON.parse(infos);
+    console.debug(info);
     var noeudP;
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/connecte.png'/></div>"; 
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/profil/" + info[i].status + ".png'/></div>"; 
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });

@@ -243,11 +243,3 @@ function cardEvents() {
 function toStringCards() {
     return (carte1 + carte2 + carte3);
 }
-
-
-/*
-$(document).ready(function () {
-    loadGame("123113211111313213213231321323131213213213121321");
-    //addSetFound("123113211111");
-	cardEvents();
-});*/
