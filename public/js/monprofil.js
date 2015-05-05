@@ -1,3 +1,5 @@
+var socket = io();
+
 //Chargement de la page
 function codeAddress() {
     socket.emit('Demande liste amis');
@@ -65,6 +67,16 @@ socket.on('Reponse liste demandes amis', function (infos) {
     for (i = 0; i < info.length ; ++i) {
         noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit('Accepter ami', '" + info[i].name + "');' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit('Refuser ami', '" + info[i].name + "');' src='/img/refuser.png'/></div>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+});
+
+/*
+    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
+    @param RsltConnexion : 0 si pas connecté, pseudo sinon
+ */
+socket.on('Resultat est connecte', function (RsltConnexion) {
+    if (RsltConnexion != 0) {
+        document.location.href = "/accueil";
     }
 });
 

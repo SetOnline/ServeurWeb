@@ -53,6 +53,16 @@ socket.on('Resultat inscription', function (message) {
 
     if (info[1].value == "true" && info[2].value == "true"/*&& info[3].value=="true"*/) {
         alert("Inscription réussie!");
+
+        //On connecte l'usr
+        var donnees = [];
+        var pseudo = $("#pseudo").val();
+        var mdp = $("#mdp").val();
+        donnees.push({ name: 'pseudo', value: pseudo });
+        donnees.push({ name: 'mdp', value: mdp });
+        
+        //envoi au serveur
+        socket.emit('Connexion', JSON.stringify(donnees));
         document.location.href = "/accueil";
     }
 });

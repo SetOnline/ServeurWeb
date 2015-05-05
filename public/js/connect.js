@@ -57,8 +57,6 @@ function connexion() {
     donnees.push({ name: 'pseudo', value: pseudo });
     donnees.push({ name: 'mdp', value: mdp });
 
-    //affichage debug
-    console.debug(donnees);
     //envoi au serveur
     socket.emit('Connexion', JSON.stringify(donnees));
 }
@@ -68,4 +66,5 @@ function connexion() {
 */
 function deco() {
     socket.emit('Deco');
+    document.location.href = "/accueil";
 }
