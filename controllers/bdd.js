@@ -275,7 +275,6 @@ function bdd(){
     }
 
     this.listeDemandesAmis = function (ajoute, socket) {
-        console.log("je passe ici");
         var requete = "SELECT * " 
                     + "FROM Amis " 
                     + "WHERE usr2 = '" + ajoute + "' " 
@@ -287,12 +286,40 @@ function bdd(){
             }
             listeAmisJSON = [];
             for (var i = 0; i < results.length; i++) {
-                console.log("je passe dans le for");
                 listeAmisJSON.push({ name: results[i]['usr1']});
             }
-            console.log("j'emit : " + listeAmisJSON);
             socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
         });
+    }
+
+    this.listeAmis = function (pseudo, socket){
+        var requete = "SELECT * " 
+                    + "FROM Amis " 
+                    + "WHERE (usr2 = '" + pseudo + "' OR usr1 = '" + pseudo + "') "
+                    + "AND valide = 1 ";
+        console.log(requete);
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            console.log("jpasse la ");
+            console.log(results);
+            listeAmisJSON = [];
+            var ami;
+            for (var i = 0; i < results.length; i++) {
+                if (results[i]['usr1'] == pseudo)
+                    ami = results[i]['usr2'];
+                else
+                    ami = results[i]['usr1'];
+                listeAmisJSON.push({ name : ami, status: true });
+            }
+            console.log("j'envoie : ");
+            console.log(listeAmisJSON);
+            socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+        });
+        
+
     }
 }
 
