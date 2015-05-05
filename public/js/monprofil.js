@@ -41,13 +41,32 @@ socket.on('Reponse liste amis', function (infos) {
     var info = JSON.parse(infos);
     var noeudP;
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'>< img class='miniature' alt='avatarAmi' src='/img/avatar.png/><span class='pseudo'>" + info[i].name +"</span><span id='nbpts'>"+ info[i].points +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/connecte.png'/></div>"; 
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/connecte.png'/></div>"; 
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
-    //affichage debug dans la console
-    alert("rep liste amis: ");
-    console.debug(info);
 });
+
+/*
+    Réception évenement Reponse liste demandes amis (permet de savoir qui nous a demandé en ami)
+    @param infos : fichier Json de la forme:
+    * name : pseudo    status : connecté ou non, booléen    points : score
+*/
+socket.on('Reponse liste demandes amis', function (infos) {
+    // suppression ancienne liste de demandes d'amis
+    var myNode = document.getElementById("liste_demandes_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    
+    //récupération des données du serveur
+    var info = JSON.parse(infos);
+    var noeudP;
+    for (i = 0; i < info.length ; ++i) {
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit('Accepter ami', '" + info[i].name + "');' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit('Refuser ami', '" + info[i].name + "');' src='/img/refuser.png'/></div>";
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
+});
+
 
 ///////////////////
 // Evenements Client - Serveur

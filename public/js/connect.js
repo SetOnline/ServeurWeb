@@ -74,8 +74,10 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
         alert('pas connecté');
     } 
     else {
-        alert(RsltConnexion);
+        alert('connecté');
+        document.getElementById('pseudoConnecte').innerHTML = RsltConnexion;
         document.getElementById("connexion").style.display = 'none'; //permet de cacher la div de connexion
+
     }
 });
 
@@ -83,12 +85,6 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 ///////////////////
 // Evenements Client - Serveur
 ///////////////////
-/*
-    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
- */
-function estConnecte(){
-    socket.emit('Est connecte');
-}
 
 
 /*
