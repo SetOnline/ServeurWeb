@@ -51,7 +51,7 @@ socket.on('Resultat inscription', function (message) {
         alert("L'avatar choisi n'est pas valide");
     }*/
 
-    if (info[1].value == "true" && info[2].value == "true"/*&& info[3].value=="true"*/) {
+    if (info[0].value == "true" && info[1].value == "true" && info[2].value == "true"/*&& info[3].value=="true"*/) {
         alert("Inscription réussie!");
 
         //On connecte l'usr

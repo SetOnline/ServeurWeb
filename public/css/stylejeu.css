@@ -1,12 +1,76 @@
 ﻿body{
-    /*background:black url(background.jpg) repeat-x left top;*/
-    background-color: #96350F;
+    /*background:black url(background.jpg) ;*/
+    background: url("/img/sable2.jpg") repeat;
 }
 
 #contenu{
-	width:1200px;
+	width:90%;
 	margin:auto;
 	padding:10px;
+    position:relative;
+}
+
+#jeu{
+    padding-top:2%;
+    padding-bottom:2%;
+    margin:auto;
+    margin-top:5%;
+    width:60%;
+    border-radius: 25px;
+    text-align: center;
+    background-image: url("/img/fondJeu.png");
+    background-repeat: repeat-x;
+}
+
+    .carte{
+        width:200px;
+    }
+
+    .carte:hover{
+        filter: contrast(150%);
+    }
+
+.planche{
+    z-index:4;
+    position:absolute;
+}
+
+#plancheH{
+    left:19%;
+    top:0%;
+    width:62%;
+    z-index:3;
+}
+#plancheD{
+    /**planche verticale*/
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    top:47%;
+    width:40%;
+    left:60%;
+    z-index:2;
+}
+#plancheG{
+    /**planche verticale*/
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+    z-index:2;
+    top:47%;
+    width:40%;
+}
+#plancheB{
+    left:19%;
+    top:94%;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    width:62%;
+    z-index:3;
 }
 
 #timerdiv{
@@ -53,16 +117,6 @@
        z-index:3;
        position:absolute;
     }
-
-#jeu{
-    width:700px;
-    border-radius: 25px;
-    background-color: #F2C994;
-    text-align: center;
-    margin: auto;
-    background-image: url("/img/fondJeu.png");
-    background-repeat: repeat-x;
-}
 
 #classement {
     position:relative;
@@ -147,15 +201,7 @@
 
 
 
-.carte{
-    margin-right:15px;
-    margin-bottom:15px;
-    width:200px;
-}
 
-.carte:hover{
-        filter: contrast(150%);
-}
 
 /*carte miniature (setstrouves)*/
 .mincarte{

@@ -17,6 +17,11 @@ socket.on('timer', function (message) {
     document.getElementById('timer').innerHTML = message;
 });
 
+socket.on('Deblocage trophee', function (info){
+    var infoTrophee = JSON.parse(info);
+    alert("Vous avez débloqué le trophée " + infoTrophee.name);
+});
+
 socket.on('Nouvelle partie', function (nouveauJeu) {
     var infoPartie = JSON.parse(nouveauJeu);
     var cartesJeu = "";
