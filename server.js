@@ -51,12 +51,16 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
     socket.setDejaJoue = [];
     
+    /////////////////////////////////////////////////
+    // GESTION DU JEU
+    /////////////////////////////////////////////////
+
     // si un jeu est en cours en l'envoie quand il se connecte
     if (nouveauJeu != 0) {
         socket.emit('Nouvelle partie', nouveauJeu);
     }
     
-    jeu.on('Demande partie en cours', function () {
+    socket.on('Demande partie en cours', function () {
         socket.emit('Nouvelle partie', nouveauJeu);
     });
 
@@ -95,44 +99,33 @@ sessionSockets.on('connection', function (err, socket, session) {
         }
     });
 
-    // creation compte
-    socket.on('Creation compte', function (compteJSON) {
-        var compte = JSON.parse(compteJSON);
-        var mail = compte[0].value;
-        var pseudo = compte[1].value;
-        var mdp = compte[2].value;
-
-        var usr = new Utilisateur(mail, pseudo, mdp);
-        usr.insereBdd(bdd, socket);  
-    });
+    /////////////////////////////////////////////////
+    // GESTION DES UTILISATEURS
+    /////////////////////////////////////////////////
     
-    // classement
-    socket.on('Demande classement', function () {
-        bdd.classement(socket);
-    });
-    
-    socket.on('Demande classement jour', function () {
-        bdd.classementJour(socket);
-    });
-    
-    socket.on('Demande classement semaine', function () {
-        bdd.classementSemaine(socket);
-    });
-    
-    // connexion
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
         bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur);
     });
-
-    // profil
+    
     socket.on('Demande mon profil', function () {
         console.log('Demande mon profil');
         socket.emit('Reponse mon profil', 0); // ici on ne sait pas encore ce qu'on va envoyer
     });
-
+    
+    // creation compte
+    socket.on('Creation compte', function (compteJSON) {
+        var compte = JSON.parse(compteJSON);
+        var mail = compte[0].value;
+        var pseudo = compte[1].value;
+        var mdp = compte[2].value;
+        
+        var usr = new Utilisateur(mail, pseudo, mdp);
+        usr.insereBdd(bdd, socket);
+    });
+    
     // desinscription
     socket.on('Desinscription', function () {
         var compte = JSON.parse(compteJSON);
@@ -140,7 +133,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         var mdp = compte[1].value;
         console.log("desinscription du compte : " + pseudo + " " + mdp);
     });
-
+    
     // modification profil
     socket.on('Modifier profil', function (profilJSON) {
         var profil = JSON.parse(profilJSON);
@@ -157,18 +150,41 @@ sessionSockets.on('connection', function (err, socket, session) {
         session.save();
         console.log("deco");
     });
-
-    socket.on('Demande classement partie actuelle', function () {
-        var classementJSON = game.classementTempsReelJSON(session.utilisateur.pseudo, classementTempsReel);
-        socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
-    });
-
+    
     socket.on('Est connecte', function () {
         if (session.utilisateur != 0)
             socket.emit('Resultat est connecte', session.utilisateur.pseudo);
         else
             socket.emit('Resultat est connecte', 0);
+    }); 
+    
+    /////////////////////////////////////////////////
+    // GESTION DES CLASSEMENTS
+    /////////////////////////////////////////////////
+    
+    socket.on('Demande classement', function () {
+        bdd.classement(socket);
     });
+    
+    socket.on('Demande classement jour', function () {
+        bdd.classementJour(socket);
+    });
+    
+    socket.on('Demande classement semaine', function () {
+        bdd.classementSemaine(socket);
+    });
+    
+    socket.on('Demande classement partie actuelle', function () {
+        var classementJSON = game.classementTempsReelJSON(session.utilisateur.pseudo, classementTempsReel);
+        socket.emit('Reponse classement partie actuelle', JSON.stringify(classementJSON));
+    });
+    
+
+    
+    /////////////////////////////////////////////////
+    // GESTION DES AMIS
+    /////////////////////////////////////////////////
+    
 
     socket.on('Demande liste amis', function () {
         if (session.utilisateur != 0)
@@ -190,6 +206,22 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Demande liste demandes amis', function () {
         bdd.listeDemandesAmis(session.utilisateur.pseudo, socket);
+    });
+
+    /////////////////////////////////////////////////
+    // GESTION DES TROPHEES
+    /////////////////////////////////////////////////
+
+    socket.on('Demande liste trophees', function () {
+        bdd.tropheesByPseudo(session.utilisateur.pseudo, socket);
+    });
+
+    /////////////////////////////////////////////////
+    // GESTION DES MEDAILLES
+    /////////////////////////////////////////////////
+
+    socket.on('Demande liste medailles', function () {
+        bdd.medaillesByPseudo(session.utilisateur.pseudo, socket);
     });
 });
 
