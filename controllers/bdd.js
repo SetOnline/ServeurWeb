@@ -10,6 +10,10 @@ function bdd(){
         database: "TER_Set"
     });
     
+    /////////////////////////////////////////////////
+    // GESTION DES UTILISATEURS
+    /////////////////////////////////////////////////
+
     this.addUser = function (mail, login, password, socket) {
         var date = new Date();
         // on test si le mail existe
@@ -117,17 +121,9 @@ function bdd(){
         });
     };
     
-    this.addScoreUser = function (idUtilisateur, score) {
-        var requete = "INSERT INTO Joue(idUtilisateur, score, dateJeu) " 
-                    + "VALUES(" + idUtilisateur + ", " + score + ", CURRENT_TIMESTAMP) ";
-
-        bdd.query(requete, function select(error, results, fields) {
-            if (error) {
-                console.log(error);
-                return;
-            }
-        });
-    };
+    /////////////////////////////////////////////////
+    // GESTION DES CLASSEMENTS
+    /////////////////////////////////////////////////
 
     this.classement = function (socket){
         var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
@@ -191,6 +187,22 @@ function bdd(){
         });
     }
     
+    this.addScoreUser = function (idUtilisateur, score) {
+        var requete = "INSERT INTO Joue(idUtilisateur, score, dateJeu) " 
+                    + "VALUES(" + idUtilisateur + ", " + score + ", CURRENT_TIMESTAMP) ";
+        
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+        });
+    };
+    
+    /////////////////////////////////////////////////
+    // GESTION DES AMIS
+    /////////////////////////////////////////////////
+
     this.ajouteAmi = function (ajouteur, ajoute, socket) {
         if (ajouteur == ajoute) {
             socket.emit('Reponse demande ami', 0);
@@ -279,38 +291,85 @@ function bdd(){
             }
             listeAmisJSON = [];
             for (var i = 0; i < results.length; i++) {
-                listeAmisJSON.push({ name: results[i]['usr1']});
+                listeAmisJSON.push({ name: results[i]['usr1'] });
             }
             socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
         });
-    }
+    };
 
-    this.listeAmis = function (pseudo, socket){
+    this.listeAmis = function (pseudo, socket) {
         var requete = "SELECT U.pseudo, SUM(J.score) AS \"nbDePts\" " 
                     + "FROM Utilisateur U, Amis A, Joue J " 
                     + "WHERE U.idUtilisateur = J.idUtilisateur " 
-                    + "AND (U.pseudo = A.usr2 "
+                    + "AND (U.pseudo = A.usr2 " 
                     + "AND A.usr1 = '" + pseudo + "' " 
                     + "OR (U.pseudo = A.usr1 " 
                     + "AND A.usr2 = '" + pseudo + "')) " 
                     + "AND A.valide = 1 ";
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            var listeAmisJSON = [];
+            for (var i = 0; i < results.length; i++) {
+                listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+            }
+            socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+        });
+    };
+
+    /////////////////////////////////////////////////
+    // GESTION DES TROPHEES
+    /////////////////////////////////////////////////
+
+    this.tropheesByPseudo = function (pseudo, socket) {
+        var requete = "SELECT T.nomT, T.imgT, T.descriptionT "
+                    + "FROM TropheesUtilisateur TU, Utilisateur U, Trophee T "
+                    + "WHERE TU.idTrophee = T.idTrophee "
+                    + "AND TU.idUtilisateur = U.idUtilisateur "
+                    + "AND U.pseudo = '" + pseudo + "' ";
         console.log(requete);
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
                 return;
             }
-            listeAmisJSON = [];
+            var listeTropheesJSON = [];
             for (var i = 0; i < results.length; i++) {
-                listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+                listeTropheesJSON.push({ name : results[i]['nomT'], desc: results[i]['descriptionT'], pic: results[i]['imgT'] });
             }
-            console.log("liste d'amis : ");
-            console.log(listeAmisJSON);
-            socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+            console.log("j'envoie trophees : ");
+            console.log(listeTropheesJSON);
+            socket.emit('Reponse liste trophees', JSON.stringify(listeTropheesJSON));
         });
-        
+    };
 
-    }
+    /////////////////////////////////////////////////
+    // GESTION DES MEDAILLES
+    /////////////////////////////////////////////////
+    
+    this.medaillesByPseudo = function (pseudo, socket) {
+        var requete = "SELECT M.nomM, M.imgM, M.descriptionM " 
+                    + "FROM Utilisateur U, Medaille M " 
+                    + "WHERE M.idUtilisateur = U.idUtilisateur " 
+                    + "AND U.pseudo = '" + pseudo + "' ";
+        console.log(requete);
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            var listeMedaillesJSON = [];
+            for (var i = 0; i < results.length; i++) {
+                listeMedaillesJSON.push({ name : results[i]['nomM'], desc: results[i]['descriptionM'], pic: results[i]['imgM'] });
+            }
+            console.log("j'envoie medailles : ");
+            console.log(listeMedaillesJSON);
+            socket.emit('Reponse liste medailles', JSON.stringify(listeMedaillesJSON));
+        });
+    };
+
 }
 
 // conversion date format mysql
