@@ -72,13 +72,8 @@
     z-index:3;
 }
 
-#timerdiv{
-    float:left;
-    position: relative; 
-}
-
     #sablier{
-        width:80px;
+        width:7%;
         z-index:2;
         position:absolute;
     }
@@ -87,23 +82,17 @@
        font-weight: bold;
        text-align: center;
        font-size: 23px;
-       top:40px;
-       left:33px;
+       top:10%;
+       left:3.5%;
        z-index:3;
        position:absolute;
     }
 
-#boomdiv{
-    left:60px;
-    top:180px;
-    position:relative;
-    float:left;
-}
     #boom{
-        width:150px;
-        height:150px;
         z-index:2;
+        top:30%;
         position:absolute;
+        width:12%;
     }
 
     #nbdepts{
@@ -111,36 +100,39 @@
        font-weight: bold;
        text-align: center;
        font-size: 42px;
-       top:40px;
-       left:65px;
        z-index:3;
+       top:36%;
+       left:6%;
        position:absolute;
     }
 
 #classement {
-    position:relative;
-    float:right;
+    position:absolute;
+    right:1%;
+    background-color:pink;
 }
     .personneC{
-        margin:10px;
+        margin:2%;
         border-radius:25px;
+        padding:10%;
     }
         .numC{
-            width:30px;
-            height:30px;
+            width:50%;
+            height:50%;
             position:absolute;
             z-index:2;
-            left:-25px;
+            left:-50%;
         }
         .valueC{
             z-index:3;
             position:absolute;
-            left:-20px;
+            left:-30%;
         }
         .avatarC{
-            width:30px;
+            width:50%;
+            height:50%;
+            position:absolute;
             float:right;
-            height:30px;
         }
         .pseudoC{
 
