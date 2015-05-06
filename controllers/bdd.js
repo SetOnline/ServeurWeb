@@ -12,7 +12,6 @@ function bdd(){
     
     this.addUser = function (mail, login, password, socket) {
         var date = new Date();
-        
         // on test si le mail existe
         var testMail = "SELECT * FROM Utilisateur WHERE email = '" + mail + "'";
         bdd.query(testMail, function select(error, results, fields) {
@@ -195,7 +194,6 @@ function bdd(){
     this.ajouteAmi = function (ajouteur, ajoute, socket) {
         if (ajouteur == ajoute) {
             socket.emit('Reponse demande ami', 0);
-            console.log("1");
         }
         else {
             var requetetest1 = "SELECT * " 
@@ -206,12 +204,10 @@ function bdd(){
                 if (error) {
                     console.log(error);
                     socket.emit('Reponse demande ami', 0);
-                    console.log("2");
                     return;
                 }
                 if (results.length > 0) {
                     socket.emit('Reponse demande ami', 0);
-                    console.log("3");
                 }
                 else {
                     var requetetest2 = "SELECT * " 
@@ -222,12 +218,10 @@ function bdd(){
                         if (error) {
                             console.log(error);
                             socket.emit('Reponse demande ami', 0);
-                            console.log("4");
                             return;
                         }
                         if (results.length > 0) {
                             socket.emit('Reponse demande ami', 0);
-                            console.log("5");
                         }
                         else {
                             var requete = "INSERT INTO Amis(usr1, usr2, valide) " 
@@ -237,7 +231,6 @@ function bdd(){
                                 if (error) {
                                     console.log(error);
                                     socket.emit('Reponse demande ami', 0);
-                                    console.log("6");
                                     return;
                                 }
                                 socket.emit('Reponse demande ami', 1);

@@ -105,6 +105,23 @@ function setGame(){
         }
         return classementJSON;
     }
+    
+    // renvoie vrai si le set n a pas ete trouve par le joueur
+    this.estPasEncoreJoue = function(setPropose, setsDejaJoues) {
+        for (var i = 0; i < setsDejaJoues.length; i++) {
+            if (((setPropose[0].value == setsDejaJoues[i].carte1) ||
+                (setPropose[0].value == setsDejaJoues[i].carte2) ||
+                (setPropose[0].value == setsDejaJoues[i].carte3)) &&
+                ((setPropose[1].value == setsDejaJoues[i].carte1) ||
+                (setPropose[1].value == setsDejaJoues[i].carte2) ||
+                (setPropose[1].value == setsDejaJoues[i].carte3)) &&
+                ((setPropose[2].value == setsDejaJoues[i].carte1) ||
+                (setPropose[2].value == setsDejaJoues[i].carte2) ||
+                (setPropose[2].value == setsDejaJoues[i].carte3)))
+                return false;
+        }
+        return true;
+    }
 
     // private methods
     

@@ -49,6 +49,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     console.log('Un client est connecte. utilisateur : ');
     console.log(session.utilisateur);
     socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
+    socket.setDejaJoue = [];
     
     // si un jeu est en cours en l'envoie quand il se connecte
     if (nouveauJeu != 0) {
@@ -61,13 +62,17 @@ sessionSockets.on('connection', function (err, socket, session) {
             bdd.addScoreUser(session.utilisateur.idUtilisateur, socket.nbPtsPartie);
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
+        socket.setDejaJoue = [];
         socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
     });
 
     // ecouteur de l'evennement Set d'un client, verifie si le set est valide
     socket.on('Set', function (setJoueur) {
         var setPropose = JSON.parse(setJoueur);
-        if (game.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) {
+        if ((game.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value))
+            && game.estPasEncoreJoue(setPropose, socket.setDejaJoue)) {
+            // on garde en mémoire que le joueur a deja trouve ce set 
+            socket.setDejaJoue.push({ carte1 : setPropose[0].value, carte2 : setPropose[1].value, carte3 : setPropose[2].value });
             // on ajoute le multiplicateur au score 
             socket.nbPtsPartie += socket.multiplicateur;
             // puis on double le multiplicateur (x2 pour le set suivant)
@@ -143,7 +148,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
     
     // deconnexion
-    socket.on('Deco', function (profilJSON) {
+    socket.on('Deco', function () {
         session.utilisateur = 0;
         session.save();
         console.log("deco");
