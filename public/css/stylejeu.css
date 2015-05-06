@@ -18,8 +18,7 @@
     width:60%;
     border-radius: 25px;
     text-align: center;
-    background-image: url("/img/fondJeu.png");
-    background-repeat: repeat-x;
+    background: url("/img/fondJeu.png") repeat;
 }
 
     .carte{
