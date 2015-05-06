@@ -57,7 +57,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     }
     
     jeu.on('Demande partie en cours', function () {
-        socket.emit('Reponse partie en cours', nouveauJeu);
+        socket.emit('Nouvelle partie', nouveauJeu);
     });
 
     // reinitialisation du nombre de set restant
