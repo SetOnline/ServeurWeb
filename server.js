@@ -55,6 +55,10 @@ sessionSockets.on('connection', function (err, socket, session) {
     if (nouveauJeu != 0) {
         socket.emit('Nouvelle partie', nouveauJeu);
     }
+    
+    jeu.on('Demande partie en cours', function () {
+        socket.emit('Reponse partie en cours', nouveauJeu);
+    });
 
     // reinitialisation du nombre de set restant
     jeu.on('Nouvelle partie', function () {
