@@ -172,6 +172,8 @@ function setGame(){
             for (var j = i + 1; j != 11; ++j) {
                 for (var k = j + 1; k != 12; ++k) {
                     if (that.estUnSetValide(tabCartes[i].value, tabCartes[j].value, tabCartes[k].value)) {
+                        // triche
+                        console.log("set : " + (i + 1) + " " + (j + 1) + " " + (k + 1));
                         res++;
                     }
                 }
