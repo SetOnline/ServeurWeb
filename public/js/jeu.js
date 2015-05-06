@@ -2,6 +2,7 @@ var carte1 = 0;
 var carte2 = 0;
 var carte3 = 0;
 var nbSetTrouves = 0;
+var tb = 0;
 
 ///////////////////
 // COMMUNICATION
@@ -42,6 +43,32 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
 
     //suppression nb de pts
     document.getElementById('nbdepts').innerHTML = 0;
+
+    // suppression ancien classement "actuel"
+    var myNode = document.getElementById("classement");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    
+    //apparition du classement de la dernière partie jouée
+    var Noeud = document.getElementById("AncienClassement");
+    //s'il existe la partie précédente
+    if (tb != 0) {
+        //alors on va la copier 
+        var noeudP;
+        for (i = 0; i < tb.length ; ++i) {
+            noeudP = "<div class=' personneAC '> <img src = '/img/boom.png' class='numAC'><span class='valueAC'>" + tb[i].rank + "</span><span class='pseudoAC'>" + tb[i].name + "</span>" 
+        + "<img src='/img/avatar.png' class='avatarAC'></div>"; //A remplacer ac le véritable avatar
+            // console.log(tbpersonne[i].name);
+            Noeud.innerHTML = Noeud.innerHTML + noeudP;
+        }
+    }
+    else {
+        var AC = document.getElementById("AncienClassement");
+        while (AC.firstChild) {
+            AC.removeChild(AC.firstChild);
+        }
+    }
 });
 
 socket.on('Set valide', function (setQuiEstValide) {
@@ -72,7 +99,6 @@ socket.on('Set invalide', function (setQuiEstInvalide) {
 });
 
 socket.on('Reponse classement partie actuelle', function (donnees) {
-    //console.log(donnees);
     // suppression ancien classement
     var myNode = document.getElementById("classement");
     while (myNode.firstChild) {
@@ -82,11 +108,19 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
     var tbpersonne = JSON.parse(donnees);
     var noeudP;
     for (i = 0; i < tbpersonne.length ; ++i) {
-        noeudP = "<div class=' personne '> <img src = '/img/boom.png' class='num'><span class='value'>" + tbpersonne[i].rank + "</span><span class='pseudo'>"+ tbpersonne[i].name +"</span>"
-        + "<img src='/img/sablier.gif' class='avatar'></div>"; //A remplacer ac le véritable avatar
+        noeudP = "<div class=' personneC '> <img src = '/img/boom.png' class='numC'><span class='valueC'>" + tbpersonne[i].rank + "</span><span class='pseudoC'>"+ tbpersonne[i].name +"</span>"
+        + "<img src='/img/avatar.png' class='avatarC'></div>"; //A remplacer ac le véritable avatar
        // console.log(tbpersonne[i].name);
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
+    var classement = document.getElementById("classement");
+    if (classement.childNodes.length == 0) {
+        tb = 0;
+    }
+    else {
+        tb = tbpersonne;
+    }
+    
 });
 
 ///////////////////

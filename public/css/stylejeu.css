@@ -64,32 +64,62 @@
     background-repeat: repeat-x;
 }
 
-#classement{
+#classement {
     position:relative;
     float:right;
 }
-    .personne{
+    .personneC{
         margin:10px;
         border-radius:25px;
     }
-        .num{
+        .numC{
             width:30px;
             height:30px;
             position:absolute;
             z-index:2;
             left:-25px;
         }
-        .value{
+        .valueC{
             z-index:3;
             position:absolute;
             left:-20px;
         }
-        .avatar{
+        .avatarC{
             width:30px;
             float:right;
             height:30px;
         }
-        .pseudo{
+        .pseudoC{
+
+        }
+
+#AncienClassement {
+    position:relative;
+    float:right;
+    margin-top:350px;
+}
+    .personneAC{
+        margin:10px;
+        border-radius:25px;
+    }
+        .numAC{
+            width:30px;
+            height:30px;
+            position:absolute;
+            z-index:2;
+            left:-25px;
+        }
+        .valueAC{
+            z-index:3;
+            position:absolute;
+            left:-20px;
+        }
+        .avatarAC{
+            width:30px;
+            float:right;
+            height:30px;
+        }
+        .pseudoAC{
 
         }
 
