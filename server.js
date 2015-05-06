@@ -56,7 +56,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         socket.emit('Nouvelle partie', nouveauJeu);
     }
     
-    jeu.on('Demande partie en cours', function () {
+    socket.on('Demande partie en cours', function () {
         socket.emit('Nouvelle partie', nouveauJeu);
     });
 
