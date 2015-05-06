@@ -323,13 +323,38 @@ function bdd(){
     // GESTION DES TROPHEES
     /////////////////////////////////////////////////
 
+    this.ajouteTrophee = function (idUtilisateur, idTrophee, socket) {
+        var requete = "SELECT * "
+                    + "FROM TropheesUtilisateur TU "
+                    + "WHERE TU.idUtilisateur = '" + idUtilisateur + "' "
+                    + "AND TU.idTrophee = '" + idTrophee + "' ";
+        console.log(requete);
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            // si il a pas le trophee
+            if (results.length == 0) {
+                var requete2 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
+                             + "VALUES(" + idUtilisateur + ", " + idTrophee + ") ";
+                bdd.query(requete, function select2(error, results, fields) {
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+                    // ici il faudra emit l'event pour dire GG T'AS WIN UN TROPHEEEEE !!!!!
+                });
+            }
+        });
+    };
+    
     this.tropheesByPseudo = function (pseudo, socket) {
         var requete = "SELECT T.nomT, T.imgT, T.descriptionT "
-                    + "FROM TropheesUtilisateur TU, Utilisateur U, Trophee T "
+                    + "FROM TropheesUtilisateur TU, Trophee T, Utilisateur U "
                     + "WHERE TU.idTrophee = T.idTrophee "
                     + "AND TU.idUtilisateur = U.idUtilisateur "
-                    + "AND U.pseudo = '" + pseudo + "' ";
-        console.log(requete);
+                    + "AND U.pseudo = '" + pseudo + "' " 
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -370,6 +395,17 @@ function bdd(){
         });
     };
 
+    this.ajouteMedaille = function (idUtilisateur, idMedaille, socket) {
+        var requete = "UPDATE medaille " 
+                    + "SET idUtilisateur = " + idUtilisateur + " " 
+                    + "WHERE idMedaille = " + idMedaille + " ";
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+        });
+    };
 }
 
 // conversion date format mysql
