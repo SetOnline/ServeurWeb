@@ -59,6 +59,39 @@ function setGame(){
         return setCorrect;
     }
     
+    this.gestionSet = function (setJoueur, idUtilisateur, pseudo, classementTempsReel, socket, bdd) {
+        var setPropose = JSON.parse(setJoueur);
+        if ((that.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) 
+            && that.estPasEncoreJoue(setPropose, socket.setDejaJoue)) {
+            // gestion des trophees 10, 20 parties d'affilees
+            if (socket.multiplicateur == 1) {
+                socket.nbPartiesAffilees++;
+                if (socket.nbPartiesAffilees == 10)
+                    bdd.ajouteTrophee(idUtilisateur, 5, socket);
+                if (socket.nbPartiesAffilees == 20)
+                    bdd.ajouteTrophee(idUtilisateur, 6, socket);
+            }
+            // on garde en mémoire que le joueur a deja trouve ce set 
+            socket.setDejaJoue.push({ carte1 : setPropose[0].value, carte2 : setPropose[1].value, carte3 : setPropose[2].value });
+            // on ajoute le multiplicateur au score 
+            socket.nbPtsPartie += socket.multiplicateur;
+            // puis on double le multiplicateur (x2 pour le set suivant)
+            socket.multiplicateur = socket.multiplicateur * 2;
+            if (socket.utilisateur != 0) {
+                classementTempsReel[pseudo] = socket.nbPtsPartie;
+            }
+            // il reste un set de moins à trouver
+            socket.nbSetsValidesRestants -= 1;
+            setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
+            setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
+            setPropose.push({ name: 'nbPtsTotal', value: (socket.nbPtsPartie) });
+            socket.emit('Set valide', JSON.stringify(setPropose));
+        } else {
+            socket.emit('Set invalide', setJoueur);
+        }
+    };
+    
+    // génère le classement en temps réel de la partie
     this.classementTempsReelJSON = function (pseudo, classementTempsReel){
         var sort = sortAssoc(classementTempsReel);
         var classementJSON = [];

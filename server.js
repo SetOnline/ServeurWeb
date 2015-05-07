@@ -34,7 +34,7 @@ var bdd = controllers.bdd;
 var Utilisateur = controllers.utilisateur;
 // GLOBALES
 var tempsDePartie = 30000; // duree d'une partie (en ms)
-var tempsRestant = 0; // temps restant sur la partie (en s)
+var tempsRestant = 30; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 var classementTempsReel = 0; // contiendra le tableau du classement de la partie en cours
 var nouveauJeu = 0; // contient le jeu
@@ -49,6 +49,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     console.log('Un client est connecte. utilisateur : ');
     console.log(session.utilisateur);
     socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
+    socket.nbPartiesAffilees = 0; // trophee 10, 20 parties d'affilées
     socket.setDejaJoue = [];
     
     /////////////////////////////////////////////////
@@ -68,6 +69,10 @@ sessionSockets.on('connection', function (err, socket, session) {
     jeu.on('Nouvelle partie', function () {
         if (socket.nbPtsPartie != 0 && session.utilisateur != 0)
             bdd.addScoreUser(session.utilisateur.idUtilisateur, socket.nbPtsPartie);
+        // s il a pas trouve de set a la partie d'avant
+        if (socket.multiplicateur == 1) {
+            socket.nbPartiesAffilees = 0;
+        }
         socket.nbPtsPartie = 0;
         socket.multiplicateur = 1;
         socket.setDejaJoue = [];
@@ -76,27 +81,7 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     // ecouteur de l'evennement Set d'un client, verifie si le set est valide
     socket.on('Set', function (setJoueur) {
-        var setPropose = JSON.parse(setJoueur);
-        if ((game.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value))
-            && game.estPasEncoreJoue(setPropose, socket.setDejaJoue)) {
-            // on garde en mémoire que le joueur a deja trouve ce set 
-            socket.setDejaJoue.push({ carte1 : setPropose[0].value, carte2 : setPropose[1].value, carte3 : setPropose[2].value });
-            // on ajoute le multiplicateur au score 
-            socket.nbPtsPartie += socket.multiplicateur;
-            // puis on double le multiplicateur (x2 pour le set suivant)
-            socket.multiplicateur = socket.multiplicateur * 2;
-            if (socket.utilisateur != 0) {
-                classementTempsReel[session.utilisateur.pseudo] = socket.nbPtsPartie;
-            }
-            // il reste un set de moins à trouver
-            socket.nbSetsValidesRestants -= 1;
-            setPropose.push({ name: 'nbSetsRestants', value: socket.nbSetsValidesRestants });
-            setPropose.push({ name: 'nbPtsGagne', value: (socket.multiplicateur / 2) });
-            setPropose.push({ name: 'nbPtsTotal', value: (socket.nbPtsPartie) });
-            socket.emit('Set valide', JSON.stringify(setPropose));
-        } else {
-            socket.emit('Set invalide', setJoueur);
-        }
+        game.gestionSet(setJoueur, session.utilisateur.idUtilisateur, session.utilisateur.pseudo, classementTempsReel, socket, bdd);
     });
 
     /////////////////////////////////////////////////

@@ -326,8 +326,8 @@ function bdd(){
     this.ajouteTrophee = function (idUtilisateur, idTrophee, socket) {
         var requete = "SELECT * "
                     + "FROM TropheesUtilisateur TU "
-                    + "WHERE TU.idUtilisateur = '" + idUtilisateur + "' "
-                    + "AND TU.idTrophee = '" + idTrophee + "' ";
+                    + "WHERE TU.idUtilisateur = " + idUtilisateur + " "
+                    + "AND TU.idTrophee = " + idTrophee + " ";
         console.log(requete);
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
@@ -336,14 +336,29 @@ function bdd(){
             }
             // si il a pas le trophee
             if (results.length == 0) {
+                console.log("je passe ici");
                 var requete2 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
                              + "VALUES(" + idUtilisateur + ", " + idTrophee + ") ";
-                bdd.query(requete, function select2(error, results, fields) {
+                bdd.query(requete2, function select2(error, results, fields) {
                     if (error) {
                         console.log(error);
                         return;
                     }
-                    // ici il faudra emit l'event pour dire GG T'AS WIN UN TROPHEEEEE !!!!!
+                    var requete3 = "SELECT * " 
+                                 + "FROM Trophee " 
+                                 + "WHERE idTrophee = " + idTrophee;
+                    
+                    bdd.query(requete3, function select3(error, results, fields) {
+                        if (error) {
+                            console.log(error);
+                            return;
+                        }
+                        debloqueTropheeJSON = [];
+                        debloqueTropheeJSON.push({name: results[0]["nomT"], desc: results[0]["descriptionT"], pic: results[0]["imgT"]});
+                        console.log("jenvoie:");
+                        console.log(debloqueTropheeJSON);
+                        socket.emit('Deblocage trophee', JSON.stringify(debloqueTropheeJSON));
+                    });
                 });
             }
         });
