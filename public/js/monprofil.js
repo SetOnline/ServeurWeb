@@ -13,6 +13,25 @@ function codeAddress() {
 }
 window.onload = codeAddress();
 
+setInterval(function () { majListeAmi(); }, 10000);
+
+function majListeAmi(){
+    //Liste d'amis
+    socket.emit('Demande liste amis');
+    // suppression ancienne liste amis
+    var myNode = document.getElementById("liste_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    //Liste de demandes d'amis
+    socket.emit('Demande liste demandes amis');
+    // suppression de l'ancienne liste demandes d'amis
+    var myNode = document.getElementById("liste_demandes_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
+
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
@@ -54,7 +73,7 @@ socket.on('Reponse liste demandes amis', function (infos) {
     var info = JSON.parse(infos);
     var noeudP;
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit(\"Accepter ami\", \"" + info[i].name + "\")' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit(\"Refuser ami\", \"" + info[i].name + "\");' src='/img/refuser.png'/></div>";
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit(\"Accepter ami\", \"" + info[i].name + "\");majListeAmi();' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit(\"Refuser ami\", \"" + info[i].name + "\");' src='/img/refuser.png'/></div>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
@@ -103,6 +122,8 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
     }
     else {
         document.getElementById('pseudoConnecte').innerHTML = RsltConnexion;
+        document.getElementById('co').style.display = 'block';
+        document.getElementById('profil').style.display = 'inline';
     }
 });
 

@@ -17,16 +17,36 @@
 	<title>SetOnline</title>
 </head>
 <body>
-	<div id="header">
-		<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
-		<p id="setonline">SetOnline</p>
+<div id="header">
+		<img src="/img/tronc.png" id="fondLogo" alt="fondLogo">
+		<div id="clear"></div>
+		<div id="containerSet">
+			<span id="setonline">SetOnline</span>
+		</div>
 		<div id="menu">
-			<img alt="plancheA" id="plancheAccueil" class="planche" src="/img/plancheV.png" />
-			<img alt="plancheJ" id="plancheJouer" class="planche" src="/img/plancheV.png" />
-			<img alt="plancheP" id="plancheProfil" class="planche" src="/img/plancheV.png" />
-			<img alt="plancheC" id="plancheClassement" class="planche" src="/img/plancheV.png" />
+			<a href="/accueil">
+			<img alt="plancheA" id="plancheAccueil" class="planche" src="/img/plancheA.png" />
+			</a>
+			<a href="/game">
+			<img alt="plancheJ" id="plancheJouer" class="planche" src="/img/plancheJ.png" />
+			</a>
+			<a href="/profil" id="profil">
+			<img alt="plancheP" id="plancheProfil" class="planche" src="/img/plancheP.png" />
+			</a>
+			<a href="/classement">
+			<img alt="plancheC" id="plancheClassement" class="planche" src="/img/plancheC.png" />
+			</a>
 		</div>
 	</div>
+    <header>
+	    <div id="connexion">
+			<div id="co">
+				<span class="bb" id="bj">Bonjour</span>
+				<span class="bb" id="pseudoConnecte"></span>
+				<button type="button" onclick="deco()">Deconnexion</button> 
+			</div>
+        </div>
+    </header>
     <div id="contenu">
         <h2><span id="pseudoConnecte"></span></h2>
         <img alt="avatar" id="avatarProfil" src="/img/avatar.png" />

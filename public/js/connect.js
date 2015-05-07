@@ -29,12 +29,13 @@ socket.on('Resultat connexion', function (RsltConnexion) {
     @param RsltConnexion : 0 si pas connecté, pseudo sinon
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
-    if (RsltConnexion == 0) { 
+    if (RsltConnexion == 0) {
         document.getElementById('pasco').style.display = 'block';
     } 
     else {
         document.getElementById('co').style.display = 'block';
         document.getElementById('pseudoCo').innerHTML = RsltConnexion;
+        document.getElementById('profil').style.display = 'inline';
     }
 });
 

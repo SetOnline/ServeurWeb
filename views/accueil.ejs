@@ -17,9 +17,11 @@
 </head>
 <body>
 	<div id="header">
-		<img src="/img/fondLogo.png" id="fondLogo" alt="fondLogo">
-		<img src="/img/logo.png" id="logo" alt="Logo_SetOnline">
-		<p id="setonline">SetOnline</p>
+		<img src="/img/tronc.png" id="fondLogo" alt="fondLogo">
+		<div id="clear"></div>
+		<div id="containerSet">
+			<span id="setonline">SetOnline</span>
+		</div>
 		<div id="menu">
 			<a href="/accueil">
 			<img alt="plancheA" id="plancheAccueil" class="planche" src="/img/plancheA.png" />
@@ -27,7 +29,7 @@
 			<a href="/game">
 			<img alt="plancheJ" id="plancheJouer" class="planche" src="/img/plancheJ.png" />
 			</a>
-			<a href="/profil">
+			<a href="/profil" id="profil">
 			<img alt="plancheP" id="plancheProfil" class="planche" src="/img/plancheP.png" />
 			</a>
 			<a href="/classement">
@@ -45,26 +47,45 @@
 					<input type="password" id="mdp" required />
 					<input type="button" value="Submit" onclick="connexion()">
 				</form>
-				<a href="/inscription"> Pas encore de compte? </a>
+				<a href="/inscription" class="bb" id="insc"> Pas encore de compte? </a>
 			</div>
 			<div id="co">
-				<span id="bj">Bonjour</span>
-				<span id="pseudoCo"></span>
+				<span class="bb" id="bj">Bonjour</span>
+				<span class="bb" id="pseudoCo"></span>
 				<button type="button" onclick="deco()">Deconnexion</button> 
 			</div>
         </div>
     </header>
 
     <div id="contenu">
-	<p class="bb" id="presentation">
-		SetOnline est un jeu produit par l'équipe Pancake, composée de Matthieu Morin, Pierre Cavalet, Olivier Saint-paul et Marlène Guillemette. Ce projet a permis a ces étudiants de découvrir de nombreuses technologies dans le but de leur TER de master informatique (1ere année).
+		<h2 class="orangej">Présentation</h2>
+		<p class="bb" id="presentation">
+		SetOnline est un jeu produit par l'équipe Pancake, composée de Matthieu Morin, Pierre Cavalet, Olivier Saint-Paul et Marlène Guillemette. Ce projet a permis a ces étudiants de découvrir de nombreuses technologies dans le but de leur TER de master informatique (1ere année).
 		Il a été développé en 3 mois durant lesquels l'équipe a produit:
 		<ul>
 			<li class="bb">un serveur nodeJS communiquant avec une base de données mysql, tous deux étant stockés sur un vps</li>
 			<li class="bb">un client navigateur, fonctionnant sur pc ainsi que sur tablette</li>
 			<li class="bb">un client android</li>
 		</ul>
-	</p>
-	<p></p>
+		<h2 class="orangej">Règles du jeu</h2>
+		<p class="bb" id="regles">
+		Le jeu est constitué de 81 cartes toutes différentes qui se distinguent selon 4 caractéristiques :
+		<ul>
+			<li class="bb">Nombre : 1, 2 ou 3</li>
+			<li class="bb">Couleur : rouge, vert ou bleu</li>
+			<li class="bb">Forme : triangle, sphère ou éclair </li>
+			<li class="bb">Contenu : vide, hachuré ou plein </li>
+		</ul>
+		</p>
+		<p class="bb" id="regles">
+		Trouver le maximum de sets. Un set est composé de trois cartes dont les quatre caractéristiques (prises séparément) sont :
+		<ul>
+			<li class="bb">
+				soit totalement identiques (par exemple les trois cartes ont la même couleur),
+			</li>
+			<li class="bb">
+				soit totalement différentes (par exemple chacune des trois cartes est d'une couleur différente).
+			</li>
+		</p>
     </div>
 <% include footer.ejs %>

@@ -7,18 +7,15 @@ header, footer{
     width:90%;
 }
 
-#fondLogo{
-    width:12%;
-    position:absolute;
-    left:45%;
-    z-index:1;
+#insc{
+    font-size:24px;
 }
 
-#logo{
-    top:21px;
-    left:6px;
-    z-index:3;
+#fondLogo{
+    width:12%;
     position:relative;
+    left:45%;
+    z-index:1;
 }
 
 #header{
@@ -36,7 +33,7 @@ header, footer{
 #contenu{
 	width:90%;
 	margin:auto;
-	padding:10px;
+	padding:2%;
     position:relative;
     background: url("/img/white2.png") repeat;
     border-radius:5px;
@@ -44,6 +41,30 @@ header, footer{
 
 .clear{
 	clear:both;
+}
+#setonline{
+    margin:auto;
+}
+#profil{
+    display:none;
+}
+#containerSet{
+    text-align:center;
+}
+
+
+/*gestion police*/
+@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* EOT file for IE */
+}
+@font-face {
+    font-family:"OrangeJuice";
+    src: url("/fonts/orange_juice_20.ttf") /* TTF file for CSS3 browsers */
+}
+
+.orangej {
+    font-family:'OrangeJuice';
 }
 
 @font-face {
