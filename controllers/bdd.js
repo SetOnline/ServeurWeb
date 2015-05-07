@@ -264,6 +264,72 @@ function bdd(){
                 console.log(error);
                 return;
             }
+            // gestion du trophee 20 amis
+            var requete2 = "SELECT COUNT(*) AS \"nbAmis\""
+                        + "FROM Utilisateur U, Amis A " 
+                        + "WHERE (U.pseudo = A.usr2 " 
+                        + "AND A.usr1 = '" + ajoute + "' " 
+                        + "OR (U.pseudo = A.usr1 " 
+                        + "AND A.usr2 = '" + ajoute + "')) " 
+                        + "AND A.valide = 1 ";
+            bdd.query(requete2, function select2(error, results, fields) {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (results[0]['nbAmis'] == 3) {
+                    var requete3 = "SELECT idUtilisateur " 
+                                 + "FROM Utilisateur " 
+                                 + "WHERE Pseudo = '" + ajoute + "'";
+                    bdd.query(requete3, function select3(error, results, fields) {
+                        if (error) {
+                            console.log(error);
+                            return;
+                        }
+                        var requete4 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
+                                     + "VALUES(" + idUtilisateur + ", 2) ";
+                        bdd.query(requete4, function select4(error, results, fields) {
+                            if (error) {
+                                console.log(error);
+                                return;
+                            }
+                        });
+                    });
+                }
+            });
+
+            var requete5 = "SELECT COUNT(*) AS \"nbAmis\"" 
+                        + "FROM Utilisateur U, Amis A " 
+                        + "WHERE (U.pseudo = A.usr2 " 
+                        + "AND A.usr1 = '" + ajouteur + "' " 
+                        + "OR (U.pseudo = A.usr1 " 
+                        + "AND A.usr2 = '" + ajouteur + "')) " 
+                        + "AND A.valide = 1 ";
+            bdd.query(requete5, function select5(error, results, fields) {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (results[0]['nbAmis'] == 3) {
+                    var requete6 = "SELECT idUtilisateur " 
+                                 + "FROM Utilisateur " 
+                                 + "WHERE Pseudo = '" + ajouteur + "'";
+                    bdd.query(requete6, function select6(error, results, fields) {
+                        if (error) {
+                            console.log(error);
+                            return;
+                        }
+                        var requete7 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
+                                     + "VALUES(" + idUtilisateur + ", 2) ";
+                        bdd.query(requete7, function select7(error, results, fields) {
+                            if (error) {
+                                console.log(error);
+                                return;
+                            }
+                        });
+                    });
+                }
+            });
         });
     }
 
@@ -312,10 +378,14 @@ function bdd(){
                 return;
             }
             var listeAmisJSON = [];
+            console.log("results");
+            console.log(results);
+            console.log(results.length);
             for (var i = 0; i < results.length; i++) {
-                listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+                if (results[i]['pseudo'] != null)
+                    listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
             }
-            socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
+            socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
         });
     };
 
