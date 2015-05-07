@@ -95,11 +95,6 @@ sessionSockets.on('connection', function (err, socket, session) {
         bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur);
     });
     
-    socket.on('Demande mon profil', function () {
-        console.log('Demande mon profil');
-        socket.emit('Reponse mon profil', 0); // ici on ne sait pas encore ce qu'on va envoyer
-    });
-    
     // creation compte
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
@@ -109,24 +104,6 @@ sessionSockets.on('connection', function (err, socket, session) {
         
         var usr = new Utilisateur(mail, pseudo, mdp);
         usr.insereBdd(bdd, socket);
-    });
-    
-    // desinscription
-    socket.on('Desinscription', function () {
-        var compte = JSON.parse(compteJSON);
-        var pseudo = compte[0].value;
-        var mdp = compte[1].value;
-        console.log("desinscription du compte : " + pseudo + " " + mdp);
-    });
-    
-    // modification profil
-    socket.on('Modifier profil', function (profilJSON) {
-        var profil = JSON.parse(profilJSON);
-        console.log('Modifier profil');
-        var ancienmdp = profil[0].value;
-        var nouveaumdp = profil[0].value;
-        var nvelavatar = profil[0].value;
-        console.log("modif profil fini");
     });
     
     // deconnexion
