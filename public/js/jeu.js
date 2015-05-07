@@ -59,6 +59,10 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     var Noeud = document.getElementById("AncienClassement");
     //s'il existe la partie précédente
     if (tb != 0) {
+        var AC = document.getElementById("AncienClassement");
+        while (AC.firstChild) {
+            AC.removeChild(AC.firstChild);
+        }
         //alors on va la copier 
         var noeudP;
         for (i = 0; i < tb.length ; ++i) {
@@ -109,7 +113,7 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
-    //pour chaque personne
+        //pour chaque personne
     var tbpersonne = JSON.parse(donnees);
     var noeudP;
     for (i = 0; i < tbpersonne.length ; ++i) {
@@ -246,6 +250,7 @@ function cardEvents() {
         }
         if (selection) {
             $(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
+            $(this).css('filter', 'contrast(1.4)');
         }
         else {
             $(this).css('filter', 'none'); /* firefox */
