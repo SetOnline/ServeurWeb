@@ -59,17 +59,19 @@ function setGame(){
         return setCorrect;
     }
     
-    this.gestionSet = function (setJoueur, idUtilisateur, pseudo, classementTempsReel, socket, bdd) {
+    this.gestionSet = function (setJoueur, utilisateur, classementTempsReel, socket, bdd) {
         var setPropose = JSON.parse(setJoueur);
         if ((that.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) 
             && that.estPasEncoreJoue(setPropose, socket.setDejaJoue)) {
-            // gestion des trophees 10, 20 parties d'affilees
-            if (socket.multiplicateur == 1) {
-                socket.nbPartiesAffilees++;
-                if (socket.nbPartiesAffilees == 10)
-                    bdd.ajouteTrophee(idUtilisateur, 5, socket);
-                if (socket.nbPartiesAffilees == 20)
-                    bdd.ajouteTrophee(idUtilisateur, 6, socket);
+            if (utilisateur != 0) {
+                // gestion des trophees 10, 20 parties d'affilees
+                if (socket.multiplicateur == 1) {
+                    socket.nbPartiesAffilees++;
+                    if (socket.nbPartiesAffilees == 10)
+                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 5, socket);
+                    if (socket.nbPartiesAffilees == 20)
+                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 6, socket);
+                }
             }
             // on garde en mémoire que le joueur a deja trouve ce set 
             socket.setDejaJoue.push({ carte1 : setPropose[0].value, carte2 : setPropose[1].value, carte3 : setPropose[2].value });
@@ -77,8 +79,8 @@ function setGame(){
             socket.nbPtsPartie += socket.multiplicateur;
             // puis on double le multiplicateur (x2 pour le set suivant)
             socket.multiplicateur = socket.multiplicateur * 2;
-            if (socket.utilisateur != 0) {
-                classementTempsReel[pseudo] = socket.nbPtsPartie;
+            if (utilisateur != 0) {
+                classementTempsReel[utilisateur.pseudo] = socket.nbPtsPartie;
             }
             // il reste un set de moins à trouver
             socket.nbSetsValidesRestants -= 1;
