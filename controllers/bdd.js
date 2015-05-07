@@ -380,11 +380,7 @@ function bdd(){
                 return;
             }
             var listeAmisJSON = [];
-            console.log("results");
-            console.log(results);
-            console.log(results.length);
             for (var i = 0; i < results.length; i++) {
-                // s il est co
                 if (utilisateursConnectes[results[i]['pseudo']] == 1)
                     listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
                 else
@@ -411,7 +407,6 @@ function bdd(){
             }
             // si il a pas le trophee
             if (results.length == 0) {
-                console.log("je passe ici");
                 var requete2 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
                              + "VALUES(" + idUtilisateur + ", " + idTrophee + ") ";
                 bdd.query(requete2, function select2(error, results, fields) {
@@ -454,8 +449,6 @@ function bdd(){
             for (var i = 0; i < results.length; i++) {
                 listeTropheesJSON.push({ name : results[i]['nomT'], desc: results[i]['descriptionT'], pic: results[i]['imgT'] });
             }
-            console.log("j'envoie trophees : ");
-            console.log(listeTropheesJSON);
             socket.emit('Reponse liste trophees', JSON.stringify(listeTropheesJSON));
         });
     };
@@ -479,8 +472,6 @@ function bdd(){
             for (var i = 0; i < results.length; i++) {
                 listeMedaillesJSON.push({ name : results[i]['nomM'], desc: results[i]['descriptionM'], pic: results[i]['imgM'] });
             }
-            console.log("j'envoie medailles : ");
-            console.log(listeMedaillesJSON);
             socket.emit('Reponse liste medailles', JSON.stringify(listeMedaillesJSON));
         });
     };

@@ -99,17 +99,17 @@ sessionSockets.on('connection', function (err, socket, session) {
     
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
-        var pseudo = compte[0].value;
-        var mdp = compte[1].value;
+        var pseudo = compte[0].value.toLowerCase();
+        var mdp = compte[1].value.toLowerCase();
         bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur, utilisateursConnectes);
     });
     
     // creation compte
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
-        var mail = compte[0].value;
-        var pseudo = compte[1].value;
-        var mdp = compte[2].value;
+        var mail = compte[0].value.toLowerCase();
+        var pseudo = compte[1].value.toLowerCase();
+        var mdp = compte[2].value.toLowerCase();
         
         var usr = new Utilisateur(mail, pseudo, mdp);
         usr.insereBdd(bdd, socket);
