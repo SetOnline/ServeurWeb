@@ -249,8 +249,8 @@ function cardEvents() {
             console.log("carte3 == 0");
         }
         if (selection) {
-            //$(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
-            $(this).css('filter', 'contrast(2)');
+            $(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
+            $(this).css('-webkit-filter', 'contrast(1.5) saturate(1.3) drop-shadow(7px 7px 5px #EBEBFF) brightness(1.2)');
         }
         else {
             $(this).css('filter', 'none'); /* firefox */
