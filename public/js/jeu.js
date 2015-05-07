@@ -249,8 +249,8 @@ function cardEvents() {
             console.log("carte3 == 0");
         }
         if (selection) {
-            $(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
-            $(this).css('filter', 'contrast(1.4)');
+            //$(this).css('filter', 'drop-shadow(7px 7px 5px #EBEBFF) contrast(150%)');
+            $(this).css('filter', 'contrast(2)');
         }
         else {
             $(this).css('filter', 'none'); /* firefox */
