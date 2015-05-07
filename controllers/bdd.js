@@ -287,7 +287,7 @@ function bdd(){
                             return;
                         }
                         var requete4 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
-                                     + "VALUES(" + idUtilisateur + ", 2) ";
+                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 2) ";
                         bdd.query(requete4, function select4(error, results, fields) {
                             if (error) {
                                 console.log(error);
@@ -320,7 +320,7 @@ function bdd(){
                             return;
                         }
                         var requete7 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
-                                     + "VALUES(" + idUtilisateur + ", 2) ";
+                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 2) ";
                         bdd.query(requete7, function select7(error, results, fields) {
                             if (error) {
                                 console.log(error);
@@ -371,7 +371,8 @@ function bdd(){
                     + "AND A.usr1 = '" + pseudo + "' " 
                     + "OR (U.pseudo = A.usr1 " 
                     + "AND A.usr2 = '" + pseudo + "')) " 
-                    + "AND A.valide = 1 ";
+                    + "AND A.valide = 1 "
+                    + "GROUP BY U.pseudo ";
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -382,8 +383,7 @@ function bdd(){
             console.log(results);
             console.log(results.length);
             for (var i = 0; i < results.length; i++) {
-                if (results[i]['pseudo'] != null)
-                    listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+                listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
             }
             socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
         });
