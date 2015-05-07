@@ -50,8 +50,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     }
     socket.nbPtsPartie = 0;
     socket.multiplicateur = 1;
-    console.log('Un client est connecte. utilisateur : ');
-    console.log(session.utilisateur);
+    
     socket.nbSetsValidesRestants = nbSetsTrouvablesPartieEnCours;
     socket.nbPartiesAffilees = 0; // trophee 10, 20 parties d'affilées
     socket.setDejaJoue = [];
@@ -121,7 +120,6 @@ sessionSockets.on('connection', function (err, socket, session) {
         utilisateursConnectes[session.utilisateur.pseudo] = 0;
         session.utilisateur = 0;
         session.save();
-        console.log("deco");
     });
     
     socket.on('Est connecte', function () {
@@ -218,4 +216,6 @@ setInterval(function () {
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
 
-setInterval(function () { console.log(utilisateursConnectes) }, 1000);
+setInterval(function () {
+    console.log(utilisateursConnectes);
+},5000);
