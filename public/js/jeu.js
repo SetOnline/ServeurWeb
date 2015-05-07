@@ -50,10 +50,10 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     document.getElementById('nbdepts').innerHTML = 0;
 
     // suppression ancien classement "actuel"
-    /*var myNode = document.getElementById("classement");
+    var myNode = document.getElementById("classement");
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
-    }*/
+    }
     
     //apparition du classement de la dernière partie jouée
     var Noeud = document.getElementById("AncienClassement");
@@ -105,10 +105,10 @@ socket.on('Set invalide', function (setQuiEstInvalide) {
 
 socket.on('Reponse classement partie actuelle', function (donnees) {
     // suppression ancien classement
-    /*var myNode = document.getElementById("classement");
+    var myNode = document.getElementById("classement");
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
-    }*/
+    }
     //pour chaque personne
     var tbpersonne = JSON.parse(donnees);
     var noeudP;

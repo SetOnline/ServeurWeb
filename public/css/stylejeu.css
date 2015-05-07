@@ -106,22 +106,28 @@
        position:absolute;
     }
 
+
+
 #classement {
     position:absolute;
     right:1%;
-    background-color:pink;
+    background: url("/img/white.png") repeat;
+    border-radius:5px;
+    width:9%;
 }
     .personneC{
         margin:2%;
-        border-radius:25px;
+        border-radius:20px;
         padding:10%;
+        background: url("/img/sable.jpg") repeat;
+        background-size: 20px 20px;
     }
         .numC{
             width:50%;
-            height:50%;
             position:absolute;
             z-index:2;
             left:-50%;
+            margin-top:-9%;
         }
         .valueC{
             z-index:3;
@@ -129,40 +135,49 @@
             left:-30%;
         }
         .avatarC{
-            width:50%;
-            height:50%;
+            width:30%;
             position:absolute;
             float:right;
+            right:-40%;
+            margin-top:-9%;
         }
         .pseudoC{
 
         }
 
 #AncienClassement {
-    position:relative;
-    float:right;
+    position:absolute;
+    right:1%;
+    background: url("/img/white.png") repeat;
+    border-radius:5px;
+    width:9%;
     margin-top:350px;
 }
     .personneAC{
-        margin:10px;
-        border-radius:25px;
+        margin:2%;
+        border-radius:20px;
+        padding:10%;
+        background: url("/img/sable.jpg") repeat;
+        background-size: 20px 20px;
     }
         .numAC{
-            width:30px;
-            height:30px;
+            width:50%;
             position:absolute;
             z-index:2;
-            left:-25px;
+            left:-50%;
+            margin-top:-9%;
         }
         .valueAC{
             z-index:3;
             position:absolute;
-            left:-20px;
+            left:-30%;
         }
         .avatarAC{
-            width:30px;
+            width:30%;
+            position:absolute;
             float:right;
-            height:30px;
+            right:-40%;
+            margin-top:-9%;
         }
         .pseudoAC{
 
@@ -221,4 +236,17 @@
 
 .orangej {
     font-family:'OrangeJuice';
+}
+
+@font-face {
+    font-family:"ButterflyBall";
+    src: url("/fonts/ButterflyBall.otf") /* EOT file for IE */
+}
+@font-face {
+    font-family:"ButterflyBall";
+    src: url("/fonts/ButterflyBall.otf") /* TTF file for CSS3 browsers */
+}
+
+.bb {
+    font-family:'ButterflyBall';
 }
