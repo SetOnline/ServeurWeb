@@ -1,18 +1,60 @@
 ﻿body{
-
+    background: url("/img/sable2.jpg") repeat;
 }
 
 header, footer{
-	width:992px;
 	margin:auto;
+    width:90%;
+}
+
+#fondLogo{
+    width:12%;
+    position:absolute;
+    left:45%;
+    z-index:1;
+}
+
+#logo{
+    top:21px;
+    left:6px;
+    z-index:3;
+    position:relative;
+}
+
+#header{
+}
+
+#menu{
+    margin:auto;
+    width:70%;
+}
+
+.planche{
+    width:24.5%;
 }
 
 #contenu{
-	width:992px;
+	width:90%;
 	margin:auto;
 	padding:10px;
+    position:relative;
+    background: url("/img/white2.png") repeat;
+    border-radius:5px;
 }
 
 .clear{
 	clear:both;
+}
+
+@font-face {
+    font-family:"ButterflyBall";
+    src: url("/fonts/ButterflyBall.otf") /* EOT file for IE */
+}
+@font-face {
+    font-family:"ButterflyBall";
+    src: url("/fonts/ButterflyBall.otf") /* TTF file for CSS3 browsers */
+}
+
+.bb {
+    font-family:'ButterflyBall';
 }

@@ -16,15 +16,32 @@
 	<title>SetOnline</title>
 </head>
 <body>
-	<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
-	<p id="setonline">SetOnline</p>
+	<div id="header">
+		<img src="/img/fondLogo.png" id="fondLogo" alt="fondLogo">
+		<img src="/img/logo.png" id="logo" alt="Logo_SetOnline">
+		<p id="setonline">SetOnline</p>
+		<div id="menu">
+			<a href="/accueil">
+			<img alt="plancheA" id="plancheAccueil" class="planche" src="/img/plancheA.png" />
+			</a>
+			<a href="/game">
+			<img alt="plancheJ" id="plancheJouer" class="planche" src="/img/plancheJ.png" />
+			</a>
+			<a href="/profil">
+			<img alt="plancheP" id="plancheProfil" class="planche" src="/img/plancheP.png" />
+			</a>
+			<a href="/classement">
+			<img alt="plancheC" id="plancheClassement" class="planche" src="/img/plancheC.png" />
+			</a>
+		</div>
+	</div>
     <header>
 	    <div id="connexion">
 			<div id="pasco">
 				<form>
-					<label for="pseudo">Pseudo: </label>
+					<label for="pseudo" class="bb">Pseudo</label>
 					<input type="text" id="pseudo" required />
-					<label for="mdp">Mot de passe</label>
+					<label for="mdp" class="bb">Mot de passe</label>
 					<input type="password" id="mdp" required />
 					<input type="button" value="Submit" onclick="connexion()">
 				</form>
@@ -39,16 +56,15 @@
     </header>
 
     <div id="contenu">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vehicula hendrerit tincidunt. Nunc eget tincidunt nibh. Phasellus at semper ante, a consectetur magna. Nulla suscipit, nunc pretium interdum rhoncus, nisl leo tincidunt mi, eget ultrices est massa vitae ipsum. Nullam viverra eros eget imperdiet pharetra. Maecenas at posuere nibh, ac facilisis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam enim felis, vulputate ut iaculis vel, lacinia quis dolor. </p>
+	<p class="bb" id="presentation">
+		SetOnline est un jeu produit par l'équipe Pancake, composée de Matthieu Morin, Pierre Cavalet, Olivier Saint-paul et Marlène Guillemette. Ce projet a permis a ces étudiants de découvrir de nombreuses technologies dans le but de leur TER de master informatique (1ere année).
+		Il a été développé en 3 mois durant lesquels l'équipe a produit:
+		<ul>
+			<li class="bb">un serveur nodeJS communiquant avec une base de données mysql, tous deux étant stockés sur un vps</li>
+			<li class="bb">un client navigateur, fonctionnant sur pc ainsi que sur tablette</li>
+			<li class="bb">un client android</li>
+		</ul>
+	</p>
+	<p></p>
     </div>
 <% include footer.ejs %>

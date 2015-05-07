@@ -54,7 +54,7 @@ socket.on('Reponse liste demandes amis', function (infos) {
     var info = JSON.parse(infos);
     var noeudP;
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit('Accepter ami', '" + info[i].name + "');' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit('Refuser ami', '" + info[i].name + "');' src='/img/refuser.png'/></div>";
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit(\"Accepter ami\", \"" + info[i].name + "\")' src='/img/accepter.png'/><img alt='refuser' onclick='socket.emit(\"Refuser ami\", \"" + info[i].name + "\");' src='/img/refuser.png'/></div>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
