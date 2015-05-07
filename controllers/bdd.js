@@ -164,7 +164,7 @@ function bdd(){
             for (var i = 0; i < results.length; i++) {
                 classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts'] });
             }
-            socket.emit('Reponse classement jour', classementJSON);
+            socket.emit('Reponse classement jour', JSON.stringify(classementJSON));
         });
     }
 
@@ -184,7 +184,7 @@ function bdd(){
             for (var i = 0; i < results.length; i++) {
                 classementJSON.push({ name: results[i]['pseudo'], value: results[i]['nbDePts'] });
             }
-            socket.emit('Reponse classement semaine', classementJSON);
+            socket.emit('Reponse classement semaine', JSON.stringify(classementJSON));
         });
     }
     
