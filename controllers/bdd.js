@@ -98,7 +98,7 @@ function bdd(){
         });
     };
 
-    this.connexionUser = function (login, password, socket, session, Utilisateur) {
+    this.connexionUser = function (login, password, socket, session, Utilisateur, utilisateursConnectes) {
         var requete = "SELECT idUtilisateur, email" 
                     + " FROM Utilisateur U" 
                     + " WHERE U.pseudo = '" + login + "'" 
@@ -113,6 +113,7 @@ function bdd(){
                 var firstResult = results[0];
                 session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['idUtilisateur']);
                 session.save();
+                utilisateursConnectes[login] = 1;
                 socket.emit('Resultat connexion', 1);
             } 
             else {
@@ -363,7 +364,7 @@ function bdd(){
         });
     };
 
-    this.listeAmis = function (pseudo, socket) {
+    this.listeAmis = function (pseudo, socket, utilisateursConnectes) {
         var requete = "SELECT U.pseudo, SUM(J.score) AS \"nbDePts\" " 
                     + "FROM Utilisateur U, Amis A, Joue J " 
                     + "WHERE U.idUtilisateur = J.idUtilisateur " 
@@ -383,7 +384,11 @@ function bdd(){
             console.log(results);
             console.log(results.length);
             for (var i = 0; i < results.length; i++) {
-                listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+                // s il est co
+                if (utilisateursConnectes[results[i]['pseudo']] == 1)
+                    listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
+                else
+                    listeAmisJSON.push({ name : results[i]['pseudo'], status: false, points: results[i]['nbDePts'] });
             }
             socket.emit('Reponse liste amis', JSON.stringify(listeAmisJSON));
         });

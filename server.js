@@ -38,12 +38,16 @@ var tempsRestant = 30; // temps restant sur la partie (en s)
 var nbSetsTrouvablesPartieEnCours = 0; // nombre de set partie en cours
 var classementTempsReel = 0; // contiendra le tableau du classement de la partie en cours
 var nouveauJeu = 0; // contient le jeu
+var utilisateursConnectes = []; // contient les gens connectés
 
 // declancher à chaque connexion d'un client
 // socket est la variable associe à chacun des clients dans la fonction de callback
 // dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
 sessionSockets.on('connection', function (err, socket, session) {
     session.utilisateur = session.utilisateur || 0;
+    if(session.utilisateur != 0) {
+        utilisateursConnectes[session.utilisateur.pseudo] = 1;
+    }
     socket.nbPtsPartie = 0;
     socket.multiplicateur = 1;
     console.log('Un client est connecte. utilisateur : ');
@@ -55,6 +59,12 @@ sessionSockets.on('connection', function (err, socket, session) {
     /////////////////////////////////////////////////
     // GESTION DU JEU
     /////////////////////////////////////////////////
+    
+    socket.on('disconnect', function () {
+        if (session.utilisateur != 0) {
+            utilisateursConnectes[session.utilisateur.pseudo] = 0;
+        }
+    });
 
     // si un jeu est en cours en l'envoie quand il se connecte
     if (nouveauJeu != 0) {
@@ -81,7 +91,7 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     // ecouteur de l'evennement Set d'un client, verifie si le set est valide
     socket.on('Set', function (setJoueur) {
-        game.gestionSet(setJoueur, session.utilisateur.idUtilisateur, session.utilisateur.pseudo, classementTempsReel, socket, bdd);
+        game.gestionSet(setJoueur, session.utilisateur, classementTempsReel, socket, bdd);
     });
 
     /////////////////////////////////////////////////
@@ -92,7 +102,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value;
         var mdp = compte[1].value;
-        bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur);
+        bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur, utilisateursConnectes);
     });
     
     // creation compte
@@ -108,6 +118,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     
     // deconnexion
     socket.on('Deco', function () {
+        utilisateursConnectes[session.utilisateur.pseudo] = 0;
         session.utilisateur = 0;
         session.save();
         console.log("deco");
@@ -150,7 +161,7 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Demande liste amis', function () {
         if (session.utilisateur != 0)
-            bdd.listeAmis(session.utilisateur.pseudo, socket);
+            bdd.listeAmis(session.utilisateur.pseudo, socket, utilisateursConnectes);
     });
 
     socket.on('Demander ami', function (nomAmiString) {
@@ -206,3 +217,5 @@ setInterval(function () {
     jeu.emit('Nouvelle partie');
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
+
+setInterval(function () { console.log(utilisateursConnectes) }, 1000);
