@@ -15,22 +15,41 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/profil.css">
     <title>SetOnline</title>
-	<img src="/img/logo.png" id="logo" align:middle alt="Logo_SetOnline">
-	<p id="setonline">SetOnline</p>
 
 </head>
 <body>
-    <div id="inscription">
-            <form>
-                <label class="labelinscription" for="pseudo">Pseudo: </label>
-                <input type="text" minlength="3" maxlength="20" id="pseudo" required /><br />
-				<label class="labelinscription" for="adr">Adresse mail: </label>
-                <input type="email" id="mail" required /><br />
-                <label class="labelinscription" for="mdp">Mot de passe</label>
-                <input type="password" id="mdp" minlength="3" maxlength="20" required /><br />
-				<label class="labelinscription" for="avatar">Avatar</label>
-				<input type="file" id="avatar" accept="image/*"/><br />
-                <input type="button" id="connect" value="Submit" onclick="creationCompte()">
-            </form>
-        </div>
+<div id="header">
+		<img src="/img/tronc.png" id="fondLogo" alt="fondLogo">
+		<div id="clear"></div>
+		<div id="containerSet">
+			<span id="setonline">SetOnline</span>
+		</div>
+		<div id="menu">
+			<a href="/accueil">
+			<img alt="plancheA" id="plancheAccueil" class="planche" src="/img/plancheA.png" />
+			</a>
+			<a href="/game">
+			<img alt="plancheJ" id="plancheJouer" class="planche" src="/img/plancheJ.png" />
+			</a>
+			<a href="/classement">
+			<img alt="plancheC" id="plancheClassement" class="planche" src="/img/plancheC.png" />
+			</a>
+		</div>
+	</div>
+    <header>
+	<div id="contenu">
+		<div id="inscription">
+				<form>
+					<label class="labelinscription" for="pseudo">Pseudo: </label>
+					<input type="text" minlength="3" maxlength="20" id="pseudo" required /><br />
+					<label class="labelinscription" for="adr">Adresse mail: </label>
+					<input type="email" id="mail" required /><br />
+					<label class="labelinscription" for="mdp">Mot de passe</label>
+					<input type="password" id="mdp" minlength="3" maxlength="20" required /><br />
+					<label class="labelinscription" for="avatar">Avatar</label>
+					<input type="file" id="avatar" accept="image/*"/><br />
+					<input type="button" id="connect" value="Submit" onclick="creationCompte()">
+				</form>
+		</div>
+	</div>
 <% include footer.ejs %>
