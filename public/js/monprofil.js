@@ -57,6 +57,14 @@ socket.on('Reponse liste amis', function (infos) {
     }
 });
 
+socket.on('Reponse demande ami', function (rslt) {
+    alert("test");
+    if (rslt == 0) {
+        alert("Pseudo invalide!");
+    }
+    else{ alert('Votre demande a bien été prise en compte!'); }
+});
+
 /*
     Réception évenement Reponse liste demandes amis (permet de savoir qui nous a demandé en ami)
     @param infos : fichier Json de la forme:

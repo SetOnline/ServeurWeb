@@ -2,13 +2,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" href="/css/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     
     <script src="/js/classement.js"></script>
-
+	  <script>
+		$(function() {
+			$( "#tabs" ).tabs();
+		});
+  </script>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/styleaccueil.css">
 	<link rel="stylesheet" type="text/css" href="/css/styleform.css">
@@ -47,26 +51,39 @@
         </div>
     </header>
     <div id="contenu">
-		<p>Classement à l'infini</p>
-		<table id="classement">
-			<tr>
-				<th>Pseudo</th>
-				<th>Nombre de points</th>
-			</tr>
-		</table>
-		<p>Classement à la journée</p>
-		<table id="classementJour">
-			<tr>
-				<th>Pseudo</th>
-				<th>Nombre de points</th>
-			</tr>
-		</table>
-		<p>Classement à la semaine</p>
-		<table id="classementSemaine">
-			<tr>
-				<th>Pseudo</th>
-				<th>Nombre de points</th>
-			</tr>
-		</table>
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Classement jour</a></li>
+				<li><a href="#tabs-2">Classement semaine</a></li>
+				<li><a href="#tabs-3">Classement global</a></li>
+			</ul>
+			<div id="tabs-1">
+				<p>Classement du jour</p>
+				<table id="classementJour" border="1">
+					<tr>
+						<th>Pseudo</th>
+						<th>Nombre de points</th>
+					</tr>
+				</table>
+			</div>
+			<div id="tabs-2">
+				<p>Classement de la semaine</p>
+				<table id="classementSemaine" border="1">
+					<tr>
+						<th>Pseudo</th>
+						<th>Nombre de points</th>
+					</tr>
+				</table>
+			</div>
+			<div id="tabs-3">
+				<p>Classement global</p>
+				<table id="classement" border="1">
+					<tr>
+						<th>Pseudo</th>
+						<th>Nombre de points</th>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 <% include footer.ejs %>

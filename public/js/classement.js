@@ -5,6 +5,8 @@ function codeAddress() {
     socket.emit('Demande classement');
     socket.emit('Demande classement jour');
     socket.emit('Demande classement semaine');
+    
+    $("#tabs").tabs();
 }
 window.onload = codeAddress();
 
