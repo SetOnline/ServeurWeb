@@ -1,7 +1,7 @@
 module.exports.set = function (app) {
     app.get('/', function (req, res) {
-        res.setHeader('content-Type', 'text/plain');
-        res.end('Vous êtes à l\'accueil');
+        req.session.foo = req.session.foo || 3;
+        res.render('accueil.ejs');
     });
     
     app.get('/test', function (req, res) {

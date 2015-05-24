@@ -13,24 +13,11 @@ function codeAddress() {
 }
 window.onload = codeAddress();
 
-setInterval(function () { majListeAmi(); }, 10000);
+setInterval(function () { majListeAmi(); }, 10000); //màj de la liste d'amis 
 
-function majListeAmi(){
-    //Liste d'amis
-    socket.emit('Demande liste amis');
-    // suppression ancienne liste amis
-    var myNode = document.getElementById("liste_amis");
-    while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-    }
-    //Liste de demandes d'amis
-    socket.emit('Demande liste demandes amis');
-    // suppression de l'ancienne liste demandes d'amis
-    var myNode = document.getElementById("liste_demandes_amis");
-    while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-    }
-}
+///////////////////
+// Evenements Client - Serveur
+///////////////////
 
 ///////////////////
 // Evenements Serveur - Client
@@ -57,6 +44,10 @@ socket.on('Reponse liste amis', function (infos) {
     }
 });
 
+/*
+    Réception évenement Reponse demande ami (feedback si le pseudo n'existe pas)
+    @param rslt:
+*/
 socket.on('Reponse demande ami', function (rslt) {
     alert("test");
     if (rslt == 0) {
@@ -139,6 +130,26 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 ///////////////////
 // Evenements Client - Serveur
 ///////////////////
+
+/* Fonction qui permet la mise à jour de la liste d'amis via l'envoi de 2 events*/
+function majListeAmi() {
+    //Liste d'amis
+    socket.emit('Demande liste amis');
+    // suppression ancienne liste amis
+    var myNode = document.getElementById("liste_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    //Liste de demandes d'amis
+    socket.emit('Demande liste demandes amis');
+    // suppression de l'ancienne liste demandes d'amis
+    var myNode = document.getElementById("liste_demandes_amis");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
+
+
 /*
     Fonction appellée automatiquement lors du click sur le bouton "desinscription"
 */
@@ -146,6 +157,7 @@ function desinscription() {
     socket.emit('Desinscription');
 }
 
+/*Fonction permettant d'ajouter le pseudo rentré dans le form en ami*/
 function ajouteAmi(){
     socket.emit('Demander ami', $("#pseudoAjout").val());
     document.location.href = "/profil";

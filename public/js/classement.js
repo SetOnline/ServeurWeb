@@ -1,6 +1,6 @@
 var socket = io();
 
-function codeAddress() {
+function codeAddress() { //demande des classements au serv dés le chargemt de la page
     socket.emit('Est connecte');
     socket.emit('Demande classement');
     socket.emit('Demande classement jour');
@@ -14,7 +14,9 @@ window.onload = codeAddress();
 // Evenements Serveur - Client
 ///////////////////
 
-/* Réception du classement */
+/* Réception du classement général
+ *      @param message: name: pseudo value: nombre de points (liste)
+ * */
 socket.on('Reponse classement', function (message) {
     //récupération des données du serveur
     console.log("classement");
@@ -33,7 +35,9 @@ socket.on('Reponse classement', function (message) {
     })
 });
 
-/* Réception du classement */
+/* Réception du classement du jour
+ * @param message: name: pseudo value: nombre de points (liste)
+ * */
 socket.on('Reponse classement jour', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);
@@ -50,7 +54,8 @@ socket.on('Reponse classement jour', function (message) {
     })
 });
 
-/* Réception du classement */
+/* Réception du classement de la semaine
+ * @param message: name: pseudo value: nombre de points (liste)*/
 socket.on('Reponse classement semaine', function (message) {
     //récupération des données du serveur
     var info = JSON.parse(message);

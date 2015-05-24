@@ -1,8 +1,9 @@
+//les 3 cartes sélectionnés
 var carte1 = 0;
 var carte2 = 0;
 var carte3 = 0;
-var nbSetTrouves = 0;
-var tb = 0;
+var nbSetTrouves = 0; //nb de sets trouvés
+var tb = 0; //gestion du classement de la partie en cours qui deviendra tb de la partie precedente
 
 ///////////////////
 // COMMUNICATION
@@ -11,17 +12,46 @@ var tb = 0;
 var socket = io(); //.connect('http://localhost:1337/game');
 
 
-setInterval(function () { demandeClassement(); }, 1000);
+setInterval(function () { demandeClassement(); }, 1000); //demande du classement en temps réel
 
+///////////////////
+// Evenements Serveur - Client
+///////////////////
+
+/*
+    Réception évènement timer
+ * @message: temps restant pour la partie
+*/
 socket.on('timer', function (message) {
     document.getElementById('timer').innerHTML = message;
 });
 
+/*
+    Réception évènement Déblocage trophée
+    @param info : name : nom    desc : description        pic : nom l’image
+*/
 socket.on('Deblocage trophee', function (info){
     var infoTrophee = JSON.parse(info);
     alert("Vous avez débloqué le trophée " + infoTrophee.name);
 });
 
+/*
+    Réception évenement Nouvelle partie 
+    @param nouveauJeu : name: carte0 value: 1221
+        name: carte1 value: 3223
+        name: carte2 value: 1221
+        name: carte3 value: 3223
+        name: carte4 value: 1221
+        name: carte5 value: 3223
+        name: carte6 value: 1221
+        name: carte7 value: 3223
+        name: carte8 value: 1221
+        name: carte9 value: 3223
+        name: carte10 value: 1221
+        name: carte11 value: 3223
+        name: nbSets value: 8
+
+*/
 socket.on('Nouvelle partie', function (nouveauJeu) {
     var infoPartie = JSON.parse(nouveauJeu);
     var cartesJeu = "";
@@ -80,6 +110,16 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     }
 });
 
+/*
+    Réception évènement Set valide
+    @param setQuiEstValide : name: carte0 value: 1221
+        name: carte1 value: 1321
+        name: carte2 value: 2312
+        name: nbSetsRestants value: 2
+        name: nbPtsGagne value : 4
+        name: nbPtsTotal value : 7
+
+*/
 socket.on('Set valide', function (setQuiEstValide) {
     var setPropose = JSON.parse(setQuiEstValide);
     //ajouts des sets
@@ -103,10 +143,20 @@ socket.on('Set valide', function (setQuiEstValide) {
     document.getElementById('nbdepts').innerHTML = nbPtsTotal;
 });
 
+/*
+    Réception évènement Set valide
+    @param setQuiEstInvalide : name: carte0 value: 1221
+        name: carte1 value: 1321
+        name: carte2 value: 2312
+*/
 socket.on('Set invalide', function (setQuiEstInvalide) {
     console.log('pas valide, reessaie p\'tit hacker');
 });
 
+/*
+    Réception évènement Reponse classement partie actuelle
+    @param donnees: name : pseudo    value : score    rank : rang   (liste)
+*/
 socket.on('Reponse classement partie actuelle', function (donnees) {
     // suppression ancien classement
     var myNode = document.getElementById("classement");
@@ -133,11 +183,23 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
 });
 
 ///////////////////
+// Evenements Client - Serveur
+///////////////////
 
+/*
+    Fonction appellée automatiquement 
+*/
 function demandeClassement(){
     socket.emit('Demande classement partie actuelle');
 }
 
+///////////////////
+// Fonctionnement du jeu
+///////////////////
+/*
+    Fonction appellée automatiquement lors de l'affichage de la partie
+    @param combiCartes: les 12 cartes constituant la partie
+*/
 function loadGame(combiCartes) {
     var codeCarte = 0;
     // 1) suppression
@@ -153,6 +215,10 @@ function loadGame(combiCartes) {
     }
 }
 
+/*
+    Fonction appellée automatiquement lors de la réception de l'évenement setValide
+    @param set : le set à ajouter aux sets trouvés
+*/
 function addSetFound(set) {
     nbSetTrouves++;
     var codeCarte = 0;
@@ -164,6 +230,10 @@ function addSetFound(set) {
     }
 }
 
+/*
+    Fonction permettant de savoir si la propriété est valide
+        @param prop1, prop2, prop3 : les 3 propriétés à comparer
+*/
 function propriete(prop1, prop2, prop3) {
     if ((prop1 == prop2) && (prop2 == prop3) && (prop1 == prop3)) {
         return true;
@@ -177,6 +247,9 @@ function propriete(prop1, prop2, prop3) {
 
 }
 
+/*
+   Fonction permettant de savoir si un set est valide ou pas (en appelant propriete())
+*/
 function set() {
     var setCorrect = true;
     for (var i = 0; i < 4; i++) {
@@ -188,6 +261,9 @@ function set() {
     return setCorrect;
 }
 
+/*
+ * Fonction permettant de déselectionner les cartes sélectionnées
+*/
 function viderCartes() {
     if (carte1 != 0) {
         $("#" + carte1).css('filter', 'none'); /* firefox */
@@ -209,12 +285,13 @@ function viderCartes() {
     }
 }
 
-
-
+/*
+  Fonction permettant de gérer la sélection
+*/
 function cardEvents() {
     $(".carte").click(function () {
         var selection = false;
-        // codeCarte est le code correspondant au propriété de la carte "rr3s"
+        //code de la carte (ex 1232)
         var codeCarte = $(this).attr('id');
 
         // on vérifie si la carte est sélectionnée
@@ -260,7 +337,7 @@ function cardEvents() {
 
         if ((carte1 != 0) && (carte2 != 0) && (carte3 != 0)) {
             if (set()) {
-                // ici insérer ce qu'on veut mettre quand il trouve un set
+                //ce qu'on veut mettre quand il trouve un set
                 console.log("Set trouvé correct");
                 console.log("set: " + toStringCards());
                 
@@ -284,6 +361,7 @@ function cardEvents() {
     });
 }
 
+/*Fonction permettant la trasformationd des cartes en string*/
 function toStringCards() {
     return (carte1 + carte2 + carte3);
 }
