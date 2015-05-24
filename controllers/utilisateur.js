@@ -1,5 +1,6 @@
 module.exports.utilisateur = Utilisateur;
 
+// permet de construire des objets Utilisateur
 function Utilisateur(mail, login, pwd, id){
 
     this.idUtilisateur = id || 0;
@@ -8,7 +9,9 @@ function Utilisateur(mail, login, pwd, id){
     this.mdp = pwd;
     
     var that = this;
-
+    
+    // insere l'utilisateur dans la base de données 
+    //(avec verif mdp pseudo et adresse mail non vide)
     this.insereBdd = function (bdd, socket) {
         if (that.adresseMail == "") {
             var resultat = [];
@@ -35,11 +38,13 @@ function Utilisateur(mail, login, pwd, id){
             bdd.addUser(that.adresseMail, that.pseudo, that.mdp, socket);
         }  
     };
-
+    
+    // modifie le pseudo de l'utilisateur
     this.modifierPseudo = function (nouveauPseudo, bdd) {
         bdd.modifierPseudo(nouveauPseudo, that.pseudo);
     };
-
+    
+    // modifie l'adresse mail de l'utilisateur
     this.modifierEmail = function (nouveauEmail, bdd) {
         bdd.modifierEmail(nouveauEmail, that.pseudo);
     };

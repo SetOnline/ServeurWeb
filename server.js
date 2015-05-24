@@ -44,7 +44,9 @@ var utilisateursConnectes = []; // contient les gens connectés
 // socket est la variable associe à chacun des clients dans la fonction de callback
 // dans cette fonction de callback on defini les fonctions qui vont modifier les variables propres à chaque client
 sessionSockets.on('connection', function (err, socket, session) {
+    // contient l'objet utilisateur quand l'utilisateur est connecté
     session.utilisateur = session.utilisateur || 0;
+    // gestion du tableau des utilisateurs connectés
     if(session.utilisateur != 0) {
         utilisateursConnectes[session.utilisateur.pseudo] = 1;
     }
@@ -97,6 +99,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     // GESTION DES UTILISATEURS
     /////////////////////////////////////////////////
     
+    // connexion
     socket.on('Connexion', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value.toLowerCase();
@@ -122,6 +125,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         session.save();
     });
     
+    // est connecte
     socket.on('Est connecte', function () {
         if (session.utilisateur != 0)
             socket.emit('Resultat est connecte', session.utilisateur.pseudo);
@@ -163,16 +167,16 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Demander ami', function (nomAmiString) {
-        bdd.ajouteAmi(session.utilisateur.pseudo, nomAmiString, socket);
+        bdd.ajouteAmi(session.utilisateur.pseudo, nomAmiString.toLowerCase(), socket);
     });
 
     socket.on('Accepter ami', function (nomAmiString) {
-        bdd.accepteAmi(session.utilisateur.pseudo, nomAmiString, socket);
+        bdd.accepteAmi(session.utilisateur.pseudo, nomAmiString.toLowerCase(), socket);
     });
 
 
     socket.on('Refuser ami', function (nomAmiString) {
-        bdd.refuseAmi(session.utilisateur.pseudo, nomAmiString, socket);
+        bdd.refuseAmi(session.utilisateur.pseudo, nomAmiString.toLowerCase(), socket);
     });
 
     socket.on('Demande liste demandes amis', function () {
@@ -216,6 +220,7 @@ setInterval(function () {
     io.sockets.emit('Nouvelle partie', nouveauJeu);
 }, tempsDePartie);
 
+//debug
 setInterval(function () {
     console.log(utilisateursConnectes);
 },5000);

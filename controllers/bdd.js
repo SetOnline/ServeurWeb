@@ -2,7 +2,8 @@ var mysql = require('mysql');
 
 
 
-function bdd(){
+function bdd() {
+    // connexion à la bdd
     var bdd = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -14,6 +15,7 @@ function bdd(){
     // GESTION DES UTILISATEURS
     /////////////////////////////////////////////////
 
+    // ajoute un utilisateur (+ verifs)
     this.addUser = function (mail, login, password, socket) {
         var date = new Date();
         // on test si le mail existe
@@ -72,6 +74,7 @@ function bdd(){
         });
     };
     
+    // modifie le pseudo d'un utilisateur
     this.modifierPseudoUser = function (nouveauPseudo, ancienPseudo) {
         var requete = "UPDATE Utilisateur "
                     + "SET pseudo = " + nouveauPseudo + " "
@@ -85,6 +88,7 @@ function bdd(){
         });
     };
     
+    // modifie l'email d'un utilisateur
     this.modifierEmailUser = function (nouveauMail, pseudo) {
         var requete = "UPDATE Utilisateur U "
                     + "SET email = " + nouveauMail + " "
@@ -98,6 +102,7 @@ function bdd(){
         });
     };
 
+    // connecte un utilisateur (donc il faut la socket, session & co)
     this.connexionUser = function (login, password, socket, session, Utilisateur, utilisateursConnectes) {
         var requete = "SELECT idUtilisateur, email" 
                     + " FROM Utilisateur U" 
@@ -126,6 +131,7 @@ function bdd(){
     // GESTION DES CLASSEMENTS
     /////////////////////////////////////////////////
 
+    // classement (infini)
     this.classement = function (socket){
         var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
                     + "FROM Utilisateur U, Joue J " 
@@ -147,6 +153,7 @@ function bdd(){
 
     }
 
+    // classement (jour)
     this.classementJour = function (socket) {
         var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
                     + "FROM Utilisateur U, Joue J " 
@@ -168,6 +175,7 @@ function bdd(){
         });
     }
 
+    // classement semaine
     this.classementSemaine = function (socket) {
         var requete = "SELECT Distinct(U.pseudo), SUM(J.score) AS 'nbDePts' " 
         + "FROM Utilisateur U, Joue J " 
@@ -188,6 +196,7 @@ function bdd(){
         });
     }
     
+    // ajout d'un score pour un utilisateur
     this.addScoreUser = function (idUtilisateur, score) {
         var requete = "INSERT INTO Joue(idUtilisateur, score, dateJeu) " 
                     + "VALUES(" + idUtilisateur + ", " + score + ", CURRENT_TIMESTAMP) ";
@@ -204,6 +213,7 @@ function bdd(){
     // GESTION DES AMIS
     /////////////////////////////////////////////////
 
+    // ajouter un ami
     this.ajouteAmi = function (ajouteur, ajoute, socket) {
         if (ajouteur == ajoute) {
             socket.emit('Reponse demande ami', 0);
@@ -255,6 +265,7 @@ function bdd(){
         }
     }
 
+    // accepter un ami
     this.accepteAmi = function (ajoute, ajouteur, socket) {
         var requete = "UPDATE Amis " 
                     + "SET valide = 1 " 
@@ -265,7 +276,7 @@ function bdd(){
                 console.log(error);
                 return;
             }
-            // gestion du trophee 20 amis
+            // gestion du trophee 20 amis (mis à 3 pour les tests)
             var requete2 = "SELECT COUNT(*) AS \"nbAmis\""
                         + "FROM Utilisateur U, Amis A " 
                         + "WHERE (U.pseudo = A.usr2 " 
@@ -299,6 +310,7 @@ function bdd(){
                 }
             });
 
+            // trophees + d'amis ? (en construction)
             var requete5 = "SELECT COUNT(*) AS \"nbAmis\"" 
                         + "FROM Utilisateur U, Amis A " 
                         + "WHERE (U.pseudo = A.usr2 " 
@@ -334,6 +346,7 @@ function bdd(){
         });
     }
 
+    // refuser un ami
     this.refuseAmi = function (ajoute, ajouteur, socket) {
         var requete = "DELETE FROM Amis "
                     + "WHERE usr1 = '" + ajouteur + "' " 
@@ -346,6 +359,7 @@ function bdd(){
         });
     }
 
+    // liste des demandes d'amis
     this.listeDemandesAmis = function (ajoute, socket) {
         var requete = "SELECT * " 
                     + "FROM Amis " 
@@ -380,6 +394,8 @@ function bdd(){
                 return;
             }
             var listeAmisJSON = [];
+            console.log("amis de " + pseudo + ":");
+            console.log(results);
             for (var i = 0; i < results.length; i++) {
                 if (utilisateursConnectes[results[i]['pseudo']] == 1)
                     listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
@@ -394,6 +410,7 @@ function bdd(){
     // GESTION DES TROPHEES
     /////////////////////////////////////////////////
 
+    // ajoute un trophees
     this.ajouteTrophee = function (idUtilisateur, idTrophee, socket) {
         var requete = "SELECT * "
                     + "FROM TropheesUtilisateur TU "
@@ -434,6 +451,7 @@ function bdd(){
         });
     };
     
+    // liste des trophees
     this.tropheesByPseudo = function (pseudo, socket) {
         var requete = "SELECT T.nomT, T.imgT, T.descriptionT "
                     + "FROM TropheesUtilisateur TU, Trophee T, Utilisateur U "
@@ -457,6 +475,7 @@ function bdd(){
     // GESTION DES MEDAILLES
     /////////////////////////////////////////////////
     
+    // liste des médailles
     this.medaillesByPseudo = function (pseudo, socket) {
         var requete = "SELECT M.nomM, M.imgM, M.descriptionM " 
                     + "FROM Utilisateur U, Medaille M " 
@@ -476,6 +495,7 @@ function bdd(){
         });
     };
 
+    // ajouter une medaille
     this.ajouteMedaille = function (idUtilisateur, idMedaille, socket) {
         var requete = "UPDATE medaille " 
                     + "SET idUtilisateur = " + idUtilisateur + " " 

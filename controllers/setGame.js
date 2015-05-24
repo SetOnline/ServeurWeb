@@ -59,6 +59,12 @@ function setGame(){
         return setCorrect;
     }
     
+    // gestion d'un set
+    // @param setJoueur : le json contenant le set du joueur
+    // @param utilisateur : obj Utilisateur de l'utilisateur qui envoie le set
+    // @param classementTempsReel : le classement en temps réel à modif s il trouve un set
+    // @param socket : la socket de l'utilisateur
+    // @param bdd : la bdd à modifier
     this.gestionSet = function (setJoueur, utilisateur, classementTempsReel, socket, bdd) {
         var setPropose = JSON.parse(setJoueur);
         if ((that.estUnSetValide(setPropose[0].value, setPropose[1].value, setPropose[2].value)) 
@@ -94,6 +100,9 @@ function setGame(){
     };
     
     // génère le classement en temps réel de la partie
+    // @param pseudo : le pseudo du joueur qui demande le classement
+    // @param classementTempsReel : le classement en temps réel global 
+    // @return : le classement en temps reel pour le joueur (juste 5 personnes)
     this.classementTempsReelJSON = function (pseudo, classementTempsReel){
         var sort = sortAssoc(classementTempsReel);
         var classementJSON = [];
@@ -141,7 +150,10 @@ function setGame(){
         return classementJSON;
     }
     
-    // renvoie vrai si le set n a pas ete trouve par le joueur
+    // vérifie que le set n'a pas été déjà joué par le joueur
+    // @param setPropose : le set qui est proposé
+    // @param setDejaJoues : le tableau des sets déjà joué par l'utilisateur
+    // @return : true si pas encore joue
     this.estPasEncoreJoue = function(setPropose, setsDejaJoues) {
         for (var i = 0; i < setsDejaJoues.length; i++) {
             if (((setPropose[0].value == setsDejaJoues[i].carte1) ||

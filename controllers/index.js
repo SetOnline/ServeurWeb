@@ -1,4 +1,6 @@
 
+// module d'index pour acceder aux autres modules
+
 module.exports.init = function (app) {
     // initialisation des routes
     var routes = require('./routes.js');
