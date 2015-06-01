@@ -219,25 +219,24 @@ function bdd() {
             socket.emit('Reponse demande ami', 0);
         }
         else {
-            var requetetest1 = "SELECT * " 
-                         + "FROM Amis " 
-                         + "WHERE usr1 = '" + ajouteur + "' " 
-                         + "AND usr2 = '" + ajoute + "' ";
-            bdd.query(requetetest1, function select(error, results, fields) {
+            var requetetest0 = "SELECT * " 
+                             + "FROM Utilisateur " 
+                             + "WHERE pseudo = '" + ajoute + "' ";
+            bdd.query(requetetest0, function select(error, results, fields) {
                 if (error) {
                     console.log(error);
                     socket.emit('Reponse demande ami', 0);
                     return;
                 }
-                if (results.length > 0) {
+                if (results.length <= 0) {
                     socket.emit('Reponse demande ami', 0);
                 }
                 else {
-                    var requetetest2 = "SELECT * " 
-                                 + "FROM Amis " 
-                                 + "WHERE usr1 = '" + ajoute + "' " 
-                                 + "AND usr2 = '" + ajouteur + "' ";
-                    bdd.query(requetetest2, function select2(error, results, fields) {
+                    var requetetest1 = "SELECT * " 
+                         + "FROM Amis " 
+                         + "WHERE usr1 = '" + ajouteur + "' " 
+                         + "AND usr2 = '" + ajoute + "' ";
+                    bdd.query(requetetest1, function select1(error, results, fields) {
                         if (error) {
                             console.log(error);
                             socket.emit('Reponse demande ami', 0);
@@ -247,16 +246,32 @@ function bdd() {
                             socket.emit('Reponse demande ami', 0);
                         }
                         else {
-                            var requete = "INSERT INTO Amis(usr1, usr2, valide) " 
-                                    + "VALUES('" + ajouteur + "', '" + ajoute + "', false) ";
-                            
-                            bdd.query(requete, function select(error, results, fields) {
+                            var requetetest2 = "SELECT * " 
+                                 + "FROM Amis " 
+                                 + "WHERE usr1 = '" + ajoute + "' " 
+                                 + "AND usr2 = '" + ajouteur + "' ";
+                            bdd.query(requetetest2, function select2(error, results, fields) {
                                 if (error) {
                                     console.log(error);
                                     socket.emit('Reponse demande ami', 0);
                                     return;
                                 }
-                                socket.emit('Reponse demande ami', 1);
+                                if (results.length > 0) {
+                                    socket.emit('Reponse demande ami', 0);
+                                }
+                                else {
+                                    var requete = "INSERT INTO Amis(usr1, usr2, valide) " 
+                                    + "VALUES('" + ajouteur + "', '" + ajoute + "', false) ";
+                                    
+                                    bdd.query(requete, function select(error, results, fields) {
+                                        if (error) {
+                                            console.log(error);
+                                            socket.emit('Reponse demande ami', 0);
+                                            return;
+                                        }
+                                        socket.emit('Reponse demande ami', 1);
+                                    });
+                                }
                             });
                         }
                     });

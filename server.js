@@ -104,7 +104,10 @@ sessionSockets.on('connection', function (err, socket, session) {
         var compte = JSON.parse(compteJSON);
         var pseudo = compte[0].value.toLowerCase();
         var mdp = compte[1].value.toLowerCase();
-        bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur, utilisateursConnectes);
+        if (utilisateursConnectes[pseudo] != 1)
+            bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur, utilisateursConnectes);
+        else
+            socket.emit('Resultat connexion', 0);
     });
     
     // creation compte
