@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var myCookieParser = cookieParser('secret');
 var SessionSockets = require('session.socket.io');
+var fs = require('fs');
 var FileStore = require('session-file-store')(expressSession);
 var app = express();
 
@@ -109,14 +110,18 @@ sessionSockets.on('connection', function (err, socket, session) {
         else
             socket.emit('Resultat connexion', 0);
     });
-    
+
     // creation compte
     socket.on('Creation compte', function (compteJSON) {
         var compte = JSON.parse(compteJSON);
         var mail = compte[0].value.toLowerCase();
         var pseudo = compte[1].value.toLowerCase();
         var mdp = compte[2].value.toLowerCase();
-        
+        var img = compte[3].value();
+        fs.writeFile('public/img/profil_' + pseudo + '.jpg', img, function (err) {
+            if (err) throw err;
+            console.log('It\'s saved!');
+        });
         var usr = new Utilisateur(mail, pseudo, mdp);
         usr.insereBdd(bdd, socket);
     });
@@ -193,6 +198,10 @@ sessionSockets.on('connection', function (err, socket, session) {
     socket.on('Demande liste trophees', function () {
         bdd.tropheesByPseudo(session.utilisateur.pseudo, socket);
     });
+    
+    socket.on('Voir liste trophees', function (pseudo) {
+        bdd.tropheesByPseudo(pseudo, socket);
+    });
 
     /////////////////////////////////////////////////
     // GESTION DES MEDAILLES
@@ -200,6 +209,10 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('Demande liste medailles', function () {
         bdd.medaillesByPseudo(session.utilisateur.pseudo, socket);
+    });
+
+    socket.on('Voir liste medailles', function (pseudo) {
+        bdd.medaillesByPseudo(pseudo, socket);
     });
 });
 
