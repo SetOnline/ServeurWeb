@@ -1,9 +1,11 @@
-//les 3 cartes sélectionnés
+ï»¿//les 3 cartes sÃ©lectionnÃ©s
 var carte1 = 0;
 var carte2 = 0;
 var carte3 = 0;
-var nbSetTrouves = 0; //nb de sets trouvés
+var nbSetTrouves = 0; //nb de sets trouvÃ©s
 var tb = 0; //gestion du classement de la partie en cours qui deviendra tb de la partie precedente
+var str;
+var setsTrouves;
 
 ///////////////////
 // COMMUNICATION
@@ -12,14 +14,26 @@ var tb = 0; //gestion du classement de la partie en cours qui deviendra tb de la
 var socket = io(); //.connect('http://localhost:1337/game');
 
 
-setInterval(function () { demandeClassement(); }, 1000); //demande du classement en temps réel
+setInterval(function () { demandeClassement(); }, 1000); //demande du classement en temps rÃ©el
+
+//gestion des tooltips
+$(function () {
+    $("#nbSetsdiv").tooltip({
+        content: "Pas de set trouvÃ© pour l'instant...",
+        position: { my: "left+15 center", at: "right bottom" },
+        open: function (event, ui) {
+            ui.tooltip.css("max-width", "800px");//modification max width tooltip
+        }
+    });
+});
+
 
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
 
 /*
-    Réception évènement timer
+    RÃ©ception Ã©vÃ¨nement timer
  * @message: temps restant pour la partie
 */
 socket.on('timer', function (message) {
@@ -27,16 +41,16 @@ socket.on('timer', function (message) {
 });
 
 /*
-    Réception évènement Déblocage trophée
-    @param info : name : nom    desc : description        pic : nom l’image
+    RÃ©ception Ã©vÃ¨nement DÃ©blocage trophÃ©e
+    @param info : name : nom    desc : description        pic : nom l'image
 */
-socket.on('Deblocage trophee', function (info){
+socket.on('Deblocage trophee', function (info) {
     var infoTrophee = JSON.parse(info);
-    alert("Vous avez débloqué le trophée " + infoTrophee.name);
+    alert("Vous avez dÃ©bloquÃ© le trophÃ©e " + infoTrophee.name);
 });
 
 /*
-    Réception évenement Nouvelle partie 
+    Reception evenement Nouvelle partie 
     @param nouveauJeu : name: carte0 value: 1221
         name: carte1 value: 3223
         name: carte2 value: 1221
@@ -58,36 +72,38 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
     var i;
     console.log('Nouvelle partie !');
     for (i = 0; i != 12; ++i) {
-    //    console.log(infoPartie[i].value);
+        //    console.log(infoPartie[i].value);
         cartesJeu += infoPartie[i].value;
     }
-
+    
     loadGame(cartesJeu);
     cardEvents();
     
-    //affichage du nombre de sets à trouver
+    //affichage du nombre de sets Ã  trouver
     var nbSets = infoPartie[12].value;
     document.getElementById('nbSets').innerHTML = nbSets;
     document.getElementById('nbSetsTrouves').innerHTML = "0";
-
-    // suppression sets trouvés
-    var myNode = document.getElementById("trouves");
-    while(myNode.firstChild){
+    
+    // suppression sets trouvÃ©s
+    /*var myNode = $("#trouves");
+    while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
-    }
-
+    }*/
+    str = "<div id='trouves'>";
+    $("#nbSetsdiv").tooltip("option", "content", "Pas de set trouvÃ© pour l'instant...");
+    
     //suppression nb de pts
     document.getElementById('nbdepts').innerHTML = 0;
-
+    
     // suppression ancien classement "actuel"
     var myNode = document.getElementById("classement");
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
     
-    //apparition du classement de la dernière partie jouée
+    //apparition du classement de la derniÃ¨re partie jouÃ©e
     var Noeud = document.getElementById("AncienClassement");
-    //s'il existe la partie précédente
+    //s'il existe la partie prÃ©cÃ©dente
     if (tb != 0) {
         var AC = document.getElementById("AncienClassement");
         while (AC.firstChild) {
@@ -97,7 +113,7 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
         var noeudP;
         for (i = 0; i < tb.length ; ++i) {
             noeudP = "<div class=' personneAC '> <img src = '/img/boom.png' class='numAC'><span class='valueAC'>" + tb[i].rank + "</span><span class='pseudoAC'>" + tb[i].name + "</span>" 
-        + "<img src='/img/avatar.png' class='avatarAC'></div>"; //A remplacer ac le véritable avatar
+        + "<img src='/img/avatar.png' class='avatarAC'></div>"; //A remplacer ac le vï¿½ritable avatar
             // console.log(tbpersonne[i].name);
             Noeud.innerHTML = Noeud.innerHTML + noeudP;
         }
@@ -111,7 +127,7 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
 });
 
 /*
-    Réception évènement Set valide
+    RÃ©ception evenement Set valide
     @param setQuiEstValide : name: carte0 value: 1221
         name: carte1 value: 1321
         name: carte2 value: 2312
@@ -127,7 +143,7 @@ socket.on('Set valide', function (setQuiEstValide) {
     setBon += setPropose[0].value;
     setBon += setPropose[1].value;
     setBon += setPropose[2].value;
-   // addSetFound(setBon);
+    addSetFound(setBon);
     var nbSetsRestants = setPropose[3].value;
     var nbPtsGagne = setPropose[4].value;
     var nbPtsTotal = setPropose[5].value;
@@ -138,13 +154,13 @@ socket.on('Set valide', function (setQuiEstValide) {
     
     document.getElementById('nbSets').innerHTML = nbSetsTotal;
     document.getElementById('nbSetsTrouves').innerHTML = nbSets;
-
-    //afficher nbPtsGagne en gros pdt une courte période
+    
+    //afficher nbPtsGagne en gros pdt une courte pÃ©riode
     document.getElementById('nbdepts').innerHTML = nbPtsTotal;
 });
 
 /*
-    Réception évènement Set valide
+    RÃ©ception Ã©vÃ¨nement Set valide
     @param setQuiEstInvalide : name: carte0 value: 1221
         name: carte1 value: 1321
         name: carte2 value: 2312
@@ -154,7 +170,7 @@ socket.on('Set invalide', function (setQuiEstInvalide) {
 });
 
 /*
-    Réception évènement Reponse classement partie actuelle
+    Rï¿½ception ï¿½vï¿½nement Reponse classement partie actuelle
     @param donnees: name : pseudo    value : score    rank : rang   (liste)
 */
 socket.on('Reponse classement partie actuelle', function (donnees) {
@@ -163,13 +179,13 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
-        //pour chaque personne
+    //pour chaque personne
     var tbpersonne = JSON.parse(donnees);
     var noeudP;
     for (i = 0; i < tbpersonne.length ; ++i) {
-        noeudP = "<div class=' personneC '> <img src = '/img/boom.png' class='numC'><span class='valueC'>" + tbpersonne[i].rank + "</span><span class='pseudoC'>"+ tbpersonne[i].name +"</span>"
-        + "<img src='/img/avatar.png' class='avatarC'></div>"; //A remplacer ac le véritable avatar
-       // console.log(tbpersonne[i].name);
+        noeudP = "<div class=' personneC '> <img src = '/img/boom.png' class='numC'><span class='valueC'>" + tbpersonne[i].rank + "</span><span class='pseudoC'>" + tbpersonne[i].name + "</span>" 
+        + "<img src='/img/avatar.png' class='avatarC'></div>"; //A remplacer ac le vï¿½ritable avatar
+        // console.log(tbpersonne[i].name);
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
     var classement = document.getElementById("classement");
@@ -187,9 +203,9 @@ socket.on('Reponse classement partie actuelle', function (donnees) {
 ///////////////////
 
 /*
-    Fonction appellée automatiquement 
+    Fonction appellï¿½e automatiquement 
 */
-function demandeClassement(){
+function demandeClassement() {
     socket.emit('Demande classement partie actuelle');
 }
 
@@ -197,7 +213,7 @@ function demandeClassement(){
 // Fonctionnement du jeu
 ///////////////////
 /*
-    Fonction appellée automatiquement lors de l'affichage de la partie
+    Fonction appellï¿½e automatiquement lors de l'affichage de la partie
     @param combiCartes: les 12 cartes constituant la partie
 */
 function loadGame(combiCartes) {
@@ -207,32 +223,33 @@ function loadGame(combiCartes) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
-
+    
     // 2) ajout
     for (var i = 0; i < 12; i++) {
-        codecarte = combiCartes.substring(i*4, (i+1)*4);
+        codecarte = combiCartes.substring(i * 4, (i + 1) * 4);
         $("#jeu").append("<img alt=\"carte\" src=\"/img/" + codecarte + ".png\" class=\"carte\" id=\"" + codecarte + "\" />");
     }
 }
 
 /*
-    Fonction appellée automatiquement lors de la réception de l'évenement setValide
-    @param set : le set à ajouter aux sets trouvés
+    Fonction appellï¿½e automatiquement lors de la rï¿½ception de l'ï¿½venement setValide
+    @param set : le set ï¿½ ajouter aux sets trouvï¿½s
 */
 function addSetFound(set) {
     nbSetTrouves++;
     var codeCarte = 0;
-    $("#trouves").append("<div class=\"set\" id=\"set" + nbSetTrouves + "\"></div>")
+    str += "<div class=\"set\" id=\"set" + nbSetTrouves + "\">";
     for (var i = 0; i < 3; i++) {
         codecarte = set.substring(i * 4, (i + 1) * 4);
-        console.log("codecarte : " + codecarte);
-        $("#set" + nbSetTrouves).append("<img alt=\"carte\" src=\"/img/" + codecarte + ".png\" class=\"mincarte\" id=\"" + codecarte + "\" />");
+        str += "<img alt=\"carte\" src=\"/img/" + codecarte + ".png\" class=\"mincarte\" id=\"" + codecarte + "\" />";
     }
+    str += "</div>";
+    $("#nbSetsdiv").tooltip("option", "content", str + "</div>");
 }
 
 /*
-    Fonction permettant de savoir si la propriété est valide
-        @param prop1, prop2, prop3 : les 3 propriétés à comparer
+    Fonction permettant de savoir si la propriï¿½tï¿½ est valide
+        @param prop1, prop2, prop3 : les 3 propriï¿½tï¿½s ï¿½ comparer
 */
 function propriete(prop1, prop2, prop3) {
     if ((prop1 == prop2) && (prop2 == prop3) && (prop1 == prop3)) {
@@ -262,7 +279,7 @@ function set() {
 }
 
 /*
- * Fonction permettant de déselectionner les cartes sélectionnées
+ * Fonction permettant de dï¿½selectionner les cartes sï¿½lectionnï¿½es
 */
 function viderCartes() {
     if (carte1 != 0) {
@@ -286,15 +303,15 @@ function viderCartes() {
 }
 
 /*
-  Fonction permettant de gérer la sélection
+  Fonction permettant de gï¿½rer la sï¿½lection
 */
 function cardEvents() {
     $(".carte").click(function () {
         var selection = false;
         //code de la carte (ex 1232)
         var codeCarte = $(this).attr('id');
-
-        // on vérifie si la carte est sélectionnée
+        
+        // on vï¿½rifie si la carte est sï¿½lectionnï¿½e
         if (carte1 == codeCarte) {
             carte1 = 0;
             selection = false;
@@ -310,12 +327,12 @@ function cardEvents() {
             selection = false;
             console.log("carte3 == codeCarte");
         }
-        else if(carte1 == 0){
+        else if (carte1 == 0) {
             carte1 = codeCarte;
             selection = true;
             console.log("carte1 == 0");
         }
-        else if(carte2 == 0){
+        else if (carte2 == 0) {
             carte2 = codeCarte;
             selection = true;
             console.log("carte2 == 0");
@@ -334,11 +351,11 @@ function cardEvents() {
             $(this).css('-webkit-filter', 'none'); /* chrome et safari */
             $(this).css('-webkit-transition', 'none');
         }
-
+        
         if ((carte1 != 0) && (carte2 != 0) && (carte3 != 0)) {
             if (set()) {
                 //ce qu'on veut mettre quand il trouve un set
-                console.log("Set trouvé correct");
+                console.log("Set trouvÃ© correct");
                 console.log("set: " + toStringCards());
                 
                 var tabCartes = [];
@@ -347,12 +364,12 @@ function cardEvents() {
                 tabCartes.push({ name: 'carte2', value: carte3 });
                 
                 socket.emit('Set', JSON.stringify(tabCartes));
-
+                
                 viderCartes();
                 
             }
             else {
-                // ici insérer ce qu'on veut mettre quand il se trompe
+                // ici insï¿½rer ce qu'on veut mettre quand il se trompe
                 console.log("combinaison incorrecte");
                 console.log("set: " + toStringCards());
                 viderCartes();
