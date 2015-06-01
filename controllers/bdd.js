@@ -377,17 +377,30 @@ function bdd() {
             socket.emit('Reponse liste demandes amis', JSON.stringify(listeAmisJSON));
         });
     };
-
+    
+    // liste d'amis
     this.listeAmis = function (pseudo, socket, utilisateursConnectes) {
-        var requete = "SELECT U.pseudo, SUM(J.score) AS \"nbDePts\" " 
-                    + "FROM Utilisateur U, Amis A, Joue J " 
-                    + "WHERE U.idUtilisateur = J.idUtilisateur " 
-                    + "AND (U.pseudo = A.usr2 " 
-                    + "AND A.usr1 = '" + pseudo + "' " 
-                    + "OR (U.pseudo = A.usr1 " 
-                    + "AND A.usr2 = '" + pseudo + "')) " 
-                    + "AND A.valide = 1 "
+        var requete = "SELECT U.pseudo, SUM(J.score) AS \"nbDePts\" "
+                    + "FROM Utilisateur U, Amis A, Joue J "
+                    + "WHERE U.idUtilisateur = J.idUtilisateur "
+                    + "AND(U.pseudo = A.usr2 "
+                    + "AND A.usr1 = '" + pseudo + "' "
+                    + "OR(U.pseudo = A.usr1 "
+                    + "AND A.usr2 = '" + pseudo + "')) "
+                    + "AND A.valide = true "
+                    + "GROUP BY U.pseudo "
+                    + "UNION "
+                    + "SELECT U.pseudo, 0 "
+                    + "FROM Utilisateur U, Amis A "
+                    + "WHERE(U.pseudo = A.usr2 "
+                    + "AND A.usr1 = '"+ pseudo + "' "
+                    + "OR(U.pseudo = A.usr1 "
+                    + "AND A.usr2 = '" + pseudo + "')) "
+                    + "AND A.valide = true "
+                    + "AND U.idUtilisateur NOT IN(SELECT J.idUtilisateur FROM Joue J) "
                     + "GROUP BY U.pseudo ";
+        
+
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
