@@ -28,6 +28,11 @@ module.exports.set = function (app) {
     app.get('/profil', function (req, res) {
         res.render('profil.ejs');
     });
+    
+    // definition de la route du profil des autres joueurs
+    app.get('/profilJoueur/:pseudo', function (req, res) {
+        res.render('profilPseudo.ejs', { pseudo: req.params.pseudo });
+    });
 
     // definition de la route du classement
     app.get('/classement', function (req, res) {

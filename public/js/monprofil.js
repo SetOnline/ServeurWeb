@@ -39,17 +39,16 @@ socket.on('Reponse liste amis', function (infos) {
     console.debug(info);
     var noeudP;
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/profil/" + info[i].status + ".png'/></div>"; 
+        noeudP = "<div class='ami'><a href='profilJoueur/" + info[i].name + "' ><span class='pseudo'>" + info[i].name +"</span><img class='isconnect' alt='"+ info[i].status +"' src='/img/profil/" + info[i].status + ".png'/></a></div>"; 
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
 
 /*
     Réception évenement Reponse demande ami (feedback si le pseudo n'existe pas)
-    @param rslt:
+    @param rslt: int
 */
 socket.on('Reponse demande ami', function (rslt) {
-    alert("test");
     if (rslt == 0) {
         alert("Pseudo invalide!");
     }
@@ -71,8 +70,12 @@ socket.on('Reponse liste demandes amis', function (infos) {
     //récupération des données du serveur
     var info = JSON.parse(infos);
     var noeudP;
+    if (info.length == 0) {
+        noeudP = "<p>Aucune demande d'amis pour l'instant</p>";
+        myNode.innerHTML = myNode.innerHTML + noeudP;
+    }
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img alt='accepter' onclick='socket.emit(\"Accepter ami\", \"" + info[i].name + "\");majListeAmi();' src='/img/profil/accepter.jpg'/><img alt='refuser' onclick='socket.emit(\"Refuser ami\", \"" + info[i].name + "\");' src='/img/profil/refuser.jpg'/></div>";
+        noeudP = "<div class='ami'><span class='pseudo'>" + info[i].name + "</span><img class='bt' alt='accepter' onclick='socket.emit(\"Accepter ami\", \"" + info[i].name + "\");majListeAmi();' src='/img/bt_yes.png'/><img alt='refuser' class='bt' onclick='socket.emit(\"Refuser ami\", \"" + info[i].name + "\");' src='/img/bt_no.png'/></div>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
@@ -181,7 +184,6 @@ function ModifierProfil(form) {
 
     //affichage debug
     console.debug(donnees);
-    alert("test");
 
     //envoi au serveur
     socket.emit('Modifier profil', JSON.stringify(donnees));
