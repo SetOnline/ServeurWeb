@@ -52,7 +52,7 @@ function bdd() {
                     // sinon go for it
                     else {
                         var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) " 
-                                    + "VALUES('" + mail + "','', '" + date.toMysqlFormat() 
+                                    + "VALUES('" + mail + "','profil_" + login + "', '" + date.toMysqlFormat() 
                                     + "', '" + login + "', '" + password + "', '1') ";
                         
                         bdd.query(requete, function select3(error, results, fields) {

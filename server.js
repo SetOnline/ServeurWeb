@@ -117,7 +117,8 @@ sessionSockets.on('connection', function (err, socket, session) {
         var mail = compte[0].value.toLowerCase();
         var pseudo = compte[1].value.toLowerCase();
         var mdp = compte[2].value.toLowerCase();
-        var img = compte[3].value();
+        var temp = compte[3].value;
+        var img = new Buffer(temp, 'base64');
         fs.writeFile('public/img/profil_' + pseudo + '.jpg', img, function (err) {
             if (err) throw err;
             console.log('It\'s saved!');
