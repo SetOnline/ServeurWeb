@@ -108,7 +108,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         if (utilisateursConnectes[pseudo] != 1)
             bdd.connexionUser(pseudo, mdp, socket, session, Utilisateur, utilisateursConnectes);
         else
-            socket.emit('Resultat connexion', 0);
+            socket.emit('Resultat connexion', 2);
     });
 
     // creation compte

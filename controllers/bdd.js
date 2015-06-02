@@ -243,7 +243,7 @@ function bdd() {
                             return;
                         }
                         if (results.length > 0) {
-                            socket.emit('Reponse demande ami', 0);
+                            socket.emit('Reponse demande ami', 2);
                         }
                         else {
                             var requetetest2 = "SELECT * " 
@@ -257,7 +257,7 @@ function bdd() {
                                     return;
                                 }
                                 if (results.length > 0) {
-                                    socket.emit('Reponse demande ami', 0);
+                                    socket.emit('Reponse demande ami', 2);
                                 }
                                 else {
                                     var requete = "INSERT INTO Amis(usr1, usr2, valide) " 
