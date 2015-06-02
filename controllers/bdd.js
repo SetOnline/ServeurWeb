@@ -16,7 +16,7 @@ function bdd() {
     /////////////////////////////////////////////////
 
     // ajoute un utilisateur (+ verifs)
-    this.addUser = function (mail, login, password, socket) {
+    this.addUser = function (mail, login, password, img, socket) {
         var date = new Date();
         // on test si le mail existe
         var testMail = "SELECT * FROM Utilisateur WHERE email = '" + mail + "'";
@@ -52,7 +52,7 @@ function bdd() {
                     // sinon go for it
                     else {
                         var requete = "INSERT INTO UTILISATEUR(email, avatar, dateInscription, pseudo, mdp, valide) " 
-                                    + "VALUES('" + mail + "','profil_" + login + "', '" + date.toMysqlFormat() 
+                                    + "VALUES('" + mail + "','" + img + "', '" + date.toMysqlFormat() 
                                     + "', '" + login + "', '" + password + "', '1') ";
                         
                         bdd.query(requete, function select3(error, results, fields) {
@@ -74,11 +74,11 @@ function bdd() {
         });
     };
     
-    // modifie le pseudo d'un utilisateur
-    this.modifierPseudoUser = function (nouveauPseudo, ancienPseudo) {
+    // modifie le mdp d'un utilisateur
+    this.modifierMdpUser = function (nouveauMdp, pseudo) {
         var requete = "UPDATE Utilisateur "
-                    + "SET pseudo = " + nouveauPseudo + " "
-                    + "WHERE pseudo = " + ancienPseudo + " ";
+                    + "SET mdp = " + nouveauMdp + " "
+                    + "WHERE pseudo = " + pseudo + " ";
         
         bdd.query(requete, function select(error, results, fields) {
             if (error) {

@@ -118,12 +118,16 @@ sessionSockets.on('connection', function (err, socket, session) {
         var pseudo = compte[1].value.toLowerCase();
         var mdp = compte[2].value.toLowerCase();
         var temp = compte[3].value;
-        var img = new Buffer(temp, 'base64');
-        fs.writeFile('public/img/profil_' + pseudo + '.jpg', img, function (err) {
-            if (err) throw err;
-            console.log('It\'s saved!');
-        });
-        var usr = new Utilisateur(mail, pseudo, mdp);
+        var nomImg = "profil_";
+        if (temp != "") {
+            nomImg = "profil_" + pseudo;
+            var img = new Buffer(temp, 'base64');
+            fs.writeFile('public/img/profil_' + pseudo + '.jpg', img, function (err) {
+                if (err) throw err;
+                console.log('It\'s saved!');
+            });
+        }
+        var usr = new Utilisateur(mail, pseudo, nomImg, mdp);
         usr.insereBdd(bdd, socket);
     });
     
@@ -147,8 +151,27 @@ sessionSockets.on('connection', function (err, socket, session) {
             socket.emit('Resultat est connecte', session.utilisateur.pseudo);
         else
             socket.emit('Resultat est connecte', 0);
-    }); 
+    });
     
+    socket.on('Modifier profil', function (donneesJSON) {
+        var donnees = JSON.parse(donneesJSON);
+        var mdp = compte[0].value.toLowerCase();
+        var mdp2 = compte[1].value.toLowerCase();
+        var temp = compte[2].value;
+        if (temp != "") {
+            var img = new Buffer(temp, 'base64');
+            fs.writeFile('public/img/profil_' + session.utilisateur.pseudo + '.jpg', img, function (err) {
+                if (err) throw err;
+                console.log('It\'s saved!');
+            });
+        }
+        if (mdp != "" && mdp == mdp2) {
+            bdd.modifierMdpUser(mdp, session.utilisateur.pseudo);
+        }
+    });
+    
+    
+
     /////////////////////////////////////////////////
     // GESTION DES CLASSEMENTS
     /////////////////////////////////////////////////

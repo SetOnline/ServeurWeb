@@ -1,12 +1,13 @@
 module.exports.utilisateur = Utilisateur;
 
 // permet de construire des objets Utilisateur
-function Utilisateur(mail, login, pwd, id){
+function Utilisateur(mail, login, pwd, image, id){
 
     this.idUtilisateur = id || 0;
     this.adresseMail = mail;
     this.pseudo = login;
     this.mdp = pwd;
+    this.img = image;
     
     var that = this;
     
@@ -35,7 +36,7 @@ function Utilisateur(mail, login, pwd, id){
             socket.emit('Resultat inscription', JSON.stringify(resultat));
         }
         else {
-            bdd.addUser(that.adresseMail, that.pseudo, that.mdp, socket);
+            bdd.addUser(that.adresseMail, that.pseudo, that.mdp, that.img, socket);
         }  
     };
     
