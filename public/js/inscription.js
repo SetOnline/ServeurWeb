@@ -91,14 +91,14 @@ function creationCompte() {
     var pseudo = $("#pseudo").val();
     var mail = $("#mail").val();
     var mdp = $("#mdp").val();
-    //var avatar = $("#avatar").val();
+    var avatar = $("#avatar").val();
     
     //mise dans un tableau
     var donnees = [];
     donnees.push({ name: 'mail', value: mail });
     donnees.push({ name: 'pseudo', value: pseudo });
     donnees.push({ name: 'mdp', value: mdp });
-    //donnees.push({ name: 'avatar', value: avatar });
+    donnees.push({ name: 'avatar', value: avatar });
     
     //affichage debug
     console.debug(donnees);

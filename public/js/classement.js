@@ -29,7 +29,7 @@ socket.on('Reponse classement', function (message) {
         console.log(val);
         var ligne = tableau.insertRow(-1);//ajout d'une ligne
         var colonne1 = ligne.insertCell(0);//1e cellule
-        colonne1.innerHTML += val['name'];//ajout de son contenu
+        colonne1.innerHTML += "<a href='profilJoueur/" + val['name'] + " '>" + val['name'] + "</a>";//ajout de son contenu
         var colonne2 = ligne.insertCell(1);//2e cellule
         colonne2.innerHTML += val['value'];
     })
@@ -48,7 +48,7 @@ socket.on('Reponse classement jour', function (message) {
         console.log(val);
         var ligne = tableau.insertRow(-1);//ajout d'une ligne
         var colonne1 = ligne.insertCell(0);//1e cellule
-        colonne1.innerHTML += val['name'];//ajout de son contenu
+        colonne1.innerHTML += "<a href='profilJoueur/" + val['name'] + " '>" + val['name'] + "</a>";//ajout de son contenu
         var colonne2 = ligne.insertCell(1);//2e cellule
         colonne2.innerHTML += val['value'];
     })
@@ -66,7 +66,7 @@ socket.on('Reponse classement semaine', function (message) {
         console.log(val);
         var ligne = tableau.insertRow(-1);//ajout d'une ligne
         var colonne1 = ligne.insertCell(0);//1e cellule
-        colonne1.innerHTML += val['name'];//ajout de son contenu
+        colonne1.innerHTML += "<a href='profilJoueur/" + val['name'] + " '>" + val['name'] + "</a>";//ajout de son contenu
         var colonne2 = ligne.insertCell(1);//2e cellule
         colonne2.innerHTML += val['value'];
     })
@@ -86,3 +86,4 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
         document.getElementById('profil').style.display = 'inline';
     }
 });
+

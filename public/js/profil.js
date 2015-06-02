@@ -53,3 +53,11 @@ socket.on('Reponse voir liste medailles', function (infos) {
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
+
+/*
+    Réception évènement Reponse nom avatar
+    @param source: string ac la source
+*/
+socket.on('Reponse nom avatar', function (source) {
+    document.getElementById("avatarProfil").src = "/img/" + source + ".jpg";
+});
