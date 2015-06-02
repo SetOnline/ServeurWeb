@@ -77,8 +77,8 @@ function bdd() {
     // modifie le mdp d'un utilisateur
     this.modifierMdpUser = function (nouveauMdp, pseudo) {
         var requete = "UPDATE Utilisateur "
-                    + "SET mdp = " + nouveauMdp + " "
-                    + "WHERE pseudo = " + pseudo + " ";
+                    + "SET mdp = '" + nouveauMdp + "' "
+                    + "WHERE pseudo = '" + pseudo + "' ";
         
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
@@ -91,8 +91,8 @@ function bdd() {
     // modifie l'email d'un utilisateur
     this.modifierEmailUser = function (nouveauMail, pseudo) {
         var requete = "UPDATE Utilisateur U "
-                    + "SET email = " + nouveauMail + " "
-                    + "WHERE pseudo = " + pseudo + " ";
+                    + "SET email = '" + nouveauMail + "' "
+                    + "WHERE pseudo = '" + pseudo + "' ";
         
         bdd.query(requete, function select(error, results, fields) {
             if (error) {

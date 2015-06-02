@@ -172,9 +172,9 @@ sessionSockets.on('connection', function (err, socket, session) {
     
     socket.on('Modifier profil', function (donneesJSON) {
         var donnees = JSON.parse(donneesJSON);
-        var ancienmdp = compte[0].value.toLowerCase();
-        var nouveaumdp = compte[1].value.toLowerCase();
-        var temp = compte[2].value;
+        var ancienmdp = donnees[0].value.toLowerCase();
+        var nouveaumdp = donnees[1].value.toLowerCase();
+        var temp = donnees[2].value;
         if (temp != "") {
             var img = new Buffer(temp, 'base64');
             fs.writeFile('public/img/profil_' + session.utilisateur.pseudo + '.jpg', img, function (err) {
