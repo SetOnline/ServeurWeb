@@ -104,7 +104,7 @@ function bdd() {
 
     // connecte un utilisateur (donc il faut la socket, session & co)
     this.connexionUser = function (login, password, socket, session, Utilisateur, utilisateursConnectes) {
-        var requete = "SELECT idUtilisateur, img, email" 
+        var requete = "SELECT idUtilisateur, avatar, email" 
                     + " FROM Utilisateur U" 
                     + " WHERE U.pseudo = '" + login + "'" 
                     + " AND U.mdp = '" + password + "'";
@@ -116,7 +116,7 @@ function bdd() {
             }
             if (results.length > 0) {
                 var firstResult = results[0];
-                session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['img'], firstResult['idUtilisateur']);
+                session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['avatar'], firstResult['idUtilisateur']);
                 session.save();
                 utilisateursConnectes[login] = 1;
                 socket.emit('Resultat connexion', 1);
