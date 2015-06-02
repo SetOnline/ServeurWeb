@@ -128,7 +128,7 @@ function bdd() {
     };
     
     this.nomAvatar = function (pseudo, socket){
-        var requete = "SELECT img" 
+        var requete = "SELECT avatar" 
                     + " FROM Utilisateur U" 
                     + " WHERE U.pseudo = '" + pseudo + "'";
         
@@ -139,7 +139,7 @@ function bdd() {
             }
             if (results.length > 0) {
                 var firstResult = results[0];
-                socket.emit('Reponse nom avatar', firstResult['img']);
+                socket.emit('Reponse nom avatar', firstResult['avatar']);
             }
         });
     }
