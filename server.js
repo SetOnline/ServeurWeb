@@ -132,9 +132,17 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
     
     socket.on('Demande avatar', function (pseudo) {
-        fs.readFile('public/img/profile_' + pseudo + '.jpg', function (err, data) {
-            var image = new Buffer(data).toString('base64');
-            socket.emit('Reponse avatar', image);
+        fs.readFile('public/img/profil_' + pseudo + '.jpg', function (err, data) {
+            if (err) {
+                fs.readFile('public/img/avatar.jpg', function (err, data) {
+                    var image = new Buffer(data).toString('base64');
+                    socket.emit('Reponse avatar', image);
+                });
+            }
+            else {
+                var image = new Buffer(data).toString('base64');
+                socket.emit('Reponse avatar', image);
+            }
         });
     });
     
