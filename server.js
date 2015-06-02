@@ -127,6 +127,13 @@ sessionSockets.on('connection', function (err, socket, session) {
         usr.insereBdd(bdd, socket);
     });
     
+    socket.on('Demande avatar', function (pseudo) {
+        fs.readFile('public/img/profile_' + pseudo + '.jpg', function (err, data) {
+            var image = new Buffer(data).toString('base64');
+            socket.emit('Reponse avatar', image);
+        });
+    });
+    
     // deconnexion
     socket.on('Deco', function () {
         utilisateursConnectes[session.utilisateur.pseudo] = 0;
