@@ -8,6 +8,7 @@ function codeAddress() {
     
     socket.emit('Demande liste trophees');
     socket.emit('Demande liste medailles');
+    socket.emit('Demande nom avatar',"");
     
     $(document).tooltip();
 }
@@ -18,6 +19,7 @@ setInterval(function () { majListeAmi(); }, 10000); //màj de la liste d'amis
 ///////////////////
 // Evenements Client - Serveur
 ///////////////////
+
 
 ///////////////////
 // Evenements Serveur - Client
@@ -45,6 +47,14 @@ socket.on('Reponse liste amis', function (infos) {
 });
 
 /*
+    Réception évènement Reponse nom avatar
+    @param source: string ac la source
+*/
+socket.on('Reponse nom avatar', function (source) {
+    document.getElementById(avatarProfil).src = source;
+});
+
+/*
     Réception évenement Reponse demande ami (feedback si le pseudo n'existe pas)
     @param rslt: int
 */
@@ -52,7 +62,12 @@ socket.on('Reponse demande ami', function (rslt) {
     if (rslt == 0) {
         alert("Pseudo invalide!");
     }
-    else{ alert('Votre demande a bien été prise en compte!'); }
+    else {
+        if (rslt == 1) {
+            alert(''); //???
+        }
+        else{ alert('Votre demande a bien été prise en compte!'); }
+    }
 });
 
 /*
@@ -92,7 +107,7 @@ socket.on('Reponse liste trophees', function (infos) {
     var noeudP;
     var myNode = document.getElementById("trophes");
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<img class='miniature' alt='trophe' src='/img/"+ info[i].pic +".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span>";
+        noeudP = "<img class='miniature' alt='trophe' src='/img/"+ info[i].pic +".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
@@ -109,7 +124,7 @@ socket.on('Reponse liste medailles', function (infos) {
     var noeudP;
     var myNode = document.getElementById("medailles");
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<img class='miniature' alt='medaille' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span>";
+        noeudP = "<img class='miniature' alt='medaille' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });

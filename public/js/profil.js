@@ -7,7 +7,7 @@ function codeAddress() {
     var pseudot = pseudo.html();
     socket.emit('Voir liste trophees', pseudot);
     socket.emit('Voir liste medailles', pseudot);
-    
+    socket.emit('Demande nom avatar', pseudot);
     $(document).tooltip();
 }
 
@@ -25,7 +25,7 @@ function codeAddress() {
     @param infos : fichier Json de la forme:
     * name : nom    desc : description        pic : nom l’image
 */
-socket.on('Reponse liste trophees', function (infos) {
+socket.on('Reponse voir liste trophees', function (infos) {
     //récupération des données du serveur
     var info = JSON.parse(infos);
     console.debug(info);
@@ -42,7 +42,7 @@ socket.on('Reponse liste trophees', function (infos) {
     @param infos : fichier Json de la forme:
     * name : nom    desc : description        pic : nom l’image
 */
-socket.on('Reponse liste medailles', function (infos) {
+socket.on('Reponse voir liste medailles', function (infos) {
     //récupération des données du serveur
     var info = JSON.parse(infos);
     console.debug(info);

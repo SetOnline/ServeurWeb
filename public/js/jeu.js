@@ -124,6 +124,9 @@ socket.on('Nouvelle partie', function (nouveauJeu) {
             AC.removeChild(AC.firstChild);
         }
     }
+
+    //gestion des étoiles
+    majetoile(nbSets);
 });
 
 /*
@@ -155,8 +158,23 @@ socket.on('Set valide', function (setQuiEstValide) {
     document.getElementById('nbSets').innerHTML = nbSetsTotal;
     document.getElementById('nbSetsTrouves').innerHTML = nbSets;
     
-    //afficher nbPtsGagne en gros pdt une courte période
+    //afficher nbPtsGagne et img en dessous en gros pdt une courte période
     document.getElementById('nbdepts').innerHTML = nbPtsTotal;
+    
+    var showPtsGagne = function () {
+        document.getElementById('nbPtsGagne').innerHTML = " + " + nbPtsGagne;
+        document.getElementById('imgnbPtsGagne').style.display = "inline";
+        setTimeout(hidePtsGagne, 1000);
+    }
+    
+    var hidePtsGagne = function () {
+        document.getElementById('nbPtsGagne').innerHTML = "";
+        document.getElementById('imgnbPtsGagne').style.display = "none";
+    }
+    
+    showPtsGagne();
+
+    feedback("Positif");
 });
 
 /*
@@ -166,7 +184,7 @@ socket.on('Set valide', function (setQuiEstValide) {
         name: carte2 value: 2312
 */
 socket.on('Set invalide', function (setQuiEstInvalide) {
-    console.log('pas valide, reessaie p\'tit hacker');
+    feedback("Negatif");
 });
 
 /*
@@ -218,6 +236,7 @@ function demandeClassement() {
 */
 function loadGame(combiCartes) {
     var codeCarte = 0;
+    viderCartes();
     // 1) suppression
     var myNode = document.getElementById("jeu");
     while (myNode.firstChild) {
@@ -370,9 +389,8 @@ function cardEvents() {
             }
             else {
                 // ici ins�rer ce qu'on veut mettre quand il se trompe
-                console.log("combinaison incorrecte");
-                console.log("set: " + toStringCards());
                 viderCartes();
+                feedback("Negatif");
             }
         }
     });
@@ -382,3 +400,38 @@ function cardEvents() {
 function toStringCards() {
     return (carte1 + carte2 + carte3);
 }
+
+/*Fonction permettant de gérer les étoiles*/
+function majetoile(nbSets){
+    if (nbSets < 3) {
+        //3 étoiles
+        document.getElementById('etoile2').style.display = 'inline';
+        document.getElementById('etoile3').style.display = 'inline';
+    }
+    else if (nbSets < 6) {
+        //2 étoiles
+        document.getElementById('etoile2').style.display = 'inline';
+        document.getElementById('etoile3').style.display = 'none';
+    }
+    else {
+        //1 étoile 
+        document.getElementById('etoile2').style.display = 'none';
+        document.getElementById('etoile3').style.display = 'none';
+    }
+}
+
+/*Fonction permettant de faire un feedback */
+function feedback(type) {
+    var myDiv = document.getElementById(type);
+    
+    var show = function () {
+        myDiv.style.display = "block";
+        setTimeout(hide, 750);  // 1 secondes
+    }
+    
+    var hide = function () {
+        myDiv.style.display = "none";
+    }
+
+    show();
+};

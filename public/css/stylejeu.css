@@ -254,3 +254,60 @@
 .bb {
     font-family:'ButterflyBall';
 }
+
+.etoile{
+    width:3%;
+    position: absolute;
+    top:5%;
+    z-index:5;
+    filter: contrast(180%);
+}
+
+#etoile1{
+    margin-left:43%;
+    
+}
+
+#etoile2{
+    margin-left:47%;
+    
+}
+
+#etoile3{
+    margin-left:51%;
+}
+
+#Negatif{
+    display:none;
+}
+
+.visage{
+    filter: contrast(110%);
+    position:absolute;
+    z-index:6;
+    width:10%;
+    margin-left:70%;
+}
+
+#Positif {
+    display:none;
+}
+
+#imgnbPtsGagne{
+    z-index:6;
+    position:absolute;
+    width:12%;
+    top:30%;
+    display:none;
+}
+
+#nbPtsGagne{
+    font-weight: bold;
+    text-align: center;
+    font-size: 42px;
+    z-index:7;
+    top:36%;
+    left:4%;
+    position:absolute;
+    color:green;
+}

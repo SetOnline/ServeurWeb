@@ -20,7 +20,12 @@ socket.on('Resultat connexion', function (RsltConnexion) {
         document.location.href = "/accueil";
     } 
     else {
-        alert('Données invalides, veuillez réessayer.');
+        if (RsltConnexion == 2) {
+            alert("Vous êtes déjà connecté ailleurs sous ce pseudo...");
+        }
+        else {
+            alert('Données invalides, veuillez réessayer.');
+        }
     }
 });
 
