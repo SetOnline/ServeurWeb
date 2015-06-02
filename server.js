@@ -239,7 +239,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
     
     socket.on('Voir liste trophees', function (pseudo) {
-        bdd.tropheesByPseudo(pseudo, socket);
+        bdd.voirTropheesByPseudo(pseudo, socket);
     });
 
     /////////////////////////////////////////////////
@@ -251,7 +251,7 @@ sessionSockets.on('connection', function (err, socket, session) {
     });
 
     socket.on('Voir liste medailles', function (pseudo) {
-        bdd.medaillesByPseudo(pseudo, socket);
+        bdd.voirMedaillesByPseudo(pseudo, socket);
     });
 });
 

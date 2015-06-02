@@ -498,6 +498,25 @@ function bdd() {
             socket.emit('Reponse liste trophees', JSON.stringify(listeTropheesJSON));
         });
     };
+    
+    this.voirTropheesByPseudo = function (pseudo, socket) {
+        var requete = "SELECT T.nomT, T.imgT, T.descriptionT " 
+                    + "FROM TropheesUtilisateur TU, Trophee T, Utilisateur U " 
+                    + "WHERE TU.idTrophee = T.idTrophee " 
+                    + "AND TU.idUtilisateur = U.idUtilisateur " 
+                    + "AND U.pseudo = '" + pseudo + "' "
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            var listeTropheesJSON = [];
+            for (var i = 0; i < results.length; i++) {
+                listeTropheesJSON.push({ name : results[i]['nomT'], desc: results[i]['descriptionT'], pic: results[i]['imgT'] });
+            }
+            socket.emit('Reponse voir liste trophees', JSON.stringify(listeTropheesJSON));
+        });
+    };
 
     /////////////////////////////////////////////////
     // GESTION DES MEDAILLES
@@ -520,6 +539,25 @@ function bdd() {
                 listeMedaillesJSON.push({ name : results[i]['nomM'], desc: results[i]['descriptionM'], pic: results[i]['imgM'] });
             }
             socket.emit('Reponse liste medailles', JSON.stringify(listeMedaillesJSON));
+        });
+    };
+    
+    this.voirMedaillesByPseudo = function (pseudo, socket) {
+        var requete = "SELECT M.nomM, M.imgM, M.descriptionM " 
+                    + "FROM Utilisateur U, Medaille M " 
+                    + "WHERE M.idUtilisateur = U.idUtilisateur " 
+                    + "AND U.pseudo = '" + pseudo + "' ";
+        console.log(requete);
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            var listeMedaillesJSON = [];
+            for (var i = 0; i < results.length; i++) {
+                listeMedaillesJSON.push({ name : results[i]['nomM'], desc: results[i]['descriptionM'], pic: results[i]['imgM'] });
+            }
+            socket.emit('Reponse voir liste medailles', JSON.stringify(listeMedaillesJSON));
         });
     };
 
