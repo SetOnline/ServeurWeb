@@ -127,7 +127,8 @@ sessionSockets.on('connection', function (err, socket, session) {
                 console.log('It\'s saved!');
             });
         }
-        var usr = new Utilisateur(mail, pseudo, nomImg, mdp);
+
+        var usr = new Utilisateur(mail, pseudo, mdp, nomImg);
         usr.insereBdd(bdd, socket);
     });
     
