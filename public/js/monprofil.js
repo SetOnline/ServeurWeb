@@ -51,7 +51,7 @@ socket.on('Reponse liste amis', function (infos) {
     @param source: string ac la source
 */
 socket.on('Reponse nom avatar', function (source) {
-    document.getElementById(avatarProfil).src = source;
+    document.getElementById("avatarProfil").src = "/img/" + source + ".jpg";
 });
 
 /*
@@ -63,8 +63,8 @@ socket.on('Reponse demande ami', function (rslt) {
         alert("Pseudo invalide!");
     }
     else {
-        if (rslt == 1) {
-            alert(''); //???
+        if (rslt == 2) {
+            alert('Vous avez déjà demandé cette personne en ami'); 
         }
         else{ alert('Votre demande a bien été prise en compte!'); }
     }
@@ -178,7 +178,6 @@ function desinscription() {
 /*Fonction permettant d'ajouter le pseudo rentré dans le form en ami*/
 function ajouteAmi(){
     socket.emit('Demander ami', $("#pseudoAjout").val());
-    document.location.href = "/profil";
 }
 
 /*
