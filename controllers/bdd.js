@@ -104,7 +104,7 @@ function bdd() {
 
     // connecte un utilisateur (donc il faut la socket, session & co)
     this.connexionUser = function (login, password, socket, session, Utilisateur, utilisateursConnectes) {
-        var requete = "SELECT idUtilisateur, email" 
+        var requete = "SELECT idUtilisateur, img, email" 
                     + " FROM Utilisateur U" 
                     + " WHERE U.pseudo = '" + login + "'" 
                     + " AND U.mdp = '" + password + "'";
@@ -116,7 +116,7 @@ function bdd() {
             }
             if (results.length > 0) {
                 var firstResult = results[0];
-                session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['idUtilisateur']);
+                session.utilisateur = new Utilisateur(firstResult['email'], login, password, firstResult['img'], firstResult['idUtilisateur']);
                 session.save();
                 utilisateursConnectes[login] = 1;
                 socket.emit('Resultat connexion', 1);
@@ -126,6 +126,23 @@ function bdd() {
             }
         });
     };
+    
+    this.nomAvatar = function (pseudo, socket){
+        var requete = "SELECT img" 
+                    + " FROM Utilisateur U" 
+                    + " WHERE U.pseudo = '" + pseudo + "'";
+        
+        bdd.query(requete, function select(error, results, fields) {
+            if (error) {
+                console.log(error);
+                return;
+            }
+            if (results.length > 0) {
+                var firstResult = results[0];
+                socket.emit('Reponse nom avatar', firstResult['img']);
+            }
+        });
+    }
     
     /////////////////////////////////////////////////
     // GESTION DES CLASSEMENTS
@@ -422,8 +439,6 @@ function bdd() {
                 return;
             }
             var listeAmisJSON = [];
-            console.log("amis de " + pseudo + ":");
-            console.log(results);
             for (var i = 0; i < results.length; i++) {
                 if (utilisateursConnectes[results[i]['pseudo']] == 1)
                     listeAmisJSON.push({ name : results[i]['pseudo'], status: true, points: results[i]['nbDePts'] });
@@ -444,7 +459,6 @@ function bdd() {
                     + "FROM TropheesUtilisateur TU "
                     + "WHERE TU.idUtilisateur = " + idUtilisateur + " "
                     + "AND TU.idTrophee = " + idTrophee + " ";
-        console.log(requete);
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -470,8 +484,6 @@ function bdd() {
                         }
                         debloqueTropheeJSON = [];
                         debloqueTropheeJSON.push({name: results[0]["nomT"], desc: results[0]["descriptionT"], pic: results[0]["imgT"]});
-                        console.log("jenvoie:");
-                        console.log(debloqueTropheeJSON);
                         socket.emit('Deblocage trophee', JSON.stringify(debloqueTropheeJSON));
                     });
                 });
@@ -528,7 +540,6 @@ function bdd() {
                     + "FROM Utilisateur U, Medaille M " 
                     + "WHERE M.idUtilisateur = U.idUtilisateur " 
                     + "AND U.pseudo = '" + pseudo + "' ";
-        console.log(requete);
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);
@@ -547,7 +558,6 @@ function bdd() {
                     + "FROM Utilisateur U, Medaille M " 
                     + "WHERE M.idUtilisateur = U.idUtilisateur " 
                     + "AND U.pseudo = '" + pseudo + "' ";
-        console.log(requete);
         bdd.query(requete, function select(error, results, fields) {
             if (error) {
                 console.log(error);

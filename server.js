@@ -118,7 +118,7 @@ sessionSockets.on('connection', function (err, socket, session) {
         var pseudo = compte[1].value.toLowerCase();
         var mdp = compte[2].value.toLowerCase();
         var temp = compte[3].value;
-        var nomImg = "profil_";
+        var nomImg = "avatar";
         if (temp != "") {
             nomImg = "profil_" + pseudo;
             var img = new Buffer(temp, 'base64');
@@ -131,6 +131,15 @@ sessionSockets.on('connection', function (err, socket, session) {
         usr.insereBdd(bdd, socket);
     });
     
+    socket.on('Demande nom avatar', function (pseudo){
+        if (pseudo == "") {
+            socket.emit('Reponse nom avatar', session.utilisateur.img);
+        }
+        else {
+            bdd.nomAvatar(pseudo, socket);
+        }
+    })
+
     socket.on('Demande avatar', function (pseudo) {
         fs.readFile('public/img/profil_' + pseudo + '.jpg', function (err, data) {
             if (err) {
@@ -163,8 +172,8 @@ sessionSockets.on('connection', function (err, socket, session) {
     
     socket.on('Modifier profil', function (donneesJSON) {
         var donnees = JSON.parse(donneesJSON);
-        var mdp = compte[0].value.toLowerCase();
-        var mdp2 = compte[1].value.toLowerCase();
+        var ancienmdp = compte[0].value.toLowerCase();
+        var nouveaumdp = compte[1].value.toLowerCase();
         var temp = compte[2].value;
         if (temp != "") {
             var img = new Buffer(temp, 'base64');
@@ -173,8 +182,8 @@ sessionSockets.on('connection', function (err, socket, session) {
                 console.log('It\'s saved!');
             });
         }
-        if (mdp != "" && mdp == mdp2) {
-            bdd.modifierMdpUser(mdp, session.utilisateur.pseudo);
+        if (ancienmdp == session.utilisateur.mdp && nouveaumdp != "") {
+            bdd.modifierMdpUser(nouveaumdp, session.utilisateur.pseudo);
         }
     });
     
