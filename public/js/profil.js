@@ -47,7 +47,7 @@ socket.on('Reponse voir liste trophees', function (infos) {
     var noeudP;
     var myNode = document.getElementById("trophes");
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<img class='miniature' alt='trophe' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span>";
+        noeudP = "<img class='miniature' alt='trophe' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
@@ -64,7 +64,7 @@ socket.on('Reponse voir liste medailles', function (infos) {
     var noeudP;
     var myNode = document.getElementById("medailles");
     for (i = 0; i < info.length ; ++i) {
-        noeudP = "<img class='miniature' alt='medaille' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span>";
+        noeudP = "<img class='miniature' alt='medaille' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
 });
