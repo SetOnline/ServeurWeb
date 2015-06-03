@@ -1,4 +1,5 @@
 ﻿var socket = io();
+var avatar = "";
 
 //Chargement de la page
 function codeAddress() {
@@ -68,6 +69,7 @@ socket.on('Reponse demande ami', function (rslt) {
         }
         else {
             swal("Votre demande a bien été prise en compte!");
+            $("#pseudoAjout").val('');
         }
     }
 });
@@ -165,6 +167,13 @@ socket.on('Deblocage trophee', function (info) {
     });
 });
 
+/*
+    Permet de savoir quand est-ce que l'image a été modifiée
+*/
+
+socket.on('Reponse image profil', function (){
+    location.reload(); 
+})
 
 ///////////////////
 // Evenements Client - Serveur
@@ -209,7 +218,7 @@ function ModifierProfil(form) {
     //recuperation des valeurs du formulaire
     var ancien_mdp = $("#Ancien_mdp").val();
     var nouveau_mdp = $("#Nouveau_mdp").val();
-    var avatar = $("#avatar").val();
+    avatar = avatar.substring(23);
 
     //mise dans un tableau
     var donnees = [];
@@ -222,6 +231,9 @@ function ModifierProfil(form) {
 
     //envoi au serveur
     socket.emit('Modifier profil', JSON.stringify(donnees));
+    swal("Modifications enregistrées!");
+    $("#Ancien_mdp").val('');
+    $("#Nouveau_mdp").val('');
 }
 
 /*
@@ -230,4 +242,23 @@ function ModifierProfil(form) {
 function deco() {
     socket.emit('Deco');
     document.location.href = "/accueil";
+}
+
+/*Gestion du "file"*/
+function previewFile() {
+    var preview = document.getElementById('i');
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
+    
+    reader.onloadend = function () {
+        preview.src = reader.result;
+        avatar = reader.result;
+        avatar = avatar.replace(' ', '+');
+    }
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
 }

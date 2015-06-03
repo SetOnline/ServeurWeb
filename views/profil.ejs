@@ -65,7 +65,7 @@
         </div>
 		<form>
 			<label for="pseudoAjout" class="bb">Pseudo: </label>
-			<input type="text" id="pseudoAjout" required />
+			<input type="text" id="pseudoAjout" />
 			<input type="button" value="Ajouter" class="btn bb" onclick="ajouteAmi()">
 		</form>
 		 
@@ -84,7 +84,8 @@
 				<label for="Nouveau_mdp" class="bb">Nouveau mot de passe: </label>
 				<input type="password" id="Nouveau_mdp" />
 				<label for="avatar" class="bb">Avatar</label>
-				<input type="file" id="avatar" accept="image/*"/>
+				<input type="file" id="avatar" accept="image/*" onchange="previewFile()"/>
+				<img id="i" src="" alt=" " height="200px" width="200px" onload="redim_image()">
 				<input type="button" value="Modifier" class="btn bb" onclick="ModifierProfil()"></button>
 			</form>
         </div>

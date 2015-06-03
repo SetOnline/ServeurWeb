@@ -4,6 +4,7 @@ var avatar;
 //Chargement de la page
 function codeAddress() {
     socket.emit('Est connecte');
+    $(document).tooltip();
 }
 window.onload = codeAddress();
 
@@ -52,8 +53,11 @@ socket.on('Resultat inscription', function (message) {
         swal("L'avatar choisi n'est pas valide");
     }*/
 
-    if (info[0].value == "true" && info[1].value == "true" && info[2].value == "true"/*&& info[3].value=="true"*/) {
-        swal("Inscription réussie!");
+    if (info[0].value == "true" && info[1].value == "true" && info[2].value == "true" /*&& info[3].value=="true"*/) {
+        swal({
+            title: "Inscription réussie",
+            showConfirmButton: false
+        });
 
         //On connecte l'usr
         var donnees = [];
@@ -92,9 +96,7 @@ function creationCompte() {
     var pseudo = $("#pseudo").val();
     var mail = $("#mail").val();
     var mdp = $("#mdp").val();
-    avatar2 = avatar.substring(22);
-    alert(avatar);
-    console.log(avatar2);
+    avatar = avatar.substring(23);
     
     //mise dans un tableau
     var donnees = [];
@@ -110,3 +112,21 @@ function creationCompte() {
     socket.emit('Creation compte', JSON.stringify(donnees));
 }
 
+/*Gestion du "file"*/
+function previewFile() {
+    var preview = document.getElementById('i');
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
+    
+    reader.onloadend = function () {
+        preview.src = reader.result;
+        avatar = reader.result;
+        avatar = avatar.replace(' ', '+', avatar);
+    }
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
+}

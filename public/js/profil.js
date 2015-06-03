@@ -26,7 +26,7 @@ function codeAddress() {
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
     if (RsltConnexion == 0) {
-        document.location.href = "/accueil";
+        document.getElementById('connexion').style.display = 'none';
     }
     else {
         document.getElementById('pseudoConnecte').innerHTML = RsltConnexion;

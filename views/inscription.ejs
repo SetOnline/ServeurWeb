@@ -49,9 +49,8 @@
 					<label class="labelinscription" for="mdp">Mot de passe</label>
 					<input type="password" id="mdp" minlength="3" maxlength="20" required /><br />
 					<label class="labelinscription" for="avatar">Avatar</label>
-					<input type="file" id="avatar" accept="image/jpg" onchange="previewFile()"/><br />
+					<input title="Cette image sera redimensionnée en 200x200" type="file" id="avatar" accept="image/jpg" onchange="previewFile()"/><br />
 					<img id="i" src="" alt=" " height="200" onload="redim_image()">
-					<img id="rslt" src="" alt=" ">
 					<input type="button" class="btn bb" id="connect" value="Submit" onclick="creationCompte()">
 				</form>
 		</div>
