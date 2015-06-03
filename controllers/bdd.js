@@ -331,12 +331,25 @@ function bdd() {
                             return;
                         }
                         var requete4 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
-                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 2) ";
+                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 1) ";
                         bdd.query(requete4, function select4(error, results, fields) {
                             if (error) {
                                 console.log(error);
                                 return;
                             }
+                            var requete11 = "SELECT * " 
+                                 + "FROM Trophee " 
+                                 + "WHERE idTrophee = 1";
+                            
+                            bdd.query(requete11, function select11(error, results, fields) {
+                                if (error) {
+                                    console.log(error);
+                                    return;
+                                }
+                                debloqueTropheeJSON = [];
+                                debloqueTropheeJSON.push({ name: results[0]["nomT"], desc: results[0]["descriptionT"], pic: results[0]["imgT"] });
+                                socket.emit('Deblocage trophee', JSON.stringify(debloqueTropheeJSON));
+                            });
                         });
                     });
                 }
@@ -365,7 +378,7 @@ function bdd() {
                             return;
                         }
                         var requete7 = "INSERT INTO TropheesUtilisateur(idUtilisateur, idTrophee) " 
-                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 2) ";
+                                     + "VALUES(" + results[0]["idUtilisateur"] + ", 1) ";
                         bdd.query(requete7, function select7(error, results, fields) {
                             if (error) {
                                 console.log(error);

@@ -74,9 +74,9 @@ function setGame(){
                 if (socket.multiplicateur == 1) {
                     socket.nbPartiesAffilees++;
                     if (socket.nbPartiesAffilees == 10)
-                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 5, socket);
+                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 3, socket);
                     if (socket.nbPartiesAffilees == 20)
-                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 6, socket);
+                        bdd.ajouteTrophee(utilisateur.idUtilisateur, 4, socket);
                 }
             }
             // on garde en mémoire que le joueur a deja trouve ce set 
