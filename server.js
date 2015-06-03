@@ -181,6 +181,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             fs.writeFile('public/img/profil_' + session.utilisateur.pseudo + '.jpg', img, function (err) {
                 if (err) throw err;
                 console.log('It\'s saved!');
+                socket.emit('Reponse image profil');
             });
         }
         if (ancienmdp == session.utilisateur.mdp && nouveaumdp != "") {
