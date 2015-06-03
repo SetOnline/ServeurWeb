@@ -144,6 +144,15 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
     }
 });
 
+/*
+    Réception évènement Déblocage trophée
+    @param info : name : nom    desc : description        pic : nom l'image
+*/
+socket.on('Deblocage trophee', function (info) {
+    var infoTrophee = JSON.parse(info);
+    alert("Vous avez débloqué le trophée " + infoTrophee.name);
+});
+
 
 ///////////////////
 // Evenements Client - Serveur

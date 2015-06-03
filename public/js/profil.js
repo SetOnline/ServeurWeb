@@ -8,6 +8,7 @@ function codeAddress() {
     socket.emit('Voir liste trophees', pseudot);
     socket.emit('Voir liste medailles', pseudot);
     socket.emit('Demande nom avatar', pseudot);
+    socket.emit('Est connecte');
     $(document).tooltip();
 }
 
@@ -19,6 +20,20 @@ function codeAddress() {
 ///////////////////
 // Evenements Serveur - Client
 ///////////////////
+/*
+    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
+    @param RsltConnexion : 0 si pas connecté, pseudo sinon
+ */
+socket.on('Resultat est connecte', function (RsltConnexion) {
+    if (RsltConnexion == 0) {
+        document.location.href = "/accueil";
+    }
+    else {
+        document.getElementById('pseudoConnecte').innerHTML = RsltConnexion;
+        document.getElementById('co').style.display = 'block';
+        document.getElementById('profil').style.display = 'inline';
+    }
+});
 
 /*
     Réception évenement Reponse liste trophees
