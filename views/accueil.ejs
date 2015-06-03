@@ -7,6 +7,8 @@
 	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="/js/connect.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/styleaccueil.css">
@@ -45,14 +47,14 @@
 					<input type="text" id="pseudo" required />
 					<label for="mdp" class="bb">Mot de passe</label>
 					<input type="password" id="mdp" required />
-					<input type="button" class="btn" value="Submit" onclick="connexion()">
+					<input type="button" class="btn bb" value="Submit" onclick="connexion()">
 				</form>
 				<a href="/inscription" class="bb" id="insc"> Pas encore de compte? </a>
 			</div>
 			<div id="co">
 				<span class="bb" id="bj">Bonjour</span>
 				<span class="bb" id="pseudoCo"></span>
-				<button type="button" class="btn" onclick="deco()">Deconnexion</button> 
+				<button type="button" class="btn bb" onclick="deco()">Deconnexion</button> 
 			</div>
         </div>
     </header>

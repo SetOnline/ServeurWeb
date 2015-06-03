@@ -27,32 +27,32 @@ socket.on('Resultat inscription', function (message) {
     //vérification de chaque champ et affichage correspondant
     //adresse_mail
     if (info[0].value == "invalide") {
-        alert("L'adresse mail n'est pas valide");
+        swal("L'adresse mail n'est pas valide");
     }
     if (info[0].value == "deja prise") {
-        alert("Cette adresse mail est déjà utilisée");
+        swal("Cette adresse mail est déjà utilisée");
     }
     
     //pseudo
     if (info[1].value == "invalide") {
-        alert("Le pseudo n'est pas valide");
+        swal("Le pseudo n'est pas valide");
     }
     if (info[1].value == "deja pris") {
-        alert("Ce pseudo est déjà utilisé");
+        swal("Ce pseudo est déjà utilisé");
     }
     
     //mdp
     if (info[2].value == "invalide") {
-        alert("Le mot de passe n'est pas valide");
+        swal("Le mot de passe n'est pas valide");
     }
     
     //avatar
     /*if (info[3].value == "invalide") {
-        alert("L'avatar choisi n'est pas valide");
+        swal("L'avatar choisi n'est pas valide");
     }*/
 
     if (info[0].value == "true" && info[1].value == "true" && info[2].value == "true"/*&& info[3].value=="true"*/) {
-        alert("Inscription réussie!");
+        swal("Inscription réussie!");
 
         //On connecte l'usr
         var donnees = [];

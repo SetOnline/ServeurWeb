@@ -6,7 +6,7 @@
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.3.3.js"></script>
     <script src="/js/inscription.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="/css/jquery-ui.css">
     
 
     <meta charset="utf-8" />
@@ -40,15 +40,15 @@
 	<div id="contenu">
 		<div id="inscription">
 				<form>
-					<label class="labelinscription" for="pseudo">Pseudo: </label>
+					<label class="labelinscription" class="" for="pseudo">Pseudo: </label>
 					<input type="text" minlength="3" maxlength="20" id="pseudo" required /><br />
-					<label class="labelinscription" for="adr">Adresse mail: </label>
+					<label class="labelinscription" class="" for="adr">Adresse mail: </label>
 					<input type="email" id="mail" required /><br />
-					<label class="labelinscription" for="mdp">Mot de passe</label>
+					<label class="labelinscription" class="" for="mdp">Mot de passe</label>
 					<input type="password" id="mdp" minlength="3" maxlength="20" required /><br />
-					<label class="labelinscription" for="avatar">Avatar</label>
+					<label class="labelinscription" class="" for="avatar">Avatar</label>
 					<input type="file" id="avatar" accept="image/*"/><br />
-					<input type="button" class="btn" id="connect" value="Submit" onclick="creationCompte()">
+					<input type="button" class="btn bb" id="connect" value="Submit" onclick="creationCompte()">
 				</form>
 		</div>
 	</div>

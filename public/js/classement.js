@@ -19,8 +19,6 @@ window.onload = codeAddress();
  * */
 socket.on('Reponse classement', function (message) {
     //récupération des données du serveur
-    console.log("classement");
-    console.log(message);
     var info = JSON.parse(message);
     
     var tableau = document.getElementById("classement");

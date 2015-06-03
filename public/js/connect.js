@@ -16,15 +16,18 @@ window.onload = codeAddress();
 */
 socket.on('Resultat connexion', function (RsltConnexion) {
     if (RsltConnexion == 1) { //redirection
-        alert('connexion réussie');
+        swal({
+            title: "Connexion réussie",
+            showConfirmButton: false
+        });
         document.location.href = "/accueil";
     } 
     else {
         if (RsltConnexion == 2) {
-            alert("Vous êtes déjà connecté ailleurs sous ce pseudo...");
+            swal("Vous êtes déjà connecté ailleurs sous ce pseudo...");
         }
         else {
-            alert('Données invalides, veuillez réessayer.');
+            swal('Données invalides, veuillez réessayer.');
         }
     }
 });

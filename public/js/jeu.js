@@ -46,7 +46,7 @@ socket.on('timer', function (message) {
 */
 socket.on('Deblocage trophee', function (info) {
     var infoTrophee = JSON.parse(info);
-    alert("Vous avez débloqué le trophée " + infoTrophee.name);
+    swal("Vous avez débloqué le trophée " + infoTrophee.name);
 });
 
 /*

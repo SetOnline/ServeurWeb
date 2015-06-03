@@ -101,7 +101,7 @@ header, footer{
   -moz-box-shadow: 0px 1px 3px #666666;
   box-shadow: 0px 1px 3px #666666;
   color: #61261c;
-  font-size: 13px;
+  font-size: 16px;
   padding: 10px 20px 10px 20px;
   border: solid #01080d 1px;
   text-decoration: none;
@@ -117,4 +117,26 @@ header, footer{
   background-image: -o-linear-gradient(top, #60bf20, #157a15);
   background-image: linear-gradient(to bottom, #60bf20, #157a15);
   text-decoration: none;
+}
+
+input[type="text"]{ 
+    background-color: MintCream;
+}
+input[type="email"]{ 
+    background-color: MintCream;
+}
+input[type="password"]{ 
+    background-color: MintCream;
+}
+
+input[type="text"]:focus{
+       background-color: Linen;
+}
+
+input[type="email"]:focus{
+       background-color: Linen;
+}
+
+input[type="password"]:focus{
+       background-color: Linen;
 }
