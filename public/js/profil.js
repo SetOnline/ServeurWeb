@@ -76,3 +76,11 @@ socket.on('Reponse voir liste medailles', function (infos) {
 socket.on('Reponse nom avatar', function (source) {
     document.getElementById("avatarProfil").src = "/img/" + source + ".jpg";
 });
+
+/*
+    Fonction appellée automatiquement lors de demande de déconnexion
+*/
+function deco() {
+    socket.emit('Deco');
+    document.location.href = "/accueil";
+}

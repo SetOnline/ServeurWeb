@@ -1,6 +1,6 @@
-var socket = io();
+Ôªøvar socket = io();
 
-function codeAddress() { //demande des classements au serv dÈs le chargemt de la page
+function codeAddress() { //demande des classements au serv d√©s le chargemt de la page
     socket.emit('Est connecte');
     socket.emit('Demande classement');
     socket.emit('Demande classement jour');
@@ -14,11 +14,11 @@ window.onload = codeAddress();
 // Evenements Serveur - Client
 ///////////////////
 
-/* RÈception du classement gÈnÈral
+/* R√©ception du classement g√©n√©ral
  *      @param message: name: pseudo value: nombre de points (liste)
  * */
 socket.on('Reponse classement', function (message) {
-    //rÈcupÈration des donnÈes du serveur
+    //r√©cup√©ration des donn√©es du serveur
     console.log("classement");
     console.log(message);
     var info = JSON.parse(message);
@@ -35,11 +35,11 @@ socket.on('Reponse classement', function (message) {
     })
 });
 
-/* RÈception du classement du jour
+/* R√©ception du classement du jour
  * @param message: name: pseudo value: nombre de points (liste)
  * */
 socket.on('Reponse classement jour', function (message) {
-    //rÈcupÈration des donnÈes du serveur
+    //r√©cup√©ration des donn√©es du serveur
     var info = JSON.parse(message);
     
     var tableau = document.getElementById("classementJour");
@@ -54,10 +54,10 @@ socket.on('Reponse classement jour', function (message) {
     })
 });
 
-/* RÈception du classement de la semaine
+/* R√©ception du classement de la semaine
  * @param message: name: pseudo value: nombre de points (liste)*/
 socket.on('Reponse classement semaine', function (message) {
-    //rÈcupÈration des donnÈes du serveur
+    //r√©cup√©ration des donn√©es du serveur
     var info = JSON.parse(message);
     
     var tableau = document.getElementById("classementSemaine");
@@ -74,8 +74,8 @@ socket.on('Reponse classement semaine', function (message) {
 
 
 /*
-    Fonction appellÈe automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connectÈ ou pas
-    @param RsltConnexion : 0 si pas connectÈ, pseudo sinon
+    Fonction appell√©e automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connect√© ou pas
+    @param RsltConnexion : 0 si pas connect√©, pseudo sinon
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
     if (RsltConnexion == 0) {
@@ -87,3 +87,10 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
     }
 });
 
+/*
+    Fonction appell√©e automatiquement lors de demande de d√©connexion
+*/
+function deco() {
+    socket.emit('Deco');
+    document.location.href = "/accueil";
+}

@@ -1,4 +1,4 @@
-var socket = io();
+ï»¿var socket = io();
 
 //Chargement de la page
 function codeAddress() {
@@ -14,7 +14,7 @@ function codeAddress() {
 }
 window.onload = codeAddress();
 
-setInterval(function () { majListeAmi(); }, 10000); //màj de la liste d'amis 
+setInterval(function () { majListeAmi(); }, 10000); //mÃ j de la liste d'amis 
 
 ///////////////////
 // Evenements Client - Serveur
@@ -25,9 +25,9 @@ setInterval(function () { majListeAmi(); }, 10000); //màj de la liste d'amis
 // Evenements Serveur - Client
 ///////////////////
 /*
-    Réception évenement Reponse liste amis
+    Reception evenement Reponse liste amis
     @param infos : fichier Json de la forme:
-    * name : pseudo    status : connecté ou non, booléen    points : score
+    * name : pseudo    status : connecte ou non, booleen    points : score
 */
 socket.on('Reponse liste amis', function (infos) {
     // suppression ancienne liste d'amis
@@ -36,7 +36,7 @@ socket.on('Reponse liste amis', function (infos) {
         myNode.removeChild(myNode.firstChild);
     }
 
-    //récupération des données du serveur
+    //recuperation des donnees du serveur
     var info = JSON.parse(infos);
     console.debug(info);
     var noeudP;
@@ -47,7 +47,7 @@ socket.on('Reponse liste amis', function (infos) {
 });
 
 /*
-    Réception évènement Reponse nom avatar
+    Reception evenement Reponse nom avatar
     @param source: string ac la source
 */
 socket.on('Reponse nom avatar', function (source) {
@@ -55,7 +55,7 @@ socket.on('Reponse nom avatar', function (source) {
 });
 
 /*
-    Réception évenement Reponse demande ami (feedback si le pseudo n'existe pas)
+    Reception evenement Reponse demande ami (feedback si le pseudo n'existe pas)
     @param rslt: int
 */
 socket.on('Reponse demande ami', function (rslt) {
@@ -64,14 +64,14 @@ socket.on('Reponse demande ami', function (rslt) {
     }
     else {
         if (rslt == 2) {
-            alert('Vous avez déjà demandé cette personne en ami'); 
+            alert('Vous avez dÃ©jÃ  demandÃ© cette personne en ami'); 
         }
-        else{ alert('Votre demande a bien été prise en compte!'); }
+        else{ alert('Votre demande a bien Ã©tÃ© prise en compte!'); }
     }
 });
 
 /*
-    Réception évenement Reponse liste demandes amis (permet de savoir qui nous a demandé en ami)
+    Reception evenement Reponse liste demandes amis (permet de savoir qui nous a demande en ami)
     @param infos : fichier Json de la forme:
     * name : pseudo    
 */
@@ -82,7 +82,7 @@ socket.on('Reponse liste demandes amis', function (infos) {
         myNode.removeChild(myNode.firstChild);
     }
     
-    //récupération des données du serveur
+    //recuperation des donnees du serveur
     var info = JSON.parse(infos);
     var noeudP;
     if (info.length == 0) {
@@ -96,12 +96,12 @@ socket.on('Reponse liste demandes amis', function (infos) {
 });
 
 /*
-    Réception évenement Reponse liste trophees
+    Reception evenement Reponse liste trophees
     @param infos : fichier Json de la forme:
-    * name : nom    desc : description        pic : nom l’image
+    * name : nom    desc : description        pic : nom de l'image
 */
 socket.on('Reponse liste trophees', function (infos) {
-    //récupération des données du serveur
+    //recuperation des donnees du serveur
     var info = JSON.parse(infos);
     console.debug(info);
     var noeudP;
@@ -113,12 +113,12 @@ socket.on('Reponse liste trophees', function (infos) {
 });
 
 /*
-    Réception évenement Reponse liste medailles
+    Reception evenement Reponse liste medailles
     @param infos : fichier Json de la forme:
-    * name : nom    desc : description        pic : nom l’image
+    * name : nom    desc : description        pic : nom de l'image
 */
 socket.on('Reponse liste medailles', function (infos) {
-    //récupération des données du serveur
+    //recuperation des donnees du serveur
     var info = JSON.parse(infos);
     console.debug(info);
     var noeudP;
@@ -130,8 +130,8 @@ socket.on('Reponse liste medailles', function (infos) {
 });
 
 /*
-    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
-    @param RsltConnexion : 0 si pas connecté, pseudo sinon
+    Fonction appellee automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecte ou pas
+    @param RsltConnexion : 0 si pas connecte, pseudo sinon
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
     if (RsltConnexion == 0) {
@@ -145,12 +145,12 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 });
 
 /*
-    Réception évènement Déblocage trophée
+    Reception evenement Deblocage trophee
     @param info : name : nom    desc : description        pic : nom l'image
 */
 socket.on('Deblocage trophee', function (info) {
     var infoTrophee = JSON.parse(info);
-    alert("Vous avez débloqué le trophée " + infoTrophee.name);
+    alert("Vous avez dÃ©bloquÃ© le trophÃ©e " + infoTrophee.name);
 });
 
 
@@ -158,7 +158,7 @@ socket.on('Deblocage trophee', function (info) {
 // Evenements Client - Serveur
 ///////////////////
 
-/* Fonction qui permet la mise à jour de la liste d'amis via l'envoi de 2 events*/
+/* Fonction qui permet la mise Ã  jour de la liste d'amis via l'envoi de 2 events*/
 function majListeAmi() {
     //Liste d'amis
     socket.emit('Demande liste amis');
@@ -178,23 +178,23 @@ function majListeAmi() {
 
 
 /*
-    Fonction appellée automatiquement lors du click sur le bouton "desinscription"
+    Fonction appellee automatiquement lors du click sur le bouton "desinscription"
 */
 function desinscription() {
     socket.emit('Desinscription');
 }
 
-/*Fonction permettant d'ajouter le pseudo rentré dans le form en ami*/
+/*Fonction permettant d'ajouter le pseudo rentre dans le form en ami*/
 function ajouteAmi(){
     socket.emit('Demander ami', $("#pseudoAjout").val());
 }
 
 /*
-    Fonction appellée automatiquement lors de demande de déconnexion
-    @param form le formulaire de modification des données personnelles
+    Fonction appellee automatiquement lors de demande de deconnexion
+    @param form le formulaire de modification des donnees personnelles
 */
 function ModifierProfil(form) {
-    //récupération des valeurs du formulaire
+    //recuperation des valeurs du formulaire
     var ancien_mdp = $("#Ancien_mdp").val();
     var nouveau_mdp = $("#Nouveau_mdp").val();
     var avatar = $("#avatar").val();
@@ -210,4 +210,12 @@ function ModifierProfil(form) {
 
     //envoi au serveur
     socket.emit('Modifier profil', JSON.stringify(donnees));
+}
+
+/*
+    Fonction appellee automatiquement lors de demande de deconnexion
+*/
+function deco() {
+    socket.emit('Deco');
+    document.location.href = "/accueil";
 }

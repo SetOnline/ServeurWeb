@@ -1,4 +1,4 @@
-var socket = io(); 
+ï»¿var socket = io(); 
 
 //Chargement de la page
 function codeAddress() {
@@ -11,27 +11,27 @@ window.onload = codeAddress();
 ///////////////////
 
 /*
-    Réception évenement Resultat connexion
-    @param RsltConnexion : Entier permettant de savoir si la connexion est réussie ou pas (1 - réussie, 0 - invalide)
+    RÃ©ception Ã©venement Resultat connexion
+    @param RsltConnexion : Entier permettant de savoir si la connexion est rÃ©ussie ou pas (1 - rÃ©ussie, 0 - invalide)
 */
 socket.on('Resultat connexion', function (RsltConnexion) {
     if (RsltConnexion == 1) { //redirection
-        alert('connexion réussie');
+        alert('connexion rÃ©ussie');
         document.location.href = "/accueil";
     } 
     else {
         if (RsltConnexion == 2) {
-            alert("Vous êtes déjà connecté ailleurs sous ce pseudo...");
+            alert("Vous Ãªtes dÃ©jÃ  connectÃ© ailleurs sous ce pseudo...");
         }
         else {
-            alert('Données invalides, veuillez réessayer.');
+            alert('DonnÃ©es invalides, veuillez rÃ©essayer.');
         }
     }
 });
 
 /*
-    Fonction appellée automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connecté ou pas
-    @param RsltConnexion : 0 si pas connecté, pseudo sinon
+    Fonction appellÃ©e automatiquement lorsqu'on a besoin de savoir si l'utilisateur est connectÃ© ou pas
+    @param RsltConnexion : 0 si pas connectÃ©, pseudo sinon
  */
 socket.on('Resultat est connecte', function (RsltConnexion) {
     if (RsltConnexion == 0) {
@@ -50,11 +50,11 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 ///////////////////
 
 /*
-    Fonction appellée automatiquement lors de la validation du formulaire de connexion
+    Fonction appellÃ©e automatiquement lors de la validation du formulaire de connexion
     @param form le formulaire de connexion
 */
 function connexion() {
-    //récupération des valeurs du formulaire
+    //rÃ©cupÃ©ration des valeurs du formulaire
     var pseudo = $("#pseudo").val();
     var mdp = $("#mdp").val();
 
@@ -68,7 +68,7 @@ function connexion() {
 }
 
 /*
-    Fonction appellée automatiquement lors de demande de déconnexion
+    Fonction appellÃ©e automatiquement lors de demande de dÃ©connexion
 */
 function deco() {
     socket.emit('Deco');
