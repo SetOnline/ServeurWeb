@@ -41,12 +41,15 @@ socket.on('timer', function (message) {
 });
 
 /*
-    Réception évènement Déblocage trophée
+    Reception evenement Deblocage trophee
     @param info : name : nom    desc : description        pic : nom l'image
 */
 socket.on('Deblocage trophee', function (info) {
     var infoTrophee = JSON.parse(info);
-    swal("Vous avez débloqué le trophée " + infoTrophee.name);
+    swal({
+        title: "Vous avez débloqué le trophée " + infoTrophee[0].name,
+        imageUrl: "img/" + infoTrophee[0].pic + ".png"
+    });
 });
 
 /*

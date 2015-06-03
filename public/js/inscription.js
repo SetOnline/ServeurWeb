@@ -1,4 +1,5 @@
 ﻿var socket = io();
+var avatar;
 
 //Chargement de la page
 function codeAddress() {
@@ -91,7 +92,9 @@ function creationCompte() {
     var pseudo = $("#pseudo").val();
     var mail = $("#mail").val();
     var mdp = $("#mdp").val();
-    var avatar = $("#avatar").val();
+    avatar2 = avatar.substring(22);
+    alert(avatar);
+    console.log(avatar2);
     
     //mise dans un tableau
     var donnees = [];
@@ -106,3 +109,4 @@ function creationCompte() {
     //envoi au serveur
     socket.emit('Creation compte', JSON.stringify(donnees));
 }
+

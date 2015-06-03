@@ -159,7 +159,10 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 */
 socket.on('Deblocage trophee', function (info) {
     var infoTrophee = JSON.parse(info);
-    swal("Vous avez débloqué le trophée " + infoTrophee[0].name);
+    swal({
+        title: "Vous avez débloqué le trophée " + infoTrophee[0].name,
+        imageUrl: "img/" + infoTrophee[0].pic + ".png"
+    });
 });
 
 

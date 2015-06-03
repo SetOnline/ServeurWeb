@@ -36,6 +36,18 @@ socket.on('Resultat est connecte', function (RsltConnexion) {
 });
 
 /*
+    Reception evenement Deblocage trophee
+    @param info : name : nom    desc : description        pic : nom l'image
+*/
+socket.on('Deblocage trophee', function (info) {
+    var infoTrophee = JSON.parse(info);
+    swal({
+        title: "Vous avez débloqué le trophée " + infoTrophee[0].name,
+        imageUrl: "img/" + infoTrophee[0].pic + ".png"
+    });
+});
+
+/*
     Réception évenement Reponse liste trophees
     @param infos : fichier Json de la forme:
     * name : nom    desc : description        pic : nom l’image
