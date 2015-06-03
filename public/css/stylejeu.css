@@ -106,8 +106,8 @@
        text-align: center;
        font-size: 42px;
        z-index:3;
-       top:36%;
-       left:6%;
+       top:33%;
+       left:5%;
        position:absolute;
     }
 
@@ -306,8 +306,8 @@
     text-align: center;
     font-size: 42px;
     z-index:7;
-    top:36%;
-    left:4%;
+    top:33%;
+    left:3%;
     position:absolute;
     color:green;
 }
