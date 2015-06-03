@@ -64,9 +64,11 @@ socket.on('Reponse demande ami', function (rslt) {
     }
     else {
         if (rslt == 2) {
-            swal('Vous avez déjà demandé cette personne en ami'); 
+            swal("Vous avez déjà demandé cette personne en ami"); 
         }
-        else{ swal('Votre demande a bien été prise en compte!'); }
+        else {
+            swal("Votre demande a bien été prise en compte!");
+        }
     }
 });
 
@@ -105,11 +107,11 @@ socket.on('Reponse liste trophees', function (infos) {
     var info = JSON.parse(infos);
     console.debug(info);
     var noeudP;
+    var myNode = document.getElementById("trophes");
     if (info.length == 0) {
         noeudP = "<p>Aucun trophée pour l'instant</p>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
-    var myNode = document.getElementById("trophes");
     for (i = 0; i < info.length ; ++i) {
         noeudP = "<img class='miniature' alt='trophe' src='/img/"+ info[i].pic +".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
@@ -124,13 +126,12 @@ socket.on('Reponse liste trophees', function (infos) {
 socket.on('Reponse liste medailles', function (infos) {
     //recuperation des donnees du serveur
     var info = JSON.parse(infos);
-    console.debug(info);
+    var noeudP;
+    var myNode = document.getElementById("medailles");
     if (info.length == 0) {
         noeudP = "<p>Aucune médaille pour l'instant</p>";
         myNode.innerHTML = myNode.innerHTML + noeudP;
     }
-    var noeudP;
-    var myNode = document.getElementById("medailles");
     for (i = 0; i < info.length ; ++i) {
         noeudP = "<img class='miniature' alt='medaille' src='/img/" + info[i].pic + ".png' title=\"" + info[i].desc + "\"/><span>" + info[i].name + "</span><br />";
         myNode.innerHTML = myNode.innerHTML + noeudP;
